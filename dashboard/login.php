@@ -1,4 +1,12 @@
-<?php include "../init.php"; ?>
+<?php 
+session_start();
+//check if admin is already logged in or not
+if(isset($_SESSION['admin_email'])){
+  header("Location: index.php");
+}
+include "../init.php"; 
+$msg = '';
+?>
 <!doctype html>
 <html lang="en">
   <head>
@@ -17,11 +25,56 @@
     <!-- Style -->
     <link rel="stylesheet" href="<?=$css_login?>style.css">
 
-    <title>Login #3</title>
+    <title>Login</title>
   </head>
   <body>
   
+  <!-------------------------------Login Code Start------------------------------------->
+  <?php 
+  	// Check If User Coming From HTTP Post Request
+    if ($_SERVER['REQUEST_METHOD'] == 'POST')
+    {
+      $email    = $_POST['email'];
+      $password = $_POST['password'];
+      //Hash The Password to protect admin info
+      $hashedPass = sha1($password);
+      //check if email is valid email
+      if(!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $msg = 'Not a valid email';
+      }else{
+        // Check If The User Exist In Database
+        $stmt = $con->prepare
+                ("SELECT 
+                id,
+                email,
+                password 
+                FROM 
+                users 
+                WHERE 
+                email = ? 
+                AND 
+                password = ? 
+                AND 
+                group_id =?");
+        $stmt->execute(array($email,$hashedPass,1));
+        $row = $stmt->fetch();
+        $count = $stmt->rowCount();
 
+        //check if user already exists if row count > 0 
+        if($count > 0 ){
+          $_SESSION['admin_email'] = $email;
+          $_SESSION['admin_id'] = $row->id;
+          header("Location: index.php");
+          exit();
+        }else{
+          $msg = 'Wrong Email Or Password Please Try Again';
+        }
+      }
+      
+    }
+  
+  ?>
+  <!----------------------------------Login Code End---------------------------------->
   <div class="half">
     <div class="bg order-1 order-md-2" style="background-image: url('assets/login_assets/images/bg_1.jpg');"></div>
     <div class="contents order-2 order-md-1">
@@ -31,17 +84,28 @@
           <div class="col-md-6">
             <div class="form-block">
               <div class="text-center mb-5">
-              <h3>Login to <strong>Colorlib</strong></h3>
+              <?php 
+              //show error message
+              if(isset($msg) && $msg != ''){
+                echo '<div class="alert alert-danger alert-dismissible fade show" role="alert">
+                      <strong class="text-center">'.$msg.'</strong>
+                      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                      </div>';
+              }
+              ?>
+              <h3>Login to <strong>Dashboard</strong></h3>
               <!-- <p class="mb-4">Lorem ipsum dolor sit amet elit. Sapiente sit aut eos consectetur adipisicing.</p> -->
               </div>
-              <form action="#" method="post">
+              <form action="<?=$_SERVER['PHP_SELF']?>" method="post">
                 <div class="form-group first">
-                  <label for="username">Username</label>
-                  <input type="text" class="form-control" placeholder="your-email@gmail.com" id="username">
+                  <label for="Email">Email</label>
+                  <input type="email" class="form-control" name="email" placeholder="Write E-mail" id="Email">
                 </div>
                 <div class="form-group last mb-3">
                   <label for="password">Password</label>
-                  <input type="password" class="form-control" placeholder="Your Password" id="password">
+                  <input type="password" class="form-control" name="password" placeholder="Your Password" id="password">
                 </div>
                 
                 <div class="d-sm-flex mb-5 align-items-center">
