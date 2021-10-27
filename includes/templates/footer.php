@@ -1,42 +1,126 @@
-<!-- FOOTER =============================-->
-<div class="footer text-center">
-	<div class="container">
-		<div class="row">
-			<p class="footernote">
-				 Connect with Scorilo
-			</p>
-			<ul class="social-iconsfooter">
-				<li><a href="#"><i class="fa fa-phone"></i></a></li>
-				<li><a href="#"><i class="fa fa-facebook"></i></a></li>
-				<li><a href="#"><i class="fa fa-twitter"></i></a></li>
-				<li><a href="#"><i class="fa fa-google-plus"></i></a></li>
-				<li><a href="#"><i class="fa fa-pinterest"></i></a></li>
-			</ul>
-			<p>
-				 &copy; 2017 Your Website Name<br/>
-				
-			</p>
+<footer class="footer">
+		<!-- Footer Top -->
+		<div class="footer-top section">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-5 col-md-6 col-12">
+						<!-- Single Widget -->
+						<div class="single-footer about">
+							<div class="logo">
+								<a href="index.html"><img src="<?=$img_front?>logo2.png" alt="#"></a>
+							</div>
+							<p class="text">Praesent dapibus, neque id cursus ucibus, tortor neque egestas augue,  magna eros eu erat. Aliquam erat volutpat. Nam dui mi, tincidunt quis, accumsan porttitor, facilisis luctus, metus.</p>
+							<p class="call">Got Question? Call us 24/7<span><a href="tel:123456789">+0123 456 789</a></span></p>
+						</div>
+						<!-- End Single Widget -->
+					</div>
+					<div class="col-lg-2 col-md-6 col-12">
+						<!-- Single Widget -->
+						<div class="single-footer links">
+							<h4>Information</h4>
+							<ul>
+								<li><a href="#">About Us</a></li>
+								<li><a href="#">Faq</a></li>
+								<li><a href="#">Terms & Conditions</a></li>
+								<li><a href="#">Contact Us</a></li>
+								<li><a href="#">Help</a></li>
+							</ul>
+						</div>
+						<!-- End Single Widget -->
+					</div>
+					<div class="col-lg-2 col-md-6 col-12">
+						<!-- Single Widget -->
+						<div class="single-footer links">
+							<h4>Customer Service</h4>
+							<ul>
+								<li><a href="#">Payment Methods</a></li>
+								<li><a href="#">Money-back</a></li>
+								<li><a href="#">Returns</a></li>
+								<li><a href="#">Shipping</a></li>
+								<li><a href="#">Privacy Policy</a></li>
+							</ul>
+						</div>
+						<!-- End Single Widget -->
+					</div>
+					<div class="col-lg-3 col-md-6 col-12">
+						<!-- Single Widget -->
+						<div class="single-footer social">
+							<h4>Get In Tuch</h4>
+							<!-- Single Widget -->
+							<div class="contact">
+								<ul>
+									<li>NO. 342 - London Oxford Street.</li>
+									<li>012 United Kingdom.</li>
+									<li>info@eshop.com</li>
+									<li>+032 3456 7890</li>
+								</ul>
+							</div>
+							<!-- End Single Widget -->
+							<ul>
+								<li><a href="#"><i class="ti-facebook"></i></a></li>
+								<li><a href="#"><i class="ti-twitter"></i></a></li>
+								<li><a href="#"><i class="ti-flickr"></i></a></li>
+								<li><a href="#"><i class="ti-instagram"></i></a></li>
+							</ul>
+						</div>
+						<!-- End Single Widget -->
+					</div>
+				</div>
+			</div>
 		</div>
-	</div>
-</div>
-
-<!-- SCRIPTS =============================-->
-<script src="<?=$js_front?>jquery-.js"></script>
-<script src="<?=$js_front?>bootstrap.min.js"></script>
-<script src="<?=$js_front?>anim.js"></script>
-<script>
-//----HOVER CAPTION---//	  
-jQuery(document).ready(function ($) {
-	$('.fadeshop').hover(
-		function(){
-			$(this).find('.captionshop').fadeIn(150);
-		},
-		function(){
-			$(this).find('.captionshop').fadeOut(150);
-		}
-	);
-});
-</script>
-	
+		<!-- End Footer Top -->
+		<div class="copyright">
+			<div class="container">
+				<div class="inner">
+					<div class="row">
+						<div class="col-lg-6 col-12">
+							<div class="left">
+								<p>Copyright © 2020 <a href="http://www.wpthemesgrid.com" target="_blank">Wpthemesgrid</a>  -  All Rights Reserved.</p>
+							</div>
+						</div>
+						<div class="col-lg-6 col-12">
+							<div class="right">
+								<img src="<?=$img_front?>payments.png" alt="#">
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</footer>
+	<!-- /End Footer Area -->
+ 
+	<!-- Jquery -->
+    <script src="<?=$js_front?>jquery.min.js"></script>
+    <script src="<?=$js_front?>jquery-migrate-3.0.0.js"></script>
+	<script src="<?=$js_front?>jquery-ui.min.js"></script>
+	<!-- Popper JS -->
+	<script src="<?=$js_front?>popper.min.js"></script>
+	<!-- Bootstrap JS -->
+	<script src="<?=$js_front?>bootstrap.min.js"></script>
+	<!-- Color JS -->
+	<script src="<?=$js_front?>colors.js"></script>
+	<!-- Slicknav JS -->
+	<script src="<?=$js_front?>slicknav.min.js"></script>
+	<!-- Owl Carousel JS -->
+	<script src="<?=$js_front?>owl-carousel.js"></script>
+	<!-- Magnific Popup JS -->
+	<script src="<?=$js_front?>magnific-popup.js"></script>
+	<!-- Waypoints JS -->
+	<script src="<?=$js_front?>waypoints.min.js"></script>
+	<!-- Countdown JS -->
+	<script src="<?=$js_front?>finalcountdown.min.js"></script>
+	<!-- Nice Select JS -->
+	<script src="<?=$js_front?>nicesellect.js"></script>
+	<!-- Flex Slider JS -->
+	<script src="<?=$js_front?>flex-slider.js"></script>
+	<!-- ScrollUp JS -->
+	<script src="<?=$js_front?>scrollup.js"></script>
+	<!-- Onepage Nav JS -->
+	<script src="<?=$js_front?>onepage-nav.min.js"></script>
+	<!-- Easing JS -->
+	<script src="<?=$js_front?>easing.js"></script>
+	<!-- Active JS -->
+	<script src="<?=$js_front?>active.js"></script>
 </body>
 </html>
