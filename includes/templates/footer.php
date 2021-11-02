@@ -91,7 +91,6 @@
 	<!-- /End Footer Area -->
  
 	<!-- Jquery -->
-    <script src="<?=$js_front?>jquery.min.js"></script>
     <script src="<?=$js_front?>jquery-migrate-3.0.0.js"></script>
 	<script src="<?=$js_front?>jquery-ui.min.js"></script>
 	<!-- Popper JS -->

@@ -41,7 +41,7 @@
 	<link rel="stylesheet" href="<?=$css_front?>reset.css">
 	<link rel="stylesheet" href="<?=$css_front?>style.css">
     <link rel="stylesheet" href="<?=$css_front?>responsive.css">
-
+	
 	
 	
 </head>
