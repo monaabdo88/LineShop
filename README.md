@@ -2,7 +2,7 @@
 A Simple Ecommerce Project Developed by using PHP, MySQL, and adminlte for the dashboard.
 ---
 <h2 align="center">🔰Project Analytics🔰</h2>
--Dashboard
+-Dashboard<br>
   --assets<br>
   --Includes<br>
     ---Functions<br>
