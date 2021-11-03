@@ -16,3 +16,6 @@ A Simple Ecommerce Project Developed by using PHP, MySQL, and adminlte for the d
   --alerts.php<br>
   --messages.php<br>
 -Main Site<br>
+---
+<h2 align="center">Technologies & Tools</h2>
+
