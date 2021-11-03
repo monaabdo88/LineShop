@@ -17,5 +17,13 @@ A Simple Ecommerce Project Developed by using PHP, MySQL, and adminlte for the d
   --messages.php<br>
 -Main Site<br>
 ---
-<h2 align="center">Technologies & Tools</h2>
-
+<h2 align="center">💻Tecnologies & Tools💻</h2>
+  <p align="center">
+   <img src="https://img.shields.io/badge/Front--end-HTML-blue">
+   <img src="https://img.shields.io/badge/Front--end-CSS-blue">
+   <img src="https://img.shields.io/badge/Front--end-JAVASCRIPT-blue">
+   <img src="https://img.shields.io/badge/Front--end-BootStrap-blue">
+   <img src="https://img.shields.io/badge/Front--end-Jquery-blue">
+   <img src="https://img.shields.io/badge/Back--end-PHP-blue">
+   <img src="https://img.shields.io/badge/Back--end-MYSQL-blue">
+  </p>
