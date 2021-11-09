@@ -27,7 +27,7 @@ A Simple Ecommerce Project Developed by using PHP, MySQL, and adminlte for the d
    <img src="https://img.shields.io/badge/Back--end-PHP-blue">
    <img src="https://img.shields.io/badge/Back--end-MYSQL-blue">
   </p>
----
+
 <h2 align="center">⚙️Libraries⚙️</h2>
 <p align="center">
    <img src="https://img.shields.io/badge/notification-SweetAlertJs-blue">
