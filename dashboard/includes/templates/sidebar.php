@@ -122,31 +122,31 @@
             </ul>
           </li>-->
               <li class="nav-item">
-                <a href="index.php" class="nav-link">
+                <a href="index.php" class="nav-link <?=isActive('index.php')?>">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Dashboard</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="settings.php" class="nav-link">
+                <a href="settings.php" class="nav-link <?=isActive('settings.php')?>">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Main Settings</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="index.php" class="nav-link">
+                <a href="categories.php" class="nav-link <?=isActive('categories.php')?>">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Categories</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="index.php" class="nav-link">
+                <a href="products.php" class="nav-link <?=isActive('products.php')?>">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Products</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="index.php" class="nav-link">
+                <a href="users.php" class="nav-link <?=isActive('users.php')?>">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Users</p>
                 </a>

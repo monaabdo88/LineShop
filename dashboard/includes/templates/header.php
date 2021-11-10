@@ -19,6 +19,8 @@ if(!$_SESSION['admin_email']){
   <link rel="stylesheet" href="<?= $plugins_cp?>fontawesome-free/css/all.min.css">
   <!-- IonIcons -->
   <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+  <!------------------Datatables style -------------------------------->
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="<?= $css_cp?>adminlte.min.css">
   <script src="<?=$js_cp?>jquery-1.12.1.min.js"></script>

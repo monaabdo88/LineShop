@@ -20,5 +20,9 @@
 <script src="<?= $js_cp?>demo.js"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="<?= $js_cp?>pages/dashboard3.js"></script>
+<!---------------------Datatables Files --------------------->
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+
 </body>
 </html>
