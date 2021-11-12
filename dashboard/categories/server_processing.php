@@ -58,8 +58,8 @@ $columns = array(
         'dt'        => 5,
         'formatter' => function ($d , $row){
             return "
-            <a href='' class='btn btn-warning'> <i class='fa fa-pen'></i></a>
-            <a href='' class='btn btn-danger'> <i class='fa fa-trash'></i></a>
+            <a href='?do=Edit&id=$d' class='btn btn-warning'> <i class='fa fa-pen'></i></a>
+            <a href='?do=Delete&id=$d' class='btn btn-danger'> <i class='fa fa-trash'></i></a>
             ";
         }
     )

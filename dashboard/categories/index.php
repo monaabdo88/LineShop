@@ -1,3 +1,7 @@
+<a href="?do=Add" class="btn btn-success float-right">
+    <i class="fa fa-plus"></i> Add Category
+</a>
+<br><br>
 <table id="example" class="display" style="width:100%">
         <thead>
             <tr>

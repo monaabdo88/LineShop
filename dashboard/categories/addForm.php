@@ -53,7 +53,7 @@
                                     <!-- End Category logo Field -->
                                     <!---- Category logo preview ----->
                                     <div class="col-md-6 col-md-offset-3">
-                                        <img id="preview" src="#" class="img-thumbnail img-responsive" />
+                                        <img id="preview" style="display:none;" src="#" class="img-thumbnail img-responsive" />
                                         <br/><br>
                                     </div>
                                     
@@ -65,3 +65,16 @@
                                     </div>
                                     <!-- End Submit Field -->
                                 </form>
+<!---- preview image before upload code ----->
+<script type="text/javascript">
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $('#preview').attr('src', e.target.result);
+                    $('#preview').show();
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+</script>

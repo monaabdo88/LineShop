@@ -1,5 +1,5 @@
 <?php include "includes/templates/header.php" ?>
-<title>Admin | <?=get_title_cp();?></title>
+<title><?=get_settings('site_name')?> | <?=get_title_cp();?></title>
    
 
   <!-- Content Wrapper. Contains page content -->

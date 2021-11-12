@@ -28,7 +28,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
             });
             
         </script>';
-        redirectPage('back');
+        redirectPage('categories.php');
     }else{
         //upload category Image
         $image = rand(0, 10000000000) . '_' . $imageName;
@@ -54,7 +54,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
               });
               
           </script>';
-        redirectPage('back');
+        redirectPage('categories.php');
         
     }
 

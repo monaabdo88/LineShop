@@ -18,7 +18,7 @@ Function To Redirect to the prev page
 take two vars the prev page  Link and Time to redirect
 */
 if(! function_exists('redirectPage')){
-    function redirectPage($url= NULL, $seconds = 5){
+    /*function redirectPage($url= NULL, $seconds = 5){
         if($url === NULL)
         {
             $url = "index.php";
@@ -31,6 +31,20 @@ if(! function_exists('redirectPage')){
             }else{
                 $url = "index.php";
                 $link = "HomePage";
+            }
+        }
+        header("refresh:$seconds,url=$url");
+        exit();
+    }*/
+    //updated function
+    function redirectPage($url = NULL , $seconds = 5){
+        if($url === NULL)
+        {
+            $url = "index.php";
+        }
+        else{
+            if (isset($_SERVER['HTTP_REFERER']) && $_SERVER['HTTP_REFERER'] !== '') {
+                $url = $_SERVER['HTTP_REFERER'];
             }
         }
         header("refresh:$seconds,url=$url");
@@ -78,7 +92,7 @@ if(! function_exists('fetchCategoryTree')){
       }
 }
 /*
-function to check if item is already exists
+function to check if item is already exists in adding new item
 take three parmetares the column name , table name and the value of item
 */
 if(! function_exists('checkItem')){
@@ -91,5 +105,39 @@ if(! function_exists('checkItem')){
 		$count = $statement->rowCount();
 
 		return $count;
+    }
+}
+/*
+function to check if item is already exists in editing item
+take four parmetares the column name , table name and the value of item
+
+*/
+if(! function_exists('checkItemUp')){
+    function checkItemUp($item, $from, $value,$id){
+        global $con;
+        $statement = $con->prepare("SELECT $item FROM $from WHERE id != ? AND $item = ?");
+
+		$statement->execute(array($id,$value));
+
+		$count = $statement->rowCount();
+
+		return $count;
+    }
+}
+
+/*
+function to get all data from settings
+take the column name
+return value of column
+*/
+if(! function_exists('get_settings')){
+    function get_settings($column){
+        global $con;
+        $stmt = $con->prepare("SELECT $column FROM settings WHERE id = ?");
+        $stmt->execute(array('1'));
+        $row = $stmt->fetch();
+        if($stmt->rowCount() > 0){
+            return $row[$column];
+        }
     }
 }
