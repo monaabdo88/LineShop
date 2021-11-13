@@ -130,11 +130,11 @@ function to get all data from settings
 take the column name
 return value of column
 */
-if(! function_exists('get_settings')){
-    function get_settings($column){
+if(! function_exists('get_item')){
+    function get_item($column,$tbl,$id){
         global $con;
-        $stmt = $con->prepare("SELECT $column FROM settings WHERE id = ?");
-        $stmt->execute(array('1'));
+        $stmt = $con->prepare("SELECT $column FROM $tbl WHERE id = ?");
+        $stmt->execute(array($id));
         $row = $stmt->fetch();
         if($stmt->rowCount() > 0){
             return $row[$column];

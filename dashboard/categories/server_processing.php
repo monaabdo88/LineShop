@@ -59,7 +59,7 @@ $columns = array(
         'formatter' => function ($d , $row){
             return "
             <a href='?do=Edit&id=$d' class='btn btn-warning'> <i class='fa fa-pen'></i></a>
-            <a href='?do=Delete&id=$d' class='btn btn-danger'> <i class='fa fa-trash'></i></a>
+            <a onclick='confirmation(event)' href='?do=Delete&id=$d' class='btn btn-danger'> <i class='fa fa-trash'></i></a>
             ";
         }
     )

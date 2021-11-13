@@ -1,5 +1,5 @@
 <?php include "includes/templates/header.php" ?>
-<title><?=get_settings('site_name')?> | <?=get_title_cp('Categories');?></title>
+<title><?=get_item('site_name','settings',1)?> | <?=get_title_cp('Categories');?></title>
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -36,6 +36,8 @@
                           $pageTitle = 'Add New Category';
                         elseif($do == 'Edit' || $do == 'updateCode')
                           $pageTitle = 'Edit Category';
+                        else
+                          $pageTitle = 'Categories';
                         ?>
                         
                         <h3 class="card-title"><?=$pageTitle?></h3>
@@ -59,7 +61,37 @@
                             include "Categories/updateCode.php";
                         }
                         elseif($do == 'Delete'){
-                            include "Categories/deleteCode.php";
+                            //check if category ID from get request
+                            $catId = isset($_GET['id']) && is_numeric($_GET['id']) ? intval($_GET['id']) : 0;
+                            // Select All Data Depend On This ID
+                            $check = checkItem('id', 'categories', $catId);
+                            // If There's Such ID Show The Form
+                            if ($check > 0) {
+                              unlink("../assets/uploads/categories/".get_item('image','categories',$catId));
+                              $stmt = $con->prepare("DELETE FROM categories WHERE id = :zid");
+                              $stmt->bindParam(":zid", $catId);
+                              $stmt->execute();
+                              echo '
+                                  <script type="text/javascript">
+                                      $(document).ready(function(){
+                                          successFn("Category Deleted Successfully","success");
+                              
+                                      });
+                                      
+                                  </script>
+                                  ';
+                                redirectPage('back');
+                            } else {
+                              echo '
+                              <script type="text/javascript">
+                                  $(document).ready(function(){
+                                      errorFn("This Category is Not Found","error");
+                      
+                                  });
+                                  
+                              </script>';
+                              redirectPage('categories.php');
+                            }
                         }
                         ?>
                     </div><!--card-body-->
@@ -75,10 +107,46 @@
 
 <script type="text/javascript">
         $(document).ready(function() {
-          $('#example').DataTable( {
+            //Show records of cateogries on datatables
+            $('#example').DataTable( {
               "processing": true,
               "serverSide": true,
               "ajax": "categories/server_processing.php"
-            } );
-        } );
+            });
+          });
+        //Confirm Before delete category
+        function confirmation(ev) {
+              ev.preventDefault();
+              var urlToRedirect = ev.currentTarget.getAttribute('href'); //use currentTarget because the click may be on the nested i tag and not a tag causing the href to be empty
+              console.log(urlToRedirect); // verify if this is the right URL
+              swal({
+                title: "Are you sure?",
+                text: "Once deleted, you will not be able to recover this imaginary file!",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+              })
+              .then((willDelete) => {
+                // redirect with javascript here as per your logic after showing the alert using the urlToRedirect value
+                if (willDelete) {
+                  //window.location.href=urlToRedirect;
+                  $.ajax({    
+                    type: "GET",
+                    url: urlToRedirect, 
+                    success: function(){   
+                      swal("Poof! Your imaginary file has been deleted!", {
+                        icon: "success",
+                      });     
+                      //redirect back after deleting category
+                      setTimeout(function(){
+                            window.location.href = 'categories.php';
+                        }, 5000);
+                    }
+                  });
+                } else {
+                  swal("Your imaginary file is safe!");
+                }
+              });
+        }
+       
 </script>
