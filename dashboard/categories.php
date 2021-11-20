@@ -52,46 +52,16 @@
                             include "Categories/addForm.php";
                         }
                         elseif($do == 'Insert'){
-                            include "Categories/insertCode.php";
+                            add_category();
                         }
                         elseif($do == 'Edit'){
                             include "Categories/editForm.php";
                         }
                         elseif($do == 'updateCode'){
-                            include "Categories/updateCode.php";
+                            up_category();
                         }
                         elseif($do == 'Delete'){
-                            //check if category ID from get request
-                            $catId = isset($_GET['id']) && is_numeric($_GET['id']) ? intval($_GET['id']) : 0;
-                            // Select All Data Depend On This ID
-                            $check = checkItem('id', 'categories', $catId);
-                            // If There's Such ID Show The Form
-                            if ($check > 0) {
-                              unlink("../assets/uploads/categories/".get_item('image','categories',$catId));
-                              $stmt = $con->prepare("DELETE FROM categories WHERE id = :zid");
-                              $stmt->bindParam(":zid", $catId);
-                              $stmt->execute();
-                              echo '
-                                  <script type="text/javascript">
-                                      $(document).ready(function(){
-                                          successFn("Category Deleted Successfully","success");
-                              
-                                      });
-                                      
-                                  </script>
-                                  ';
-                                redirectPage('back');
-                            } else {
-                              echo '
-                              <script type="text/javascript">
-                                  $(document).ready(function(){
-                                      errorFn("This Category is Not Found","error");
-                      
-                                  });
-                                  
-                              </script>';
-                              redirectPage('categories.php');
-                            }
+                            del_cat();
                         }
                         ?>
                     </div><!--card-body-->
@@ -137,7 +107,7 @@
                       swal("Poof! Your imaginary file has been deleted!", {
                         icon: "success",
                       });     
-                      //redirect back after deleting category
+                      //redirect back after deleting category 5 seconds
                       setTimeout(function(){
                             window.location.href = 'categories.php';
                         }, 5000);

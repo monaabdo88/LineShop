@@ -25,7 +25,7 @@ if(!$_SESSION['admin_email']){
   <link rel="stylesheet" href="<?= $css_cp?>adminlte.min.css">
   <script src="<?=$js_cp?>jquery-1.12.1.min.js"></script>
 	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-		<script type="text/javascript">
+	<script type="text/javascript">
 			//show Success Message
 			function successFn(msg,status){
 				swal("Good Job!", msg, status);

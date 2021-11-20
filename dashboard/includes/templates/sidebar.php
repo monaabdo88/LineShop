@@ -146,6 +146,18 @@
                 </a>
               </li>
               <li class="nav-item">
+                <a href="comments.php" class="nav-link <?=isActive('comments.php')?>">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Comments</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="alerts.php" class="nav-link <?=isActive('Alerts.php')?>">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Alerts</p>
+                </a>
+              </li>
+              <li class="nav-item">
                 <a href="users.php" class="nav-link <?=isActive('users.php')?>">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Users</p>

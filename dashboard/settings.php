@@ -35,7 +35,7 @@
                           include ("settings/editForm.php");
                           //update settings
                           if($_SERVER['REQUEST_METHOD'] == 'POST'){
-                              include("settings/updateCode.php");
+                             update_settings();
                           }
                         ?>
                     </div><!--card-body-->

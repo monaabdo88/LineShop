@@ -1,8 +1,13 @@
 <?php 
 //check if category ID from get request
 $catId = isset($_GET['id']) && is_numeric($_GET['id']) ? intval($_GET['id']) : 0;
-$row = get_row_data('categories',$catId);
-$rowsCount = checkItem('id','categories',$catId);
+//select all data from database which is related to category id
+$stmt = $con->prepare("SELECT * FROM categories WHERE id = ?");
+$stmt->execute(array($catId));
+//Fetch Data from database
+$row = $stmt->fetch();
+//Get rows Count
+$rowsCount = $stmt->rowCount();
 //Check is category ID is already exists
 if($rowsCount > 0){
 ?>                

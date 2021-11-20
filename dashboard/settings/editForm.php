@@ -1,12 +1,5 @@
 <?php 
-			$stmt = $con->prepare("SELECT * FROM settings WHERE id = 1 ");
-
-			// Execute The Statement
-
-			$stmt->execute();
-
-			// Assign To Variable 
-			$row = $stmt->fetch();
+    $row = get_row_data('settings','1');
 ?>                   
 <form class="form-horizontal" action="<?php $_SERVER['PHP_SELF'] ?>" method="POST" enctype="multipart/form-data">
                                     <input type="hidden" name="userid" value="<?php echo $userid ?>" />

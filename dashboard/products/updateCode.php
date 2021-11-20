@@ -26,7 +26,8 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         if(isset($_FILES['image']) && $_FILES['image']['size'] != 0){
             $dirImg =  "../assets/uploads/categories/";
             //delete the prev category image
-            unlink($dirImg.$_POST['oldImg']);
+            if(isset($_POST['oldImg']) && $_POST['oldImg'] != '')
+                unlink($dirImg.$_POST['oldImg']);
             // Upload Variables
             $imageName      = $_FILES['image']['name'];
             $imageSize      = $_FILES['image']['size'];
