@@ -1,8 +1,8 @@
 <?php 
-include "includes/templates/header.php";
-include "includes/functions/categories.php";
+include "includes/templates/header.php"; 
+include "includes/functions/tags.php";
 ?>
-<title><?=get_item('site_name','settings',1)?> | <?=get_title_cp('Categories');?></title>
+<title><?=get_item('site_name','settings',1)?> | <?=get_title_cp('Tags');?></title>
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -10,12 +10,12 @@ include "includes/functions/categories.php";
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0"><?=get_title_cp('Categories');?></h1>
+            <h1 class="m-0"><?=get_title_cp('Tags');?></h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="index.php">Dahboard</a></li>
-              <li class="breadcrumb-item active"><?=get_title_cp('Categories');?></li>
+              <li class="breadcrumb-item active"><?=get_title_cp('Tags');?></li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -34,13 +34,13 @@ include "includes/functions/categories.php";
                         $do = isset($_GET['do']) ? $_GET['do'] : 'Manage';
                         
                         if($do == 'Manage')
-                          $pageTitle = 'Categories';
+                          $pageTitle = 'Tags';
                         elseif($do == 'Add' || $do == 'Insert')
-                          $pageTitle = 'Add New Category';
+                          $pageTitle = 'Add New Tag';
                         elseif($do == 'Edit' || $do == 'updateCode')
-                          $pageTitle = 'Edit Category';
+                          $pageTitle = 'Edit Tag';
                         else
-                          $pageTitle = 'Categories';
+                          $pageTitle = 'Tags';
                         ?>
                         
                         <h3 class="card-title"><?=$pageTitle?></h3>
@@ -49,22 +49,22 @@ include "includes/functions/categories.php";
                     <div class="card-body">
                         <?php 
                         if($do == 'Manage'){
-                            include "categories/index.php";
+                            include "tags/index.php";
                         }
                         elseif($do == 'Add'){
-                            include "Categories/addForm.php";
+                            include "tags/addForm.php";
                         }
                         elseif($do == 'Insert'){
-                            add_category();
+                            add_tag();
                         }
                         elseif($do == 'Edit'){
-                            include "Categories/editForm.php";
+                            include "tags/editForm.php";
                         }
                         elseif($do == 'updateCode'){
-                            update_category();
+                            update_tag();
                         }
                         elseif($do == 'Delete'){
-                            delete_category();
+                            delete_tag();
                         }
                         ?>
                     </div><!--card-body-->
@@ -79,14 +79,13 @@ include "includes/functions/categories.php";
 <?php include $tpl_cp."footer.php" ?>
 
 <script type="text/javascript">
-  
         $(document).ready(function() {
             //Show records of cateogries on datatables
             var t = $('#example').DataTable( {
               "processing": true,
               "serverSide": true,
               "targets": 0,
-              "ajax": "categories/server_processing.php",
+              "ajax": "tags/server_processing.php",
               "order": [[ 1, 'asc' ]]
             });
             t.on( 'order.dt search.dt', function () {
@@ -120,7 +119,7 @@ include "includes/functions/categories.php";
                       });     
                       //redirect back after deleting category 5 seconds
                       setTimeout(function(){
-                            window.location.href = 'categories.php';
+                            window.location.href = 'Tags.php';
                         }, 5000);
                     }
                   });

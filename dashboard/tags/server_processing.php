@@ -1,5 +1,5 @@
 <?php
-
+ 
 /*
  * DataTables example server-side processing script.
  *
@@ -19,42 +19,29 @@
  */
  
 // DB table to use
-$table = 'categories';
+$table = 'tags';
+ 
 // Table's primary key
 $primaryKey = 'id';
+ 
 // Array of database columns which should be read and sent back to DataTables.
 // The `db` parameter represents the column name in the database, while the `dt`
 // parameter represents the DataTables column identifier. In this case simple
 // indexes
 $columns = array(
     array( 'db' => 'id', 'dt' => 0 ),
-    array( 
-        'db' => 'image',  'dt' => 1,
-        'formatter' => function( $d) {
-            return "<img  src='../assets/uploads/categories/$d' width='50' height='50' class='img-thumbnail img-responsive'/>";
-        }    
-    
-    ),
-    array( 'db' => 'name',   'dt' => 2 ),
-    array( 'db' => 'status',     'dt' => 3 ,
-        'formatter' => function($d){
-            if($d == 0)
-                return "<button class='btn btn-circle btn-danger'><i class='fa fa-times-circle'></i></button>";
-            else
-                return "<button class='btn btn-circle btn-success'><i class='fa fa-check-circle'></i></button>";
-        }
-    ),
+    array( 'db' => 'title',   'dt' => 1 ),
     array(
         'db'        => 'created_at',
-        'dt'        => 4,
-        'formatter' => function( $d) {
+        'dt'        => 2,
+        'formatter' => function( $d, $row ) {
             return date( 'jS M y', strtotime($d));
         }
     ),
     array(
         'db'        => 'id',
-        'dt'        => 5,
-        'formatter' => function ($d){
+        'dt'        => 3,
+        'formatter' => function ($d , $row){
             return "
             <a href='?do=Edit&id=$d' class='btn btn-warning'> <i class='fa fa-pen'></i></a>
             <a onclick='confirmation(event)' href='?do=Delete&id=$d' class='btn btn-danger'> <i class='fa fa-trash'></i></a>

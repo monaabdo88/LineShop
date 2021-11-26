@@ -140,9 +140,21 @@
                 </a>
               </li>
               <li class="nav-item">
+                <a href="tags.php" class="nav-link <?=isActive('tags.php')?>">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Tags</p>
+                </a>
+              </li>
+              <li class="nav-item">
                 <a href="products.php" class="nav-link <?=isActive('products.php')?>">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Products</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="orders.php" class="nav-link <?=isActive('orders.php')?>">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Orders</p>
                 </a>
               </li>
               <li class="nav-item">
@@ -161,6 +173,12 @@
                 <a href="users.php" class="nav-link <?=isActive('users.php')?>">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Users</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="admins.php" class="nav-link <?=isActive('admins.php')?>">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Admins</p>
                 </a>
               </li>
               <li class="nav-item">

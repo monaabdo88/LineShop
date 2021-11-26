@@ -1,5 +1,6 @@
 <?php 
 include "../init.php";
+include "includes/functions/MainFunc.php";
 ob_start();
 session_start();
 if(!$_SESSION['admin_email']){
@@ -50,7 +51,6 @@ if(!$_SESSION['admin_email']){
   <!-- Navbar -->
   <?php include $tpl_cp."nav.php"; ?>
   <!-- /.navbar -->
-
   <!-- Main Sidebar Container -->
   <?php include $tpl_cp."sidebar.php" ?>
   
