@@ -65,6 +65,8 @@ include "includes/functions/categories.php";
                         }
                         elseif($do == 'Delete'){
                             delete_category();
+                        }elseif($do == 'deleteAll'){
+                            delete_all_selected();
                         }
                         ?>
                     </div><!--card-body-->
@@ -79,10 +81,14 @@ include "includes/functions/categories.php";
 <?php include $tpl_cp."footer.php" ?>
 
 <script type="text/javascript">
-  
+      
+        //datatables code
         $(document).ready(function() {
             //Show records of cateogries on datatables
             var t = $('#example').DataTable( {
+              "columnDefs": [
+                  { "orderable": false, "targets": 0 }
+                ],
               "processing": true,
               "serverSide": true,
               "targets": 0,
@@ -90,16 +96,30 @@ include "includes/functions/categories.php";
               "order": [[ 1, 'asc' ]]
             });
             t.on( 'order.dt search.dt', function () {
-                t.column(0, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
+                t.column(1, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
                 cell.innerHTML = i+1;
               } );
             } ).draw();
           });
+         //check box code to
+        $(".checkall").click(function(){
+          $('input:checkbox').not(this).prop('checked', this.checked);
+        });
+        //enable delete all if check all checked
+        $(".checkall").click(function() {
+          $(".delAll").attr("disabled", !this.checked);
+        });
+        //enable delete all if checkbox checked length greater than 0
+        function toggleCheckbox()
+        {
+          if($("input[name='checkCat[]']").filter(':checked').length > 0){
+            $(".delAll").removeAttr("disabled");
+          }
+        }
         //Confirm Before delete category
         function confirmation(ev) {
               ev.preventDefault();
               var urlToRedirect = ev.currentTarget.getAttribute('href'); //use currentTarget because the click may be on the nested i tag and not a tag causing the href to be empty
-              console.log(urlToRedirect); // verify if this is the right URL
               swal({
                 title: "Are you sure?",
                 text: "Once deleted, you will not be able to recover this imaginary file!",
@@ -129,5 +149,41 @@ include "includes/functions/categories.php";
                 }
               });
         }
-       
+       //Delete All function
+       function confirmationDel() {
+              var ids_cats = new Array(); 
+              $("input[name='checkCat[]']:checked:enabled").each(function () {
+                ids_cats.push($(this).val());
+              });      
+              var urlToRedirect = "?do=deleteAll&ids="; 
+              swal({
+                title: "Are you sure?",
+                text: "Once deleted, you will not be able to recover this imaginary file!",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+              })
+              .then((willDelete) => {
+                // redirect with javascript here as per your logic after showing the alert using the urlToRedirect value
+                if (willDelete) {
+                  //window.location.href=urlToRedirect;
+                  $.ajax({    
+                    type: "POST",
+                    data :{ids:ids_cats},
+                    url: urlToRedirect, 
+                    success: function(){   
+                      swal("Poof! Your imaginary file has been deleted!", {
+                        icon: "success",
+                      });     
+                      //redirect back after deleting category 5 seconds
+                      setTimeout(function(){
+                            window.location.href = 'categories.php';
+                        }, 5000);
+                    }
+                  });
+                } else {
+                  swal("Your imaginary file is safe!");
+                }
+              });
+        }
 </script>

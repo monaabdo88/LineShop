@@ -1,6 +1,5 @@
 <?php 
 include "../init.php";
-include "includes/functions/MainFunc.php";
 ob_start();
 session_start();
 if(!$_SESSION['admin_email']){
@@ -22,11 +21,15 @@ if(!$_SESSION['admin_email']){
   <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
   <!------------------Datatables style -------------------------------->
   <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
+  <!--- dropzone style ------------->
+  <link rel="stylesheet" href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" type="text/css" />
   <!-- Theme style -->
   <link rel="stylesheet" href="<?= $css_cp?>adminlte.min.css">
   <script src="<?=$js_cp?>jquery-1.12.1.min.js"></script>
 	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-	<script type="text/javascript">
+  <script src="../<?=$js_front?>ckeditor/ckeditor.js"></script>
+  <script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
+  <script type="text/javascript">
 			//show Success Message
 			function successFn(msg,status){
 				swal("Good Job!", msg, status);

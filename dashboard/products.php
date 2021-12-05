@@ -1,4 +1,11 @@
-<?php include "includes/templates/header.php" ?>
+<?php 
+include "includes/templates/header.php";
+include "includes/functions/products.php";
+?>
+<script type="text/javascript">
+  
+</script>
+
 <title><?=get_item('site_name','settings',1)?> | <?=get_title_cp('Products');?></title>
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
@@ -52,50 +59,16 @@
                             include "products/addForm.php";
                         }
                         elseif($do == 'Insert'){
-                            include "products/insertCode.php";
+                            add_product();
                         }
                         elseif($do == 'Edit'){
                             include "products/editForm.php";
                         }
                         elseif($do == 'updateCode'){
-                            include "products/updateCode.php";
+                            update_product();
                         }
                         elseif($do == 'Delete'){
-                            //check if Product ID from get request
-                            $catId = isset($_GET['id']) && is_numeric($_GET['id']) ? intval($_GET['id']) : 0;
-                            // Select All Data Depend On This ID
-                            $check = checkItem('id', 'Products', $catId);
-                            // If There's Such ID Show The Form
-                            if ($check > 0) {
-                              //delete Product image
-                              $catImg = get_item('image','Products',$catId);
-                              if(isset($catImg) && $catImg != '')
-                                unlink("../assets/uploads/Products/".$catImg);
-                              //prepare to delete Product
-                              $stmt = $con->prepare("DELETE FROM Products WHERE id = :zid");
-                              $stmt->bindParam(":zid", $catId);
-                              $stmt->execute();
-                              echo '
-                                  <script type="text/javascript">
-                                      $(document).ready(function(){
-                                          successFn("Product Deleted Successfully","success");
-                              
-                                      });
-                                      
-                                  </script>
-                                  ';
-                                redirectPage('back');
-                            } else {
-                              echo '
-                              <script type="text/javascript">
-                                  $(document).ready(function(){
-                                      errorFn("This Product is Not Found","error");
-                      
-                                  });
-                                  
-                              </script>';
-                              redirectPage('Products.php');
-                            }
+                          delete_product();
                         }
                         ?>
                     </div><!--card-body-->
@@ -111,12 +84,19 @@
 
 <script type="text/javascript">
         $(document).ready(function() {
-            //Show records of cateogries on datatables
-            $('#example').DataTable( {
+            //Show records of products on datatables
+            var t = $('#example').DataTable( {
               "processing": true,
               "serverSide": true,
-              "ajax": "Products/server_processing.php"
+              "targets": 0,
+              "ajax": "products/server_processing.php",
+              "order": [[ 1, 'asc' ]]
             });
+            t.on( 'order.dt search.dt', function () {
+                t.column(0, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
+                cell.innerHTML = i+1;
+              } );
+            } ).draw();
           });
         //Confirm Before delete Product
         function confirmation(ev) {

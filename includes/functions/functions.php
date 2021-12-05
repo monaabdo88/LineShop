@@ -52,6 +52,26 @@ if(! function_exists('isActive')){
     }
 }
 /*
+function to get rows count of table
+take on var table name
+*/
+if(! function_exists('get_rows')){
+    function get_rows($tblname,$count = 0){
+        global $con;
+        $stmt = $con->prepare("SELECT * FROM $tblname");
+        $stmt->execute();
+        if($count !=0){
+            $rows = $stmt->rowCount();
+        }
+        else{
+            $rows = $stmt->fetchAll();
+
+        }
+        return $rows;
+        
+    }
+}
+/*
 function to get all categories and show them into select field
 return array of categories
 */

@@ -27,16 +27,25 @@ $primaryKey = 'id';
 // parameter represents the DataTables column identifier. In this case simple
 // indexes
 $columns = array(
-    array( 'db' => 'id', 'dt' => 0 ),
+    array('db'  => 'id', 'dt'   => 0,
+            'formatter' => function($d){
+                return "<input type='checkbox'  onchange='toggleCheckbox()' name='checkCat[]' value='$d'/>";
+            }
+        ),
+    array( 'db' => 'id', 'dt' => 1 ),
     array( 
-        'db' => 'image',  'dt' => 1,
+        'db' => 'image',  'dt' => 2,
         'formatter' => function( $d) {
-            return "<img  src='../assets/uploads/categories/$d' width='50' height='50' class='img-thumbnail img-responsive'/>";
+            if($d != '')
+                return "<img  src='../assets/uploads/categories/$d' width='50' height='50' class='img-thumbnail img-responsive'/>";
+            else
+                return "<img  src='../assets/uploads/categories/no-img.jpg' width='50' height='50' class='img-thumbnail img-responsive'/>";
+            
         }    
     
     ),
-    array( 'db' => 'name',   'dt' => 2 ),
-    array( 'db' => 'status',     'dt' => 3 ,
+    array( 'db' => 'name',   'dt' => 3 ),
+    array( 'db' => 'status',     'dt' => 4 ,
         'formatter' => function($d){
             if($d == 0)
                 return "<button class='btn btn-circle btn-danger'><i class='fa fa-times-circle'></i></button>";
@@ -46,14 +55,14 @@ $columns = array(
     ),
     array(
         'db'        => 'created_at',
-        'dt'        => 4,
+        'dt'        => 5,
         'formatter' => function( $d) {
             return date( 'jS M y', strtotime($d));
         }
     ),
     array(
         'db'        => 'id',
-        'dt'        => 5,
+        'dt'        => 6,
         'formatter' => function ($d){
             return "
             <a href='?do=Edit&id=$d' class='btn btn-warning'> <i class='fa fa-pen'></i></a>

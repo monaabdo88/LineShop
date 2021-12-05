@@ -57,7 +57,7 @@ $columns = array(
     ),
     array(
         'db'        => 'id',
-        'dt'        => 5,
+        'dt'        => 7,
         'formatter' => function ($d , $row){
             return "
             <a href='?do=Edit&id=$d' class='btn btn-warning'> <i class='fa fa-pen'></i></a>

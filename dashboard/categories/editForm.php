@@ -67,8 +67,10 @@ if($rowsCount > 0){
     <!-- End Category logo Field -->
     <!---- Category logo preview ----->
     <div class="col-md-6 col-md-offset-3">
-        <img id="preview" src="../assets/uploads/categories/<?=$row['image']?>" class="img-thumbnail img-responsive" />
-    <br/><br>
+        <?php if($row['image']){ ?>
+            <img id="preview" src="../assets/uploads/categories/<?=$row['image']?>" class="img-thumbnail img-responsive" />
+        <?php  }?>
+        <br/><br>
     </div>
                                         
     <!-- Start Submit Field -->

@@ -80,7 +80,7 @@ include "includes/functions/tags.php";
 
 <script type="text/javascript">
         $(document).ready(function() {
-            //Show records of cateogries on datatables
+            //Show records of tags on datatables
             var t = $('#example').DataTable( {
               "processing": true,
               "serverSide": true,
@@ -101,7 +101,7 @@ include "includes/functions/tags.php";
               console.log(urlToRedirect); // verify if this is the right URL
               swal({
                 title: "Are you sure?",
-                text: "Once deleted, you will not be able to recover this imaginary file!",
+                text: "Once deleted, you will not be able to recover this Tag!",
                 icon: "warning",
                 buttons: true,
                 dangerMode: true,
@@ -114,17 +114,17 @@ include "includes/functions/tags.php";
                     type: "GET",
                     url: urlToRedirect, 
                     success: function(){   
-                      swal("Poof! Your imaginary file has been deleted!", {
+                      swal("Poof!  Tag has been deleted!", {
                         icon: "success",
                       });     
                       //redirect back after deleting category 5 seconds
                       setTimeout(function(){
-                            window.location.href = 'Tags.php';
+                            window.location.href = 'tags.php';
                         }, 5000);
                     }
                   });
                 } else {
-                  swal("Your imaginary file is safe!");
+                  swal("Tag is safe!");
                 }
               });
         }

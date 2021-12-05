@@ -97,6 +97,6 @@ if(! function_exists('delete_tag')){
                 $msg = show_msg('Error','This tag is Not Found');
             }
             echo $msg;
-            redirectPage('tags.php');
+            redirectPage('back');
     }
 }

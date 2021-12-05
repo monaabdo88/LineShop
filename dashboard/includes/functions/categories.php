@@ -14,15 +14,20 @@ if(! function_exists('add_category')){
             $status         = $_POST['status'];
             $parent_id      = $_POST['parent_id'];
             $description    = $_POST['description'];
-            // Upload Variables
-            $imageTmp	    = $_FILES['image']['tmp_name'];
-            $imageType      = $_FILES['image']['type'];
             //check if category is already exists
             if(checkItem('name','categories',$name) == 1){
                 $msg = show_msg('Error','This Category is already exists');
             }else{
-                //upload category Image
-                $image = resize_image('../assets/uploads/categories/',$imageTmp,$imageType);
+                //check Upload Image
+                if(isset($_FILES['image']) && $_FILES['image']['size'] != 0){
+                    // Upload Variables
+                    $imageTmp	    = $_FILES['image']['tmp_name'];
+                    $imageType      = $_FILES['image']['type'];
+                    //upload category Image
+                    $image = resize_image('../assets/uploads/categories/',$imageTmp,$imageType);
+                }else{
+                    $image = '';
+                }
                 //add new category to database
                 $stmt = $con->prepare("INSERT INTO 
                     categories(name, description, parent_id, user_id, image,status)
@@ -113,7 +118,7 @@ function to delete Category
 if(! function_exists('delete_category')){
     function delete_category(){
             global $con;
-            $smg = '';
+            $msg = '';
             //check if category ID from get request
             $catId = isset($_GET['id']) && is_numeric($_GET['id']) ? intval($_GET['id']) : 0;
             // Select All Data Depend On This ID
@@ -134,5 +139,29 @@ if(! function_exists('delete_category')){
             }
             echo $msg;
             redirectPage('categories.php');
+    }
+}
+/*
+function to del All Selected cats
+get the ids
+*/
+if(! function_exists('delete_all_selected')){
+    function delete_all_selected(){
+        global $con;
+        $msg = '';
+        $ids = $_POST['ids'];
+        foreach($ids as $id){
+            $img = get_item('image','categories',$id);
+            if($img != ''){
+                unlink('../assets/uploads/categories/'.$img);
+            }
+            $stmt = $con->prepare("DELETE FROM categories WHERE id = :zid");
+            $stmt->bindParam(":zid", $id);
+            $stmt->execute();
+            $msg = show_msg('success','Category Deleted Successfully');
+        
+        }
+        echo $msg;
+        redirectPage('categories.php');
     }
 }
