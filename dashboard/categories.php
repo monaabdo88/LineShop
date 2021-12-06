@@ -66,7 +66,7 @@ include "includes/functions/categories.php";
                         elseif($do == 'Delete'){
                             delete_category();
                         }elseif($do == 'deleteAll'){
-                            delete_all_selected();
+                            delete_all_rows();
                         }
                         ?>
                     </div><!--card-body-->
@@ -114,7 +114,10 @@ include "includes/functions/categories.php";
         {
           if($("input[name='checkCat[]']").filter(':checked').length > 0){
             $(".delAll").removeAttr("disabled");
+          }else{
+            $(".delAll").prop('disabled', true);              
           }
+
         }
         //Confirm Before delete category
         function confirmation(ev) {
@@ -169,7 +172,7 @@ include "includes/functions/categories.php";
                   //window.location.href=urlToRedirect;
                   $.ajax({    
                     type: "POST",
-                    data :{ids:ids_cats},
+                    data :{ids:ids_cats,tblname:"categories"},
                     url: urlToRedirect, 
                     success: function(){   
                       swal("Poof! Your imaginary file has been deleted!", {

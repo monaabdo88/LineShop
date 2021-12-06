@@ -29,18 +29,23 @@ $primaryKey = 'id';
 // parameter represents the DataTables column identifier. In this case simple
 // indexes
 $columns = array(
-    array( 'db' => 'id', 'dt' => 0 ),
-    array( 'db' => 'title',   'dt' => 1 ),
+    array('db'  => 'id', 'dt'   => 0,
+            'formatter' => function($d){
+                return "<input type='checkbox'  onchange='toggleCheckbox()' name='checkTag[]' value='$d'/>";
+            }
+        ),
+    array( 'db' => 'id', 'dt' => 1 ),
+    array( 'db' => 'title',   'dt' => 2 ),
     array(
         'db'        => 'created_at',
-        'dt'        => 2,
+        'dt'        => 3,
         'formatter' => function( $d, $row ) {
             return date( 'jS M y', strtotime($d));
         }
     ),
     array(
         'db'        => 'id',
-        'dt'        => 3,
+        'dt'        => 4,
         'formatter' => function ($d , $row){
             return "
             <a href='?do=Edit&id=$d' class='btn btn-warning'> <i class='fa fa-pen'></i></a>

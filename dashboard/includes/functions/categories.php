@@ -141,27 +141,3 @@ if(! function_exists('delete_category')){
             redirectPage('categories.php');
     }
 }
-/*
-function to del All Selected cats
-get the ids
-*/
-if(! function_exists('delete_all_selected')){
-    function delete_all_selected(){
-        global $con;
-        $msg = '';
-        $ids = $_POST['ids'];
-        foreach($ids as $id){
-            $img = get_item('image','categories',$id);
-            if($img != ''){
-                unlink('../assets/uploads/categories/'.$img);
-            }
-            $stmt = $con->prepare("DELETE FROM categories WHERE id = :zid");
-            $stmt->bindParam(":zid", $id);
-            $stmt->execute();
-            $msg = show_msg('success','Category Deleted Successfully');
-        
-        }
-        echo $msg;
-        redirectPage('categories.php');
-    }
-}

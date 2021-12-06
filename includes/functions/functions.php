@@ -214,3 +214,36 @@ if(! function_exists('resize_image')){
         return $file_name;
      }
 }
+/*
+Main function to delete all records
+get two vars ids,tblname
+*/
+if(! function_exists('delete_all_rows')){
+    function delete_all_rows(){
+        global $con;
+        $msg = '';
+        $ids = $_POST['ids'];
+        $tblname = $_POST['tblname'];
+        foreach($ids as $id){
+            if($tblname == 'categories'){
+                $img = get_item('image','categories',$id);
+                if($img != ''){
+                    unlink('../assets/uploads/categories/'.$img);
+                }
+            }
+            elseif($tblname == 'products'){
+                $img = get_item('main_img','products',$id);
+                if($img != ''){
+                    unlink('../assets/uploads/products/'.$img);
+                }
+            }
+            $stmt = $con->prepare("DELETE FROM $tblname WHERE id = :zid");
+            $stmt->bindParam(":zid", $id);
+            $stmt->execute();
+            $msg = show_msg('success','Selected Records Deleted Successfully');
+        
+        }
+        echo $msg;
+        redirectPage('back');
+    }
+}

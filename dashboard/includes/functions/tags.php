@@ -100,3 +100,24 @@ if(! function_exists('delete_tag')){
             redirectPage('back');
     }
 }
+/*
+function to del All Selected Tags
+get the ids
+*/
+if(! function_exists('delete_all_selected')){
+    function delete_all_selected(){
+        global $con;
+        $msg = '';
+        $ids = $_POST['ids'];
+        foreach($ids as $id){
+            
+            $stmt = $con->prepare("DELETE FROM tags WHERE id = :zid");
+            $stmt->bindParam(":zid", $id);
+            $stmt->execute();
+            $msg = show_msg('success','Tags Deleted Successfully');
+        
+        }
+        echo $msg;
+        redirectPage('tags.php');
+    }
+}

@@ -66,6 +66,9 @@ include "includes/functions/tags.php";
                         elseif($do == 'Delete'){
                             delete_tag();
                         }
+                        elseif($do == 'deleteAll'){
+                            delete_all_rows();
+                        }
                         ?>
                     </div><!--card-body-->
                 </div>
@@ -79,9 +82,12 @@ include "includes/functions/tags.php";
 <?php include $tpl_cp."footer.php" ?>
 
 <script type="text/javascript">
-        $(document).ready(function() {
-            //Show records of tags on datatables
+       $(document).ready(function() {
+            //Show records of cateogries on datatables
             var t = $('#example').DataTable( {
+              "columnDefs": [
+                  { "orderable": false, "targets": 0 }
+                ],
               "processing": true,
               "serverSide": true,
               "targets": 0,
@@ -89,19 +95,35 @@ include "includes/functions/tags.php";
               "order": [[ 1, 'asc' ]]
             });
             t.on( 'order.dt search.dt', function () {
-                t.column(0, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
+                t.column(1, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
                 cell.innerHTML = i+1;
               } );
             } ).draw();
           });
-        //Confirm Before delete category
+         //check box code to
+        $(".checkall").click(function(){
+          $('input:checkbox').not(this).prop('checked', this.checked);
+        });
+        //enable delete all if check all checked
+        $(".checkall").click(function() {
+          $(".delAll").attr("disabled", !this.checked);
+        });
+        //enable delete all if checkbox checked length greater than 0
+        function toggleCheckbox()
+        {
+          if($("input[name='checkTag[]']").filter(':checked').length > 0){
+            $(".delAll").removeAttr("disabled");
+          }else{
+            $(".delAll").prop('disabled', true);              
+          }
+        }
+        //Confirm Before delete Tag
         function confirmation(ev) {
               ev.preventDefault();
               var urlToRedirect = ev.currentTarget.getAttribute('href'); //use currentTarget because the click may be on the nested i tag and not a tag causing the href to be empty
-              console.log(urlToRedirect); // verify if this is the right URL
               swal({
                 title: "Are you sure?",
-                text: "Once deleted, you will not be able to recover this Tag!",
+                text: "Once deleted, you will not be able to recover this imaginary file!",
                 icon: "warning",
                 buttons: true,
                 dangerMode: true,
@@ -114,19 +136,55 @@ include "includes/functions/tags.php";
                     type: "GET",
                     url: urlToRedirect, 
                     success: function(){   
-                      swal("Poof!  Tag has been deleted!", {
+                      swal("Poof! Your imaginary file has been deleted!", {
                         icon: "success",
                       });     
-                      //redirect back after deleting category 5 seconds
+                      //redirect back after deleting Tag 5 seconds
                       setTimeout(function(){
                             window.location.href = 'tags.php';
                         }, 5000);
                     }
                   });
                 } else {
-                  swal("Tag is safe!");
+                  swal("Your imaginary file is safe!");
                 }
               });
         }
-       
+       //Delete All function
+       function confirmationDel() {
+              var ids_tags = new Array(); 
+              $("input[name='checkTag[]']:checked:enabled").each(function () {
+                ids_tags.push($(this).val());
+              });      
+              var urlToRedirect = "?do=deleteAll&ids="; 
+              swal({
+                title: "Are you sure?",
+                text: "Once deleted, you will not be able to recover this imaginary file!",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+              })
+              .then((willDelete) => {
+                // redirect with javascript here as per your logic after showing the alert using the urlToRedirect value
+                if (willDelete) {
+                  //window.location.href=urlToRedirect;
+                  $.ajax({    
+                    type: "POST",
+                    data :{ids:ids_tags,tblname:"tags"},
+                    url: urlToRedirect, 
+                    success: function(){   
+                      swal("Poof! Your imaginary file has been deleted!", {
+                        icon: "success",
+                      });     
+                      //redirect back after deleting Tag 5 seconds
+                      setTimeout(function(){
+                            window.location.href = 'tags.php';
+                        }, 5000);
+                    }
+                  });
+                } else {
+                  swal("Your imaginary file is safe!");
+                }
+              });
+        }
 </script>
