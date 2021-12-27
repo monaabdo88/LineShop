@@ -2,11 +2,7 @@
 include "includes/templates/header.php";
 include "includes/functions/products.php";
 ?>
-<script type="text/javascript">
-  
-</script>
-
-<title><?=get_item('site_name','settings',1)?> | <?=get_title_cp('Products');?></title>
+<title><?=get_item('site_name','settings','id',1)?> | <?=get_title_cp('Products');?></title>
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -46,32 +42,49 @@ include "includes/functions/products.php";
                         else
                           $pageTitle = 'Products';
                         ?>
-                        
                         <h3 class="card-title"><?=$pageTitle?></h3>
-                        
                     </div>
                     <div class="card-body">
                         <?php 
+                        //show all products
                         if($do == 'Manage'){
                             include "products/index.php";
                         }
+                        //show add form
                         elseif($do == 'Add'){
                             include "products/addForm.php";
                         }
+                        //insert new product data
                         elseif($do == 'Insert'){
                             add_product();
                         }
+                        //show edit form
                         elseif($do == 'Edit'){
                             include "products/editForm.php";
                         }
+                        //update data
                         elseif($do == 'updateCode'){
                             update_product();
                         }
+                        //delete on record
                         elseif($do == 'Delete'){
                           delete_product();
                         }
+                        //delete All Selected products
                         elseif($do == 'deleteAll'){
                           delete_all_rows();
+                        }
+                        //upload product images
+                        if(($do == 'addMedia' && isset($_GET['product_id'])) || $do == 'showMedia'){
+                          include "products/media.php"; 
+                        }
+                        //show Product Media in update
+                        elseif($do == 'uploadImages'){
+                          upload_product_images($_GET['product_id']);
+                        }
+                        //delete product Image
+                        if($do == 'delImg'){
+                          delImg();
                         }
                         ?>
                     </div><!--card-body-->
@@ -87,7 +100,7 @@ include "includes/functions/products.php";
 
 <script type="text/javascript">
           $(document).ready(function() {
-            //Show records of cateogries on datatables
+            //Show records of products on datatables
             var t = $('#example').DataTable( {
               "columnDefs": [
                   { "orderable": false, "targets": 0 }

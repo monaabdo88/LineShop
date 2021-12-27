@@ -1,5 +1,5 @@
 <footer class="main-footer">
-    <?=get_item('site_copyrights','settings',1)?>
+    <?=get_item('site_copyrights','settings','id',1)?>
   </footer>
   </div>
 <!-- ./wrapper -->

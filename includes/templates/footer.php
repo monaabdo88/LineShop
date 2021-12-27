@@ -91,14 +91,13 @@
 	<!-- /End Footer Area -->
  
 	<!-- Jquery -->
+	<script src="<?=$js_front?>jquery.min.js"></script>
     <script src="<?=$js_front?>jquery-migrate-3.0.0.js"></script>
 	<script src="<?=$js_front?>jquery-ui.min.js"></script>
 	<!-- Popper JS -->
 	<script src="<?=$js_front?>popper.min.js"></script>
 	<!-- Bootstrap JS -->
 	<script src="<?=$js_front?>bootstrap.min.js"></script>
-	<!-- Color JS -->
-	<script src="<?=$js_front?>colors.js"></script>
 	<!-- Slicknav JS -->
 	<script src="<?=$js_front?>slicknav.min.js"></script>
 	<!-- Owl Carousel JS -->

@@ -11,22 +11,28 @@ if(! function_exists('add_tag')){
             //prepare values from add form
             $title          = $_POST['title'];
             $userId         = $_POST['user_id'];
-            //check if tag is already exists
-            if(checkItem('title','tags',$title) == 1){
-                $msg = show_msg('Error','This tag is already exists');
-            }else{
-                //add new tag to database
-                $stmt = $con->prepare("INSERT INTO 
-                    tags(title, user_id)
-                    VALUES(:ztitle, :zuser)");
-                $stmt->execute(array(
-                    'ztitle' 	=> $title,
-                    'zuser' 	=> $userId
-                ));
-                // Echo Success Message
-                $msg = show_msg('success', $stmt->rowCount() . ' Record Inserted');
-                
+            if($title == ''){
+                $msg = show_msg('error','Tage Title Required');
             }
+            else{
+                //check if tag is already exists
+                if(checkItem('title','tags',$title) == 1){
+                    $msg = show_msg('Error','This tag is already exists');
+                }else{
+                    //add new tag to database
+                    $stmt = $con->prepare("INSERT INTO 
+                        tags(title, user_id)
+                        VALUES(:ztitle, :zuser)");
+                    $stmt->execute(array(
+                        'ztitle' 	=> $title,
+                        'zuser' 	=> $userId
+                    ));
+                    // Echo Success Message
+                    $msg = show_msg('success', $stmt->rowCount() . ' Record Inserted');
+                    
+                }
+            }
+            
             echo $msg;
             redirectPage('tags.php');
             
@@ -47,28 +53,34 @@ if(! function_exists('update_tag')){
             $title       = $_POST['title'];
            
             //check if the new tag title is exists in another tag
-            if(checkItemUp('title','tags',$title,$id) > 0){
-                $msg = show_msg('Error','This tag title is Already exists');
+            if($title == ''){
+                $msg = show_msg('error','Tage title Required');
             }
-            else
-            {
-                //start update code
-                $stmt = $con->prepare("UPDATE 
-                                        tags 
-                                        SET 
-                                        title = ?,
-                                        user_id = ?
-                                        WHERE
-                                        id = ?
-                                        ");
-                $upData =$stmt->execute(array($title,$user_id,$id));
-                //Update Message
-                if($upData){
-                    $msg = show_msg('success','tag Updated Successfully');
-                    
+            else{
+                if(checkItemUp('title','tags',$title,$id) > 0){
+                    $msg = show_msg('Error','This tag title is Already exists');
                 }
-        
+                else
+                {
+                    //start update code
+                    $stmt = $con->prepare("UPDATE 
+                                            tags 
+                                            SET 
+                                            title = ?,
+                                            user_id = ?
+                                            WHERE
+                                            id = ?
+                                            ");
+                    $upData =$stmt->execute(array($title,$user_id,$id));
+                    //Update Message
+                    if($upData){
+                        $msg = show_msg('success','tag Updated Successfully');
+                        
+                    }
+            
+                }
             }
+            
             echo $msg;
             redirectPage('back');
         }

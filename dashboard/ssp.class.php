@@ -137,7 +137,7 @@ class SSP {
 				$column = $columns[ $columnIdx ];
 
 				if ( $requestColumn['orderable'] == 'true' ) {
-					$dir = $request['order'][$i]['dir'] === 'asc' ?
+					$dir = $request['order'][$i]['dir'] === 'desc' ?
 						'ASC' :
 						'DESC';
 

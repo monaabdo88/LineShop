@@ -14,36 +14,43 @@ if(! function_exists('add_category')){
             $status         = $_POST['status'];
             $parent_id      = $_POST['parent_id'];
             $description    = $_POST['description'];
-            //check if category is already exists
-            if(checkItem('name','categories',$name) == 1){
-                $msg = show_msg('Error','This Category is already exists');
-            }else{
-                //check Upload Image
-                if(isset($_FILES['image']) && $_FILES['image']['size'] != 0){
-                    // Upload Variables
-                    $imageTmp	    = $_FILES['image']['tmp_name'];
-                    $imageType      = $_FILES['image']['type'];
-                    //upload category Image
-                    $image = resize_image('../assets/uploads/categories/',$imageTmp,$imageType);
-                }else{
-                    $image = '';
-                }
-                //add new category to database
-                $stmt = $con->prepare("INSERT INTO 
-                    categories(name, description, parent_id, user_id, image,status)
-                    VALUES(:zname, :zdesc, :zparent, :zuser, :zimage, :zstatus)");
-                $stmt->execute(array(
-                    'zname' 	=> $name,
-                    'zdesc' 	=> $description,
-                    'zparent' 	=> $parent_id,
-                    'zuser' 	=> $userId,
-                    'zimage' 	=> $image,
-                    'zstatus'   => $status
-                ));
-                // Echo Success Message
-                $msg = show_msg('success', $stmt->rowCount() . ' Record Inserted');
-                
+            //validation
+            if($name == ''){
+                $msg = show_msg('error','Category Name Required');
             }
+            else{
+                //check if category is already exists
+                if(checkItem('name','categories',$name) == 1){
+                    $msg = show_msg('Error','This Category is already exists');
+                }else{
+                    //check Upload Image
+                    if(isset($_FILES['image']) && $_FILES['image']['size'] != 0){
+                        // Upload Variables
+                        $imageTmp	    = $_FILES['image']['tmp_name'];
+                        $imageType      = $_FILES['image']['type'];
+                        //upload category Image
+                        $image = resize_image('../assets/uploads/categories/',$imageTmp,$imageType);
+                    }else{
+                        $image = '';
+                    }
+                    //add new category to database
+                    $stmt = $con->prepare("INSERT INTO 
+                        categories(name, description, parent_id, user_id, image,status)
+                        VALUES(:zname, :zdesc, :zparent, :zuser, :zimage, :zstatus)");
+                    $stmt->execute(array(
+                        'zname' 	=> $name,
+                        'zdesc' 	=> $description,
+                        'zparent' 	=> $parent_id,
+                        'zuser' 	=> $userId,
+                        'zimage' 	=> $image,
+                        'zstatus'   => $status
+                    ));
+                    // Echo Success Message
+                    $msg = show_msg('success', $stmt->rowCount() . ' Record Inserted');
+                    
+                }
+            }
+            
             echo $msg;
             redirectPage('categories.php');
             
@@ -71,41 +78,46 @@ if(! function_exists('update_category')){
             }
             else
             {
-                //upload New Image if there file request
-                if(isset($_FILES['image']) && $_FILES['image']['size'] != 0){
-                    $dirImg =  "../assets/uploads/categories/";
-                    //delete the prev category image
-                    if(isset($_POST['oldImg']) && $_POST['oldImg'] != '')
-                        unlink($dirImg.$_POST['oldImg']);
-                        // Upload Variables
-                        $imageTmp	    = $_FILES['image']['tmp_name'];
-                        $imageType      = $_FILES['image']['type'];
-                        //upload category Image
-                        $image = resize_image('../assets/uploads/categories/',$imageTmp,$imageType);
-                
-                    }else{
-                    $image = $_POST['oldImg'];
-                }// end upload code
-                //start update code
-                $stmt = $con->prepare("UPDATE 
-                                        categories 
-                                        SET 
-                                        name = ?,
-                                        description = ?,
-                                        status = ?,
-                                        image = ?,
-                                        user_id = ?,
-                                        parent_id = ?
-                                        WHERE
-                                        id = ?
-                                        ");
-                $upData =$stmt->execute(array($name,$desc,$status,$image,$user_id,$parent,$id));
-                //Update Message
-                if($upData){
-                    $msg = show_msg('success','Category Updated Successfully');
-                    
+                if($name == ''){
+                    $msg = show_msg('error','Category Name Required');
+                }else{
+//upload New Image if there file request
+if(isset($_FILES['image']) && $_FILES['image']['size'] != 0){
+    $dirImg =  "../assets/uploads/categories/";
+    //delete the prev category image
+    if(isset($_POST['oldImg']) && $_POST['oldImg'] != '')
+        unlink($dirImg.$_POST['oldImg']);
+        // Upload Variables
+        $imageTmp	    = $_FILES['image']['tmp_name'];
+        $imageType      = $_FILES['image']['type'];
+        //upload category Image
+        $image = resize_image('../assets/uploads/categories/',$imageTmp,$imageType);
+
+    }else{
+            $image = $_POST['oldImg'];
+        }// end upload code
+        //start update code
+        $stmt = $con->prepare("UPDATE 
+                                categories 
+                                SET 
+                                name = ?,
+                                description = ?,
+                                status = ?,
+                                image = ?,
+                                user_id = ?,
+                                parent_id = ?
+                                WHERE
+                                id = ?
+                                ");
+        $upData =$stmt->execute(array($name,$desc,$status,$image,$user_id,$parent,$id));
+        //Update Message
+        if($upData){
+            $msg = show_msg('success','Category Updated Successfully');
+            
+        }
+
                 }
-        
+                
             }
             echo $msg;
             redirectPage('back');

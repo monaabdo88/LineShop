@@ -7,11 +7,11 @@
             <tr>
                 <th class="no-sort"><input type="checkbox" class="checkall"/></th>
                 <th>#</th>
-                <th>Image</th>
                 <th>Title</th>
                 <th>Status</th>
                 <th>Price</th>
                 <th>Qantity</th>
+                <th>Media</th>
                 <th>Created At</th>
                 <th>Options</th>
             </tr>
@@ -20,11 +20,11 @@
             <tr>
                 <th><input type="checkbox" class="checkall"/></th>
                 <th>#</th>
-                <th>Image</th>
                 <th>Title</th>
                 <th>Status</th>
                 <th>Price</th>
                 <th>Qantity</th>
+                <th>Media</th>
                 <th>Created At</th>
                 <th>Options</th>
             </tr>

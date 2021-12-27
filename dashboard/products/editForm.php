@@ -1,81 +1,107 @@
 <?php 
-//check if category ID from get request
-$catId = isset($_GET['id']) && is_numeric($_GET['id']) ? intval($_GET['id']) : 0;
-//select all data from database which is related to category id
-$stmt = $con->prepare("SELECT * FROM categories WHERE id = ?");
-$stmt->execute(array($catId));
-//Fetch Data from database
-$row = $stmt->fetch();
-//Get rows Count
-$rowsCount = $stmt->rowCount();
-//Check is category ID is already exists
+//check if product ID from get request
+$productId = isset($_GET['id']) && is_numeric($_GET['id']) ? intval($_GET['id']) : 0;
+$row = get_row_data('products','id',$productId);
+$rowsCount = checkItem('id','products',$productId);
+//Check is Product ID is already exists
+
+//Check is Product ID is already exists
 if($rowsCount > 0){
 ?>                
 <form class="form-horizontal" action="?do=updateCode" method="POST" enctype="multipart/form-data">
     <input type="hidden" name="user_id" value="<?= $_SESSION['admin_id'] ?>" />
-    <!-- Start Category name Field -->
+    <!-- Start Product name Field -->
     <div class="form-group form-group-lg">
-        <label class="col-sm-2 control-label">Category Name</label>
+        <label class="col-sm-2 control-label">Product Title</label>
         <div class="col-sm-10 col-md-12">
-            <input type="text" name="name" class="form-control" value="<?=$row['name']?>"  required="required" />
+            <input type="text" name="title" class="form-control" value="<?=$row['title']?>"  required="required" />
         </div>
     </div>
                                     
-    <!-- Start Category description Field -->
+    <!-- Start Product description Field -->
     <div class="form-group form-group-lg">
-        <label class="col-sm-2 control-label">Cateogry Description</label>
+        <label class="col-sm-2 control-label">Product Description</label>
         <div class="col-sm-10 col-md-12">
-            <textarea class="form-control" name="description"><?=$row['description']?></textarea>
+            <textarea class="form-control" id="editor1" name="details"><?=$row['details']?></textarea>
         </div>
     </div>
-    <!-- End Category description Field -->
+    <!-- End Product description Field -->
  
-    <!-- Start Category status Field -->
+    <!-- Start Product status Field -->
     <div class="form-group form-group-lg">
-        <label class="col-sm-2 control-label">Cateogry Status</label>
+        <label class="col-sm-2 control-label">Product Status</label>
         <div class="col-sm-10 col-md-12">
             <input type="radio" name="status" value="0" <?=($row['status'] == '0')? 'checked':''?>/> Not Active 
             <input type="radio" name="status" value="1" <?=($row['status'] == '1') ? 'checked':''?>/> Active
         </div>
     </div>
-    <!-- End Category status Field -->
-    <!-- Start Parent Category Field -->
+    <!-- End Product status Field -->
+    <!-- Start Category Field -->
     <div class="form-group form-group-lg">
-    <label class="col-sm-2 control-label">Parent Cateogry</label>
-    <div class="col-sm-10 col-md-12">
-        <select class="form-control" name="parent_id">
-        <option value="">Choose Parent Category</option>
+        <label class="col-sm-2 control-label">Category</label>
+        <div class="col-sm-10 col-md-12">
+            <select class="form-control" name="category_id">
+                <option value="">Choose Category</option>
+                    <?php
+                        foreach(fetchCategoryTree() as $cat){
+                            if($cat['id'] == $row['category_id']) 
+                                 $selected = 'selected';
+                            else $select = '';
+                            echo '<option value="'.$cat['id'].'" '.$selected.'>'.$cat['name'].'</option>';
+                        }
                                                     
-            <?php
-            foreach(fetchCategoryTree() as $cat){
-                if($cat['id'] == $row['id'] && $row['parent_id'] !=0)
-                    $select = "selected";
-                else
-                    $select = "";
-            echo '<option value="'.$cat['id'].'" '.$select.'>'.$cat['name'].'</option>';
-            }
-                                                                
-            ?>
-        </select>
+                    ?>
+            </select>
+        </div>
     </div>
+    <!-- End Category Field -->
+    <!-- start Product price Field -->
+     <div class="form-group form-group-lg col-md-4 float-right">
+        <label class="col-sm-6 control-label float-left">Product Price</label>
+            <div class="col-sm-6 col-md-6 float-right">
+                <input type="text" name="price" value="<?=$row['price']?>" class="form-control" />
+            </div>
     </div>
-    <!-- End Parent Category Field -->
-    <!-- Start Category Image Field -->
+    <!-- End Product price Field -->
+    <!-- start Product disount Field -->
+    <div class="form-group form-group-lg col-md-4 float-right">
+        <label class="col-sm-6 control-label float-left">Product Discount</label>
+            <div class="col-sm-6 col-md-6 float-right">
+                <input type="text" name="discount" class="form-control" value="<?=$row['discount']?>" />
+            </div>
+    </div>
+    <!-- End Product disount Field -->
+    <!-- start Product quantity Field -->
+    <div class="form-group form-group-lg col-md-4 float-right">
+        <label class="col-sm-6 control-label float-left">Product Quantity</label>
+        <div class="col-sm-6 col-md-6 float-right">
+            <input type="text" name="quantity" class="form-control" value="<?=$row['quantity']?>" />
+        </div>
+    </div>
+    <!-- End Product quantity Field -->
+    <!-- Start Product tags Field -->
     <div class="form-group form-group-lg">
-    <label class="col-sm-2 control-label">Category Image</label>
-    <div class="col-sm-10 col-md-12">
-        <input type="file" name="image" onchange="readURL(this);" class="form-control" />
-        <input type="hidden" name="oldImg" value="<?=$row['image']?>"/>
-        <input type="hidden" name="catID" value="<?=$row['id']?>" />
+        <label class="col-sm-2 control-label">Tags</label>
+        <div class="col-sm-10 col-md-12">
+            <?php foreach(get_rows('tags') as $tag): ?>
+                <div class="col-md-3 float-left">
+                    <?php 
+                    $product_tags = get_related_data('product_tags','product_id',$row['id']);
+                    foreach($product_tags as $pro_tag){
+                        //check product tags
+                        if($pro_tag['tag_id'] == $tag['id'])
+                            $checked = 'checked';
+                        else
+                            $checked = '';
+                    }
+                    ?>
+                    <input type="checkbox" name="tag[]" value="<?=$tag['id']?>" <?=$checked?>> <?=$tag['title']?>
+                </div>
+            <?php endforeach //end tags foreach?>
+        </div>
+        <div class="clearfix"></div>
     </div>
-    </div>
-    <!-- End Category logo Field -->
-    <!---- Category logo preview ----->
-    <div class="col-md-6 col-md-offset-3">
-        <img id="preview" src="../assets/uploads/categories/<?=$row['image']?>" class="img-thumbnail img-responsive" />
-    <br/><br>
-    </div>
-                                        
+    <!-- End Product tags Field -->                    
     <!-- Start Submit Field -->
                                         
     <div class="col-md-12">
@@ -89,12 +115,12 @@ if($rowsCount > 0){
         echo '
         <script type="text/javascript">
             $(document).ready(function(){
-                errorFn("This Category is Not Found","error");
+                errorFn("This Product is Not Found","error");
 
             });
             
         </script>';
-        redirectPage('categories.php');
+        redirectPage('products.php');
     }
     ?>
 <!---- preview image before upload code ----->
@@ -108,4 +134,8 @@ if($rowsCount > 0){
                 reader.readAsDataURL(input.files[0]);
             }
         }
+        //ckeditor
+        CKEDITOR.replace( 'editor1', {
+            customConfig: 'config.js'
+        } );
 </script>

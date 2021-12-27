@@ -35,15 +35,8 @@ $columns = array(
             }
         ),
     array( 'db' => 'id', 'dt' => 1 ),
-    array( 
-        'db' => 'main_img',  'dt' => 2,
-        'formatter' => function( $d, $row ) {
-            return "<img  src='../assets/uploads/products/$d' width='50' height='50' class='img-thumbnail img-responsive'/>";
-        }    
-    
-    ),
-    array( 'db' => 'title',   'dt' => 3 ),
-    array( 'db' => 'status',     'dt' => 4 ,
+    array( 'db' => 'title',   'dt' => 2 ),
+    array( 'db' => 'status',     'dt' => 3 ,
         'formatter' => function($d , $row){
             if($d == 0)
                 return "<button class='btn btn-circle btn-danger'><i class='fa fa-times-circle'></i></button>";
@@ -51,8 +44,16 @@ $columns = array(
                 return "<button class='btn btn-circle btn-success'><i class='fa fa-check-circle'></i></button>";
         }
     ),
-    array('db'  => 'price',     'dt'    => 5),
-    array('db'  => 'quantity',     'dt'    => 6),
+    array('db'  => 'price',     'dt'    => 4),
+    array('db'  => 'quantity',     'dt'    => 5),
+    array(
+        'db'        => 'id',
+        'dt'        => 6,
+        'formatter' => function ($d , $row){
+            return "
+            <a href='?do=showMedia&product_id=$d' class='btn btn-warning'> <i class='fa fa-image'></i></a>";
+        }
+    ),
     array(
         'db'        => 'created_at',
         'dt'        => 7,

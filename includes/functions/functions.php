@@ -22,11 +22,14 @@ if(! function_exists('redirectPage')){
         if($url === NULL)
         {
             $url = "index.php";
+        }elseif(isset($url) && $url != NULL){
+            $url;
         }
         else{
             if (isset($_SERVER['HTTP_REFERER']) && $_SERVER['HTTP_REFERER'] !== '') {
                 $url = $_SERVER['HTTP_REFERER'];
             }
+            
         }
         header("refresh:$seconds,url=$url");
         //exit();
@@ -97,11 +100,24 @@ function to get data from table where id = ?
 return the data of row
 */
 if(! function_exists('get_row_data')){
-    function get_row_data($tbl,$id){
+    function get_row_data($tbl,$col_name = 'id',$id){
         global $con;
-        $stmt = $con->prepare("SELECT * FROM $tbl WHERE id = ?");
+        $stmt = $con->prepare("SELECT * FROM $tbl WHERE $col_name = ?");
         $stmt->execute(array($id));
         $row = $stmt->fetch();
+        return $row;
+    }
+}
+/*
+function to get rows related to another column
+get tbl name, column name and column value
+*/
+if(! function_exists('get_related_data')){
+    function get_related_data($tbl,$col_name,$col_val){
+        global $con;
+        $stmt = $con->prepare("SELECT * FROM $tbl WHERE $col_name = ?");
+        $stmt->execute(array($col_val));
+        $row = $stmt->fetchall();
         return $row;
     }
 }
@@ -145,9 +161,9 @@ take the column name
 return value of column
 */
 if(! function_exists('get_item')){
-    function get_item($column,$tbl,$id){
+    function get_item($column,$tbl,$col_name,$id){
         global $con;
-        $stmt = $con->prepare("SELECT $column FROM $tbl WHERE id = ?");
+        $stmt = $con->prepare("SELECT $column FROM $tbl WHERE $col_name = ?");
         $stmt->execute(array($id));
         $row = $stmt->fetch();
         if($stmt->rowCount() > 0){

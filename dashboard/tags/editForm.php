@@ -1,7 +1,7 @@
 <?php 
 //check if category ID from get request
 $TagID = isset($_GET['id']) && is_numeric($_GET['id']) ? intval($_GET['id']) : 0;
-$row = get_row_data('tags',$TagID);
+$row = get_row_data('tags','id',$TagID);
 $rowsCount = checkItem('id','tags',$TagID);
 //Check is category ID is already exists
 if($rowsCount > 0){

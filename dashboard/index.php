@@ -1,5 +1,5 @@
 <?php include "includes/templates/header.php" ?>
-<title><?=get_item('site_name','settings',1)?> | <?=get_title_cp();?></title>
+<title><?=get_item('site_name','settings','id',1)?> | <?=get_title_cp();?></title>
    
 
   <!-- Content Wrapper. Contains page content -->
