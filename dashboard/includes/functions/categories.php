@@ -120,7 +120,7 @@ if(isset($_FILES['image']) && $_FILES['image']['size'] != 0){
                 
             }
             echo $msg;
-            redirectPage('back');
+            redirectPage('categories.php');
         }
     }
 }
@@ -138,7 +138,7 @@ if(! function_exists('delete_category')){
             // If There's Such ID Show The Form
             if ($check > 0) {
               //delete category image
-              $catImg = get_item('image','categories',$catId);
+              $catImg = get_item('image','categories','id',$catId);
               if(isset($catImg) && $catImg != '')
                 unlink("../assets/uploads/categories/".$catImg);
               //prepare to delete category

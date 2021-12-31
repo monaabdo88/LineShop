@@ -76,6 +76,7 @@ if(! function_exists('add_product')){
                 
                 //check if tag added
                 if(isset($_POST['tag']))
+                    //add product tags code
                     product_tags($_POST['tag'],$last_id);
                 // Echo Success Message
                 $msg = show_msg('success',"Record Inserted Successsfully");
@@ -96,12 +97,15 @@ if(! function_exists('update_product')){
         $msg = '';
         if($_SERVER['REQUEST_METHOD'] == 'POST'){
             //Prepare Values from edit form
-            $id         = $_POST['catID'];
-            $user_id    = $_POST['user_id'];
-            $title      = $_POST['title'];
-            $desc       = $_POST['details'];
-            $parent     = $_POST['category_id'];
-            $status     = $_POST['status'];
+            $title              = $_POST['title'];
+            $userId             = $_POST['user_id'];
+            $status             = $_POST['status'];
+            $category_id        = $_POST['category_id'];
+            $details            = $_POST['details'];
+            $price              = $_POST['price'];
+            $quantity           = $_POST['quantity'];
+            $discount           = $_POST['discount'];
+            $id                 = $_POST['product_id'];
             //check if the new product title is exists in another product
             if(checkItemUp('title','products',$title,$id) > 0){
                 $msg = show_msg('Error','This product title is Already exists');
@@ -116,20 +120,30 @@ if(! function_exists('update_product')){
                                         details = ?,
                                         status = ?,
                                         user_id = ?,
-                                        category_id = ?
+                                        category_id = ?,
+                                        discount = ?,
+                                        quantity = ? ,
+                                        price = ?
                                         WHERE
                                         id = ?
                                         ");
-                $upData =$stmt->execute(array($title,$desc,$status,$user_id,$parent,$id));
+                $upData =$stmt->execute(array($title,$details,$status,$userId,$category_id,$discount,$quantity,$price,$id));
                 //Update Message
                 if($upData){
+                    //check if tag added
+                    if(isset($_POST['tag'])){
+                        //delete previous product tags
+                        delete_product_tags($id);
+                        //add product tags code
+                        product_tags($_POST['tag'],$id);
+                    }
                     $msg = show_msg('success','product Updated Successfully');
                     
                 }
         
             }
             echo $msg;
-            redirectPage('back');
+            redirectPage('products.php');
         }
     }
 }
@@ -139,17 +153,22 @@ function to delete product
 if(! function_exists('delete_product')){
     function delete_product(){
             global $con;
-            $smg = '';
+            $msg = '';
             //check if product ID from get request
-            $catId = isset($_GET['id']) && is_numeric($_GET['id']) ? intval($_GET['id']) : 0;
+            $product_id = isset($_GET['id']) && is_numeric($_GET['id']) ? intval($_GET['id']) : 0;
             // Select All Data Depend On This ID
-            $check = checkItem('id', 'products', $catId);
+            $check = checkItem('id', 'products', $product_id);
             // If There's Such ID Show The Form
             if ($check > 0) {
-              //prepare to delete product
+                //delete product tags
+                delete_product_tags($product_id);
+                //delete product images
+                delete_product_images($product_id);
+                //prepare to delete product
                 $stmt = $con->prepare("DELETE FROM products WHERE id = :zid");
-                $stmt->bindParam(":zid", $catId);
+                $stmt->bindParam(":zid", $product_id);
                 $stmt->execute();
+                
                 $msg = show_msg('success','product Deleted Successfully');
             } else {
                 $msg = show_msg('Error','This product is Not Found');
@@ -213,5 +232,48 @@ if(! function_exists('delImg')){
                 'zproduct_id'       => $product_id
             ));
         }
+    }
+}
+/*
+function to check product tag in edit form
+take product_id , $tag_id
+*/
+if(!function_exists('check_product_tag')){
+    function check_product_tag($product_id,$tag_id){
+        global $con;
+        $stmt = $con->prepare("SELECT * FROM product_tags WHERE product_id = ? AND tag_id = ?");
+        $stmt->execute(array($product_id,$tag_id));
+        $count = $stmt->rowCount();
+        return $count;
+    }
+}
+/*
+function to delete product tags
+take product_id
+*/
+if(! function_exists('delete_product_tags')){
+    function delete_product_tags($product_id){
+        global $con;
+        $stmt = $con->prepare("DELETE FROM product_tags WHERE product_id = :zproduct_id");
+        $stmt->bindParam(":zproduct_id", $product_id);
+        $stmt->execute();
+    }
+}
+/*
+function to delete product Images
+take product_id
+*/
+if(! function_exists('delete_product_images')){
+    function delete_product_images($product_id){
+        global $con;
+        //unlink images from folder
+        $images = get_row_data('files','product_id',$product_id);
+        foreach($images as $img){
+            unlink($img['file_dir'].$img['file_name']);
+        }
+        //delete product images from database
+        $stmt = $con->prepare("DELETE FROM files WHERE product_id = :zproduct_id");
+        $stmt->bindParam(":zproduct_id", $product_id);
+        $stmt->execute();
     }
 }

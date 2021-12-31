@@ -104,7 +104,10 @@ if(! function_exists('get_row_data')){
         global $con;
         $stmt = $con->prepare("SELECT * FROM $tbl WHERE $col_name = ?");
         $stmt->execute(array($id));
-        $row = $stmt->fetch();
+        if($tbl == 'files')
+            $row = $stmt->fetchAll();
+        else
+            $row = $stmt->fetch();
         return $row;
     }
 }
@@ -242,16 +245,16 @@ if(! function_exists('delete_all_rows')){
         $tblname = $_POST['tblname'];
         foreach($ids as $id){
             if($tblname == 'categories'){
-                $img = get_item('image','categories',$id);
+                $img = get_item('image','categories','id',$id);
                 if($img != ''){
                     unlink('../assets/uploads/categories/'.$img);
                 }
             }
             elseif($tblname == 'products'){
-                $img = get_item('main_img','products',$id);
-                if($img != ''){
-                    unlink('../assets/uploads/products/'.$img);
-                }
+                //delete product tags
+                delete_product_tags($id);
+                //delete product images
+                delete_product_images($id);
             }
             $stmt = $con->prepare("DELETE FROM $tblname WHERE id = :zid");
             $stmt->bindParam(":zid", $id);

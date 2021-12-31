@@ -10,6 +10,8 @@ if($rowsCount > 0){
 ?>                
 <form class="form-horizontal" action="?do=updateCode" method="POST" enctype="multipart/form-data">
     <input type="hidden" name="user_id" value="<?= $_SESSION['admin_id'] ?>" />
+    <input type="hidden" name="product_id" value="<?= $row['id']?>" />
+
     <!-- Start Product name Field -->
     <div class="form-group form-group-lg">
         <label class="col-sm-2 control-label">Product Title</label>
@@ -44,9 +46,13 @@ if($rowsCount > 0){
                 <option value="">Choose Category</option>
                     <?php
                         foreach(fetchCategoryTree() as $cat){
+                            //check selected category
+                            $selected = '';
                             if($cat['id'] == $row['category_id']) 
                                  $selected = 'selected';
-                            else $select = '';
+                            else 
+                            $select = '';
+
                             echo '<option value="'.$cat['id'].'" '.$selected.'>'.$cat['name'].'</option>';
                         }
                                                     
@@ -86,17 +92,13 @@ if($rowsCount > 0){
             <?php foreach(get_rows('tags') as $tag): ?>
                 <div class="col-md-3 float-left">
                     <?php 
-                    $product_tags = get_related_data('product_tags','product_id',$row['id']);
-                    foreach($product_tags as $pro_tag){
-                        //check product tags
-                        if($pro_tag['tag_id'] == $tag['id'])
-                            $checked = 'checked';
-                        else
-                            $checked = '';
-                    }
+                    $check_tag = check_product_tag($row['id'],$tag['id']);
+                    ($check_tag > 0) ? $checked = 'checked' : $checked = '';
+                
+                    echo '<input type="checkbox" name="tag[]" value="'.$tag['id'].'" '.$checked.'> '.$tag['title'];  
                     ?>
-                    <input type="checkbox" name="tag[]" value="<?=$tag['id']?>" <?=$checked?>> <?=$tag['title']?>
                 </div>
+                <input type="hidden" name="tag_id" value="<?=$tag['id']?>" />
             <?php endforeach //end tags foreach?>
         </div>
         <div class="clearfix"></div>

@@ -5,7 +5,7 @@ function to update site settings
 if(! function_exists('update_settings')){
     function update_settings(){
         global $con;
-        $logo = get_item('site_logo','settings',1);
+        $logo = get_item('site_logo','settings','id',1);
         $msg = '';
         // Site logo check and upload start
         if($_FILES['site_logo']['size'] != 0){
@@ -67,6 +67,6 @@ if(! function_exists('update_settings')){
         }
         
         echo $msg;
-        redirectPage('back');
+        redirectPage('settings.php');
     }// end of function
 }

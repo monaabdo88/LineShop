@@ -10,6 +10,7 @@ if(! function_exists('add_tag')){
         if($_SERVER['REQUEST_METHOD'] == 'POST'){
             //prepare values from add form
             $title          = $_POST['title'];
+            $title = preg_replace('/\s+/', '-', $title);
             $userId         = $_POST['user_id'];
             if($title == ''){
                 $msg = show_msg('error','Tage Title Required');
@@ -51,7 +52,8 @@ if(! function_exists('update_tag')){
             $id         = $_POST['tagID'];
             $user_id    = $_POST['user_id'];
             $title       = $_POST['title'];
-           
+            $title = preg_replace('/\s+/', '-', $title);
+
             //check if the new tag title is exists in another tag
             if($title == ''){
                 $msg = show_msg('error','Tage title Required');
@@ -82,7 +84,7 @@ if(! function_exists('update_tag')){
             }
             
             echo $msg;
-            redirectPage('back');
+            redirectPage('tags.php');
         }
     }
 }
@@ -109,7 +111,7 @@ if(! function_exists('delete_tag')){
                 $msg = show_msg('Error','This tag is Not Found');
             }
             echo $msg;
-            redirectPage('back');
+            redirectPage('tags.php');
     }
 }
 /*
