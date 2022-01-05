@@ -152,6 +152,12 @@
                 </a>
               </li>
               <li class="nav-item">
+                <a href="pages.php" class="nav-link <?=isActive('pages.php')?>">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Pages</p>
+                </a>
+              </li>
+              <li class="nav-item">
                 <a href="orders.php" class="nav-link <?=isActive('orders.php')?>">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Orders</p>

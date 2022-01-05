@@ -1,8 +1,8 @@
 <?php 
 include "includes/templates/header.php";
-include "includes/functions/products.php";
+include "includes/functions/pages.php";
 ?>
-<title><?=get_item('site_name','settings','id',1)?> | <?=get_title_cp('Products');?></title>
+<title><?=get_item('site_name','settings','id',1)?> | <?=get_title_cp('pages');?></title>
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -10,12 +10,12 @@ include "includes/functions/products.php";
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0"><?=get_title_cp('Products');?></h1>
+            <h1 class="m-0"><?=get_title_cp('pages');?></h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="index.php">Dahboard</a></li>
-              <li class="breadcrumb-item active"><?=get_title_cp('Products');?></li>
+              <li class="breadcrumb-item active"><?=get_title_cp('pages');?></li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -34,58 +34,47 @@ include "includes/functions/products.php";
                         $do = isset($_GET['do']) ? $_GET['do'] : 'Manage';
                         
                         if($do == 'Manage')
-                          $pageTitle = 'Products';
+                          $pageTitle = 'pages';
                         elseif($do == 'Add' || $do == 'Insert')
-                          $pageTitle = 'Add New Product';
+                          $pageTitle = 'Add New page';
                         elseif($do == 'Edit' || $do == 'updateCode')
-                          $pageTitle = 'Edit Product';
+                          $pageTitle = 'Edit page';
                         else
-                          $pageTitle = 'Products';
+                          $pageTitle = 'pages';
                         ?>
                         <h3 class="card-title"><?=$pageTitle?></h3>
                     </div>
                     <div class="card-body">
                         <?php 
-                        //show all products
+                        //show all pages
                         if($do == 'Manage'){
-                            include "products/index.php";
+                            include "pages/index.php";
                         }
                         //show add form
                         elseif($do == 'Add'){
-                            include "products/addForm.php";
+                            include "pages/addForm.php";
                         }
-                        //insert new product data
+                        //insert new page data
                         elseif($do == 'Insert'){
-                            add_product();
+                            add_page();
                         }
                         //show edit form
                         elseif($do == 'Edit'){
-                            include "products/editForm.php";
+                            include "pages/editForm.php";
                         }
                         //update data
                         elseif($do == 'updateCode'){
-                            update_product();
+                            update_page();
                         }
                         //delete on record
                         elseif($do == 'Delete'){
-                          delete_product();
+                          delete_page();
                         }
-                        //delete All Selected products
+                        //delete All Selected pages
                         elseif($do == 'deleteAll'){
                           delete_all_rows();
                         }
-                        //upload product images
-                        if(($do == 'addMedia' && isset($_GET['product_id'])) || $do == 'showMedia'){
-                          include "products/media.php"; 
-                        }
-                        //show Product Media in update
-                        elseif($do == 'uploadImages'){
-                          upload_product_images($_GET['product_id']);
-                        }
-                        //delete product Image
-                        if($do == 'delImg'){
-                          delImg();
-                        }
+                        
                         ?>
                     </div><!--card-body-->
                 </div>
@@ -100,7 +89,7 @@ include "includes/functions/products.php";
 
 <script type="text/javascript">
           $(document).ready(function() {
-            //Show records of products on datatables
+            //Show records of pages on datatables
             var t = $('#example').DataTable( {
               "columnDefs": [
                   { "orderable": false, "targets": 0 }
@@ -108,7 +97,7 @@ include "includes/functions/products.php";
               "processing": true,
               "serverSide": true,
               "targets": 0,
-              "ajax": "products/server_processing.php",
+              "ajax": "pages/server_processing.php",
               "order": [[ 1, 'asc' ]]
             });
             t.on( 'order.dt search.dt', function () {
@@ -128,16 +117,16 @@ include "includes/functions/products.php";
           //enable delete all if checkbox checked length greater than 0
           function toggleCheckbox()
           {
-            if($("input[name='checkProduct[]']").filter(':checked').length > 0){
+            if($("input[name='checkPage[]']").filter(':checked').length > 0){
               $(".delAll").removeAttr("disabled");
             }else{
               $(".delAll").prop('disabled', true);              
             }
           }
-        //Confirm Before delete Product
+        //Confirm Before delete page
         function confirmation(ev) {
               ev.preventDefault();
-              var urlToRedirect = ev.currentTarget.getAttribute('href'); //use currentTarget because the click may be on the nested i Product and not a Product causing the href to be empty
+              var urlToRedirect = ev.currentTarget.getAttribute('href'); //use currentTarget because the click may be on the nested i page and not a page causing the href to be empty
               console.log(urlToRedirect); // verify if this is the right URL
               swal({
                 title: "Are you sure?",
@@ -157,9 +146,9 @@ include "includes/functions/products.php";
                       swal("Poof! Your imaginary file has been deleted!", {
                         icon: "success",
                       });     
-                      //redirect back after deleting Product 5 seconds
+                      //redirect back after deleting page 5 seconds
                       setTimeout(function(){
-                            window.location.href = 'products.php';
+                            window.location.href = 'pages.php';
                         }, 5000);
                     }
                   });
@@ -170,9 +159,9 @@ include "includes/functions/products.php";
         }
        //Delete All function
        function confirmationDel() {
-              var ids_products = new Array(); 
-              $("input[name='checkProduct[]']:checked:enabled").each(function () {
-                ids_products.push($(this).val());
+              var ids_pages = new Array(); 
+              $("input[name='checkPage[]']:checked:enabled").each(function () {
+                ids_pages.push($(this).val());
               });      
               var urlToRedirect = "?do=deleteAll&ids="; 
               swal({
@@ -188,15 +177,15 @@ include "includes/functions/products.php";
                   //window.location.href=urlToRedirect;
                   $.ajax({    
                     type: "POST",
-                    data :{ids:ids_products,tblname:"products"},
+                    data :{ids:ids_pages,tblname:"pages"},
                     url: urlToRedirect, 
                     success: function(){   
                       swal("Poof! Your imaginary file has been deleted!", {
                         icon: "success",
                       });     
-                      //redirect back after deleting Product 5 seconds
+                      //redirect back after deleting page 5 seconds
                       setTimeout(function(){
-                            window.location.href = 'products.php';
+                            window.location.href = 'pages.php';
                         }, 5000);
                     }
                   });
