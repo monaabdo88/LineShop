@@ -184,7 +184,7 @@
               <li class="nav-item">
                 <a href="admins.php" class="nav-link <?=isActive('admins.php')?>">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Admins</p>
+                  <p>Administration</p>
                 </a>
               </li>
               <li class="nav-item">

@@ -21,7 +21,7 @@ if(! function_exists('admin_login')){
                 AND 
                 password = ? 
                 AND 
-                group_id =?");
+                role_id =?");
         $stmt->execute(array($email,$hashedPass,1));
         $row = $stmt->fetch();
 		    $count = $stmt->rowCount();

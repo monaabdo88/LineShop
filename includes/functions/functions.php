@@ -58,18 +58,26 @@ if(! function_exists('isActive')){
 function to get rows count of table
 take on var table name
 */
-if(! function_exists('get_rows')){
-    function get_rows($tblname,$count = 0){
+if(! function_exists('get_rows_count')){
+    function get_rows_count($tblname){
         global $con;
         $stmt = $con->prepare("SELECT * FROM $tblname");
         $stmt->execute();
-        if($count !=0){
-            $rows = $stmt->rowCount();
-        }
-        else{
-            $rows = $stmt->fetchAll();
-
-        }
+        $rows = $stmt->rowCount();
+        return $rows;
+        
+    }
+}
+/*
+function to get rows of table
+take on var table name
+*/
+if(! function_exists('get_rows')){
+    function get_rows($tblname){
+        global $con;
+        $stmt = $con->prepare("SELECT * FROM $tblname");
+        $stmt->execute();
+        $rows = $stmt->fetchAll();
         return $rows;
         
     }
