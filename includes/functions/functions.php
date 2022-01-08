@@ -264,6 +264,10 @@ if(! function_exists('delete_all_rows')){
                 //delete product images
                 delete_product_images($id);
             }
+            elseif($tblname == 'roles'){
+                //delete roles permissions
+                delete_role_permissions($id);
+            }
             $stmt = $con->prepare("DELETE FROM $tblname WHERE id = :zid");
             $stmt->bindParam(":zid", $id);
             $stmt->execute();

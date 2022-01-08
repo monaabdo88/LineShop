@@ -176,15 +176,15 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="users.php" class="nav-link <?=isActive('users.php')?>">
+                <a href="roles.php" class="nav-link <?=isActive('roles.php')?>">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Users</p>
+                  <p>Roles</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="admins.php" class="nav-link <?=isActive('admins.php')?>">
+                <a href="users.php" class="nav-link <?=isActive('users.php')?>">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Administration</p>
+                  <p>Users</p>
                 </a>
               </li>
               <li class="nav-item">
