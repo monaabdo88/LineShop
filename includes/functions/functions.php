@@ -258,6 +258,12 @@ if(! function_exists('delete_all_rows')){
                     unlink('../assets/uploads/categories/'.$img);
                 }
             }
+            elseif($tblname == 'users'){
+                $img = get_item('avatar','users','id',$id);
+                if($img != 'no-image.png'){
+                    unlink('../assets/uploads/users/'.$img);
+                }
+            }
             elseif($tblname == 'products'){
                 //delete product tags
                 delete_product_tags($id);

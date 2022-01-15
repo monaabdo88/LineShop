@@ -81,8 +81,8 @@ if(! function_exists('update_category')){
                 if($name == ''){
                     $msg = show_msg('error','Category Name Required');
                 }else{
-//upload New Image if there file request
-if(isset($_FILES['image']) && $_FILES['image']['size'] != 0){
+    //upload New Image if there file request
+    if(isset($_FILES['image']) && $_FILES['image']['size'] != 0){
     $dirImg =  "../assets/uploads/categories/";
     //delete the prev category image
     if(isset($_POST['oldImg']) && $_POST['oldImg'] != '')
@@ -95,7 +95,7 @@ if(isset($_FILES['image']) && $_FILES['image']['size'] != 0){
 
     }else{
             $image = $_POST['oldImg'];
-        }// end upload code
+    }// end upload code
         //start update code
         $stmt = $con->prepare("UPDATE 
                                 categories 
