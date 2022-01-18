@@ -21,7 +21,7 @@ if(! function_exists('admin_login')){
                 AND 
                 password = ? 
                 AND 
-                role_id =?");
+                status =?");
         $stmt->execute(array($email,$hashedPass,1));
         $row = $stmt->fetch();
 		    $count = $stmt->rowCount();
@@ -30,8 +30,9 @@ if(! function_exists('admin_login')){
         if($count > 0 ){
           $_SESSION['admin_email']  = $email;
           $_SESSION['admin_id']     = $row['id'];
-          $_SESSION['admin_name']   = $row['first_name'].' '.$row['last_name'];
+          $_SESSION['admin_name']   = $row['username'];
           $_SESSION['admin_img']    = $row['avatar'];
+          $_SESSION['role_id']      = $row['role_id'];
           header("Location: index.php");
           exit();
         }else{

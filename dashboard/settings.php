@@ -28,18 +28,25 @@ include "includes/functions/settings.php";
       <div class="container-fluid">
         <div class="row">
             <div class="col-md-12">
-                <div class="card card-outline card-info">
+            
+            <div class="card card-outline card-info">
                     <div class="card-header">
                         <h3 class="card-title">Edit Settings</h3>
                     </div>
                     <div class="card-body">
-                        <?php 
+                        <?php
+                        //check if user has permission to log into settings page 
+                        if(get_user_permission($_SESSION['role_id'],'update settings')){
                           //Edit Form
                           include ("settings/editForm.php");
                           //update settings
                           if($_SERVER['REQUEST_METHOD'] == 'POST'){
                              update_settings();
                           }
+                        }
+                        else{
+                          echo '<div class="alert alert-danger"><p class="text-center">You dont Have Permission To Login To This Page</p></div>';
+                        }
                         ?>
                     </div><!--card-body-->
                 </div>

@@ -51,6 +51,7 @@ if(!$_SESSION['admin_email']){
 -->
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">
+  
   <!-- Navbar -->
   <?php include $tpl_cp."nav.php"; ?>
   <!-- /.navbar -->

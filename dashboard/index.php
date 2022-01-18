@@ -146,7 +146,7 @@
               <a href="tags.php" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
             </div>
           </div>
-          <!-- ./col -->
+          <!-- ./col -->         
         </div>
         <!-- /.row -->
       </div>

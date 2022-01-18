@@ -280,7 +280,32 @@ if(! function_exists('delete_all_rows')){
             $msg = show_msg('success','Selected Records Deleted Successfully');
         
         }
+
         echo $msg;
         redirectPage('back');
+    }
+}
+/*
+function to get user permission in dashboard
+get user id , permissions name
+*/
+if(! function_exists('get_user_permission')){
+    function get_user_permission($role_id,$per_name){
+        global $con;
+        $permission_names = array();
+        $stmt = $con->prepare("SELECT * FROM roles_permissions WHERE role_id = ?");
+        $stmt->execute(array($role_id));
+        $rows =$stmt->fetchAll();
+        foreach($rows as $row){
+            $permission_name = get_item('per_name','permissions','id',$row['permssion_id']);
+            $permission_names[]= $permission_name;
+        }
+        if(in_array($per_name,$permission_names)){
+            return true;
+        }
+        else{
+            //$msg = show_msg('Error','You dont Have Permission To Access To This Page');
+            return false;
+        }
     }
 }

@@ -72,8 +72,8 @@ if(! function_exists('update_user')){
             $status            = $_POST['status'];
             $trust_user        = $_POST['trust_user'];
             $role_id           = $_POST['role_id'];
-            if(isset($_POST['password']))
-                $password          = sha1($_POST['password']);
+            if(isset($_POST['password']) && $_POST['password'] != '')
+                $password  = sha1($_POST['password']);
             else
                 $password = get_item('password','users','id',$id);
                 
