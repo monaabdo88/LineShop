@@ -48,43 +48,74 @@ include "includes/functions/products.php";
                         <?php 
                         //show all products
                         if($do == 'Manage'){
+                          if(get_user_permission($_SESSION['role_id'],'show products'))
                             include "products/index.php";
+                          else
+                            echo '<div class="alert alert-danger"><p class="text-center">You dont Have Permission To Login To This Page</p></div>';
+                      
                         }
                         //show add form
                         elseif($do == 'Add'){
+                          if(get_user_permission($_SESSION['role_id'],'add product'))
                             include "products/addForm.php";
+                          else
+                            echo '<div class="alert alert-danger"><p class="text-center">You dont Have Permission To Login To This Page</p></div>';
                         }
                         //insert new product data
                         elseif($do == 'Insert'){
+                          if(get_user_permission($_SESSION['role_id'],'add product'))
                             add_product();
+                          else
+                            echo '<div class="alert alert-danger"><p class="text-center">You dont Have Permission To Login To This Page</p></div>';
                         }
                         //show edit form
                         elseif($do == 'Edit'){
+                          if(get_user_permission($_SESSION['role_id'],'update product'))
                             include "products/editForm.php";
+                          else
+                            echo '<div class="alert alert-danger"><p class="text-center">You dont Have Permission To Login To This Page</p></div>';
                         }
                         //update data
                         elseif($do == 'updateCode'){
+                          if(get_user_permission($_SESSION['role_id'],'update product'))
                             update_product();
+                          else
+                            echo '<div class="alert alert-danger"><p class="text-center">You dont Have Permission To Login To This Page</p></div>';
                         }
                         //delete on record
                         elseif($do == 'Delete'){
-                          delete_product();
+                          if(get_user_permission($_SESSION['role_id'],'delete product'))
+                            delete_product();
+                          else
+                            echo '<div class="alert alert-danger"><p class="text-center">You dont Have Permission To Login To This Page</p></div>';
                         }
                         //delete All Selected products
                         elseif($do == 'deleteAll'){
-                          delete_all_rows();
+                          if(get_user_permission($_SESSION['role_id'],'delete product'))
+                            delete_all_rows();
+                          else
+                            echo '<div class="alert alert-danger"><p class="text-center">You dont Have Permission To Login To This Page</p></div>';  
                         }
                         //upload product images
                         if(($do == 'addMedia' && isset($_GET['product_id'])) || $do == 'showMedia'){
-                          include "products/media.php"; 
+                          if(get_user_permission($_SESSION['role_id'],'add product'))
+                            include "products/media.php"; 
+                          else
+                            echo '<div class="alert alert-danger"><p class="text-center">You dont Have Permission To Login To This Page</p></div>';  
                         }
                         //show Product Media in update
                         elseif($do == 'uploadImages'){
-                          upload_product_images($_GET['product_id']);
+                          if(get_user_permission($_SESSION['role_id'],'add product'))
+                            upload_product_images($_GET['product_id']);
+                          else
+                            echo '<div class="alert alert-danger"><p class="text-center">You dont Have Permission To Login To This Page</p></div>';  
                         }
                         //delete product Image
                         if($do == 'delImg'){
-                          delImg();
+                          if(get_user_permission($_SESSION['role_id'],'add product'))
+                            delImg();
+                          else
+                            echo '<div class="alert alert-danger"><p class="text-center">You dont Have Permission To Login To This Page</p></div>';  
                         }
                         ?>
                     </div><!--card-body-->

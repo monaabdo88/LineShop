@@ -48,25 +48,54 @@ include "includes/functions/categories.php";
                     </div>
                     <div class="card-body">
                         <?php 
+                        //show categories
                         if($do == 'Manage'){
+                          if(get_user_permission($_SESSION['role_id'],'show categories'))
                             include "categories/index.php";
+                          else
+                            echo '<div class="alert alert-danger"><p class="text-center">You dont Have Permission To Login To This Page</p></div>';
                         }
+                        //Add New Category
                         elseif($do == 'Add'){
+                          if(get_user_permission($_SESSION['role_id'],'add new category'))
                             include "Categories/addForm.php";
+                          else
+                            echo '<div class="alert alert-danger"><p class="text-center">You dont Have Permission To Login To This Page</p></div>';
                         }
+                        //Insert New Category
                         elseif($do == 'Insert'){
+                          if(get_user_permission($_SESSION['role_id'],'add new category'))
                             add_category();
+                          else
+                            echo '<div class="alert alert-danger"><p class="text-center">You dont Have Permission To Login To This Page</p></div>';
                         }
+                        //Edit Category
                         elseif($do == 'Edit'){
+                          if(get_user_permission($_SESSION['role_id'],'update category'))
                             include "Categories/editForm.php";
+                          else
+                            echo '<div class="alert alert-danger"><p class="text-center">You dont Have Permission To Login To This Page</p></div>';
                         }
+                        //update category code
                         elseif($do == 'updateCode'){
+                          if(get_user_permission($_SESSION['role_id'],'update category'))
                             update_category();
+                          else
+                            echo '<div class="alert alert-danger"><p class="text-center">You dont Have Permission To Login To This Page</p></div>';                        
                         }
+                        //Delete Category Code
                         elseif($do == 'Delete'){
+                          if(get_user_permission($_SESSION['role_id'],'delete category'))
                             delete_category();
-                        }elseif($do == 'deleteAll'){
+                          else
+                            echo '<div class="alert alert-danger"><p class="text-center">You dont Have Permission To Login To This Page</p></div>';
+                        }
+                        //Delete All Categories
+                        elseif($do == 'deleteAll'){
+                          if(get_user_permission($_SESSION['role_id'],'delete category'))
                             delete_all_rows();
+                          else
+                            echo '<div class="alert alert-danger"><p class="text-center">You dont Have Permission To Login To This Page</p></div>';
                         }
                         ?>
                     </div><!--card-body-->

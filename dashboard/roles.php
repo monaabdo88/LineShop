@@ -48,25 +48,35 @@ include "includes/functions/Roles.php";
                     </div>
                     <div class="card-body">
                         <?php 
-                        if($do == 'Manage'){
-                            include "roles/index.php";
-                        }
-                        elseif($do == 'Add'){
-                            include "roles/addForm.php";
-                        }
-                        elseif($do == 'Insert'){
-                            add_Role();
-                        }
-                        elseif($do == 'Edit'){
-                            include "roles/editForm.php";
-                        }
-                        elseif($do == 'updateCode'){
-                            update_Role();
-                        }
-                        elseif($do == 'Delete'){
-                            delete_Role();
-                        }elseif($do == 'deleteAll'){
-                            delete_all_rows();
+                        if($_SESSION['admin_id'] == 1){
+                          //show all roles
+                          if($do == 'Manage'){
+                              include "roles/index.php";
+                          }
+                          //add new role
+                          elseif($do == 'Add'){
+                              include "roles/addForm.php";
+                          }
+                          //insert new role
+                          elseif($do == 'Insert'){
+                              add_Role();
+                          }
+                          //edit role
+                          elseif($do == 'Edit'){
+                              include "roles/editForm.php";
+                          }
+                          //update role
+                          elseif($do == 'updateCode'){
+                              update_Role();
+                          }
+                          //delete role
+                          elseif($do == 'Delete'){
+                              delete_Role();
+                          }
+                          //delete all roles
+                          elseif($do == 'deleteAll'){
+                              delete_all_rows();
+                          }
                         }
                         ?>
                     </div><!--card-body-->

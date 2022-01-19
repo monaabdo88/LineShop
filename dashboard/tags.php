@@ -48,24 +48,49 @@ include "includes/functions/tags.php";
                     </div>
                     <div class="card-body">
                         <?php 
+                        //show tags
                         if($do == 'Manage'){
+                          if(get_user_permission($_SESSION['role_id'],'show tags'))
                             include "tags/index.php";
+                          else
+                            echo '<div class="alert alert-danger"><p class="text-center">You dont Have Permission To Login To This Page</p></div>';
                         }
+                        //add new tag
                         elseif($do == 'Add'){
+                          if(get_user_permission($_SESSION['role_id'],'add new tag'))
                             include "tags/addForm.php";
+                          else
+                            echo '<div class="alert alert-danger"><p class="text-center">You dont Have Permission To Login To This Page</p></div>';
                         }
+                        //insert new tag code
                         elseif($do == 'Insert'){
+                          if(get_user_permission($_SESSION['role_id'],'add new tag'))
                             add_tag();
+                          else
+                            echo '<div class="alert alert-danger"><p class="text-center">You dont Have Permission To Login To This Page</p></div>';
                         }
+                        //edit tag
                         elseif($do == 'Edit'){
+                          if(get_user_permission($_SESSION['role_id'],'update tag'))
                             include "tags/editForm.php";
+                          else
+                            echo '<div class="alert alert-danger"><p class="text-center">You dont Have Permission To Login To This Page</p></div>';
                         }
+                        //update tag code
                         elseif($do == 'updateCode'){
+                          if(get_user_permission($_SESSION['role_id'],'update tag'))
                             update_tag();
+                          else
+                            echo '<div class="alert alert-danger"><p class="text-center">You dont Have Permission To Login To This Page</p></div>';             
                         }
+                        //delete tag
                         elseif($do == 'Delete'){
+                          if(get_user_permission($_SESSION['role_id'],'delete tag'))
                             delete_tag();
+                          else
+                            echo '<div class="alert alert-danger"><p class="text-center">You dont Have Permission To Login To This Page</p></div>';             
                         }
+                        //delete all tag
                         elseif($do == 'deleteAll'){
                             delete_all_rows();
                         }

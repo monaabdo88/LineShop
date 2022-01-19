@@ -48,31 +48,52 @@ include "includes/functions/users.php";
                         <?php 
                         //show all users
                         if($do == 'Manage'){
+                          if(get_user_permission($_SESSION['role_id'],'show users'))
                             include "users/index.php";
+                          else
+                            echo '<div class="alert alert-danger"><p class="text-center">You dont Have Permission To Login To This Page</p></div>';
                         }
                         //show add form
                         elseif($do == 'Add'){
+                          if(get_user_permission($_SESSION['role_id'],'add user'))
                             include "users/addForm.php";
+                          else
+                            echo '<div class="alert alert-danger"><p class="text-center">You dont Have Permission To Login To This Page</p></div>';
                         }
                         //insert new User data
                         elseif($do == 'Insert'){
+                          if(get_user_permission($_SESSION['role_id'],'add user'))
                             add_User();
+                          else
+                            echo '<div class="alert alert-danger"><p class="text-center">You dont Have Permission To Login To This Page</p></div>';
                         }
                         //show edit form
                         elseif($do == 'Edit'){
+                          if(get_user_permission($_SESSION['role_id'],'update user'))
                             include "users/editForm.php";
+                          else
+                            echo '<div class="alert alert-danger"><p class="text-center">You dont Have Permission To Login To This Page</p></div>';
                         }
                         //update data
                         elseif($do == 'updateCode'){
+                          if(get_user_permission($_SESSION['role_id'],'update user'))
                             update_User();
+                          else
+                            echo '<div class="alert alert-danger"><p class="text-center">You dont Have Permission To Login To This Page</p></div>';
                         }
                         //delete on record
                         elseif($do == 'Delete'){
-                          delete_User();
+                          if(get_user_permission($_SESSION['role_id'],'delete user'))
+                            delete_User();
+                          else
+                            echo '<div class="alert alert-danger"><p class="text-center">You dont Have Permission To Login To This Page</p></div>';
                         }
                         //delete All Selected users
                         elseif($do == 'deleteAll'){
-                          delete_all_rows();
+                          if(get_user_permission($_SESSION['role_id'],'delete user'))
+                            delete_all_rows();
+                          else
+                            echo '<div class="alert alert-danger"><p class="text-center">You dont Have Permission To Login To This Page</p></div>';
                         }
                         
                         ?>
