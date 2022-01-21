@@ -7,10 +7,10 @@
 						<!-- Single Widget -->
 						<div class="single-footer about">
 							<div class="logo">
-								<a href="index.html"><img src="<?=$img_front?>logo2.png" alt="#"></a>
+								<h4><a href="index.php" style="color:#fff;font-size:17px;font-weight:bold"><?=get_item('site_name','settings','id',1)?></a></h4>
 							</div>
-							<p class="text">Praesent dapibus, neque id cursus ucibus, tortor neque egestas augue,  magna eros eu erat. Aliquam erat volutpat. Nam dui mi, tincidunt quis, accumsan porttitor, facilisis luctus, metus.</p>
-							<p class="call">Got Question? Call us 24/7<span><a href="tel:123456789">+0123 456 789</a></span></p>
+							<p class="text"><?=get_item('site_summery','settings','id',1);?></p>
+							<p class="call">Got Question? Call us 24/7<span><a href="<?=get_item('wh_url','settings','id',1)?>"><?=get_item('site_phone','settings','id',1)?></a></span></p>
 						</div>
 						<!-- End Single Widget -->
 					</div>
@@ -49,18 +49,17 @@
 							<!-- Single Widget -->
 							<div class="contact">
 								<ul>
-									<li>NO. 342 - London Oxford Street.</li>
-									<li>012 United Kingdom.</li>
-									<li>info@eshop.com</li>
-									<li>+032 3456 7890</li>
+									<li><?=get_item('site_address','settings','id',1)?></li>
+									<li><?=get_item('site_email','settings','id',1)?></li>
+									<li><?=get_item('site_phone','settings','id',1)?></li>
 								</ul>
 							</div>
 							<!-- End Single Widget -->
 							<ul>
-								<li><a href="#"><i class="ti-facebook"></i></a></li>
-								<li><a href="#"><i class="ti-twitter"></i></a></li>
-								<li><a href="#"><i class="ti-flickr"></i></a></li>
-								<li><a href="#"><i class="ti-instagram"></i></a></li>
+								<li><a href="<?=get_item('fb_url','settings','id',1)?>"><i class="ti-facebook"></i></a></li>
+								<li><a href="<?=get_item('tw_url','settings','id',1)?>"><i class="ti-twitter"></i></a></li>
+								<li><a href="<?=get_item('ln_url','settings','id',1)?>"><i class="ti-linkedin"></i></a></li>
+								<li><a href="<?=get_item('wh_url','settings','id',1)?>"><i class="ti-mobile"></i></a></li>
 							</ul>
 						</div>
 						<!-- End Single Widget -->
@@ -73,16 +72,12 @@
 			<div class="container">
 				<div class="inner">
 					<div class="row">
-						<div class="col-lg-6 col-12">
-							<div class="left">
-								<p>Copyright © 2020 <a href="http://www.wpthemesgrid.com" target="_blank">Wpthemesgrid</a>  -  All Rights Reserved.</p>
+						<div class="col-lg-12 col-12">
+							<div>
+								<p class="text-center">	<?=get_item('site_copyrights','settings','id',1);?></p>
 							</div>
 						</div>
-						<div class="col-lg-6 col-12">
-							<div class="right">
-								<img src="<?=$img_front?>payments.png" alt="#">
-							</div>
-						</div>
+						
 					</div>
 				</div>
 			</div>

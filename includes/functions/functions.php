@@ -69,6 +69,19 @@ if(! function_exists('get_rows_count')){
     }
 }
 /*
+function to get count of childs of column
+take tblname,column name and id
+*/
+if(! function_exists('get_data_column_count')){
+    function get_data_column_count($tbl,$col_name,$id){
+        global $con;
+        $stmt = $con->prepare("SELECT * FROM $tbl WHERE $col_name = ?");
+        $stmt->execute(array($id));
+        $rows = $stmt->rowCount();
+        return $rows;
+    }
+}
+/*
 function to get rows of table
 take on var table name
 */
@@ -117,6 +130,19 @@ if(! function_exists('get_row_data')){
         else
             $row = $stmt->fetch();
         return $row;
+    }
+}
+/*
+function to fetch all data from tabel
+take tblname , column name and the id
+*/
+if(! function_exists('get_all_rows_data')){
+    function get_all_rows_data($tbl,$col,$id){
+        global $con;
+        $stmt = $con->prepare("SELECT * FROM $tbl WHERE $col = ?");
+        $stmt->execute(array($id));
+        $rows = $stmt->fetchAll();
+        return $rows;
     }
 }
 /*
@@ -304,7 +330,6 @@ if(! function_exists('get_user_permission')){
             return true;
         }
         else{
-            //$msg = show_msg('Error','You dont Have Permission To Access To This Page');
             return false;
         }
     }

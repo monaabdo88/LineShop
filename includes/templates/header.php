@@ -4,13 +4,15 @@
 	<!-- Meta Tag -->
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="description" content="<?=get_item('site_desc','settings','id',1)?>">
+    <meta name="keywords" content="<?=get_item('site_tags','settings','id',1)?>">
 	<meta name='copyright' content=''>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<!-- Title Tag  -->
-    <title>Eshop - eCommerce HTML5 Template.</title>
+    <title><?=get_item('site_name','settings','id',1)?></title>
 	<!-- Favicon -->
-	<link rel="icon" type="image/png" href="<?=$img_front?>favicon.png">
+	<link rel="icon" type="image/png" href="<?=get_item('site_logo','settings','id',1)?>">
 	<!-- Web Font -->
 	<link href="https://fonts.googleapis.com/css?family=Poppins:200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap" rel="stylesheet">
 	
@@ -69,8 +71,8 @@
 						<!-- Top Left -->
 						<div class="top-left">
 							<ul class="list-main">
-								<li><i class="ti-headphone-alt"></i> +060 (800) 801-582</li>
-								<li><i class="ti-email"></i> support@shophub.com</li>
+								<li><i class="ti-headphone-alt"></i><?=get_item('site_phone','settings','id',1)?></li>
+								<li><i class="ti-email"></i><?=get_item('site_email','settings','id',1)?></li>
 							</ul>
 						</div>
 						<!--/ End Top Left -->
@@ -79,10 +81,9 @@
 						<!-- Top Right -->
 						<div class="right-content">
 							<ul class="list-main">
-								<li><i class="ti-location-pin"></i> Store location</li>
-								<li><i class="ti-alarm-clock"></i> <a href="#">Daily deal</a></li>
-								<li><i class="ti-user"></i> <a href="#">My account</a></li>
-								<li><i class="ti-power-off"></i><a href="login.html#">Login</a></li>
+								<li><i class="ti-user"></i><a href="profile.php">My account</a></li>
+								<li><i class="ti-user"></i><a href="singup.php">Singup</a></li>
+								<li><i class="ti-power-off"></i><a href="login.php">Login</a></li>
 							</ul>
 						</div>
 						<!-- End Top Right -->
@@ -97,7 +98,7 @@
 					<div class="col-lg-2 col-md-2 col-12">
 						<!-- Logo -->
 						<div class="logo">
-							<a href="index.html"><img src="<?=$img_front?>logo.png" alt="logo"></a>
+							<a href="index.php" class="navbar-brand site_name"><?=get_item('site_name','settings','id',1)?></a>
 						</div>
 						<!--/ End Logo -->
 						<!-- Search Form -->
@@ -120,9 +121,11 @@
 							<div class="search-bar">
 								<select>
 									<option selected="selected">All Category</option>
-									<option>watch</option>
-									<option>mobile</option>
-									<option>kid’s item</option>
+									<?php 
+									foreach(get_all_rows_data('categories','parent_id',0) as $cat){
+										echo '<option value="'.$cat['id'].'">'.$cat['name'].'</option>';
+									}
+									?>
 								</select>
 								<form>
 									<input name="search" placeholder="Search Products Here....." type="search">
@@ -186,67 +189,28 @@
 							<div class="all-category">
 								<h3 class="cat-heading"><i class="fa fa-bars" aria-hidden="true"></i>CATEGORIES</h3>
 								<ul class="main-category">
-									<li><a href="#">New Arrivals <i class="fa fa-angle-right" aria-hidden="true"></i></a>
-										<ul class="sub-category">
-											<li><a href="#">accessories</a></li>
-											<li><a href="#">best selling</a></li>
-											<li><a href="#">top 100 offer</a></li>
-											<li><a href="#">sunglass</a></li>
-											<li><a href="#">watch</a></li>
-											<li><a href="#">man’s product</a></li>
-											<li><a href="#">ladies</a></li>
-											<li><a href="#">westrn dress</a></li>
-											<li><a href="#">denim </a></li>
-										</ul>
-									</li>
-									<li class="main-mega"><a href="#">best selling <i class="fa fa-angle-right" aria-hidden="true"></i></a>
-										<ul class="mega-menu">
-											<li class="single-menu">
-												<a href="#" class="title-link">Shop Kid's</a>
-												<div class="image">
-													<img src="https://via.placeholder.com/225x155" alt="#">
-												</div>
-												<div class="inner-link">
-													<a href="#">Kids Toys</a>
-													<a href="#">Kids Travel Car</a>
-													<a href="#">Kids Color Shape</a>
-													<a href="#">Kids Tent</a>
-												</div>
-											</li>
-											<li class="single-menu">
-												<a href="#" class="title-link">Shop Men's</a>
-												<div class="image">
-													<img src="https://via.placeholder.com/225x155" alt="#">
-												</div>
-												<div class="inner-link">
-													<a href="#">Watch</a>
-													<a href="#">T-shirt</a>
-													<a href="#">Hoodies</a>
-													<a href="#">Formal Pant</a>
-												</div>
-											</li>
-											<li class="single-menu">
-												<a href="#" class="title-link">Shop Women's</a>
-												<div class="image">
-													<img src="https://via.placeholder.com/225x155" alt="#">
-												</div>
-												<div class="inner-link">
-													<a href="#">Ladies Shirt</a>
-													<a href="#">Ladies Frog</a>
-													<a href="#">Ladies Sun Glass</a>
-													<a href="#">Ladies Watch</a>
-												</div>
-											</li>
-										</ul>
-									</li>
-									<li><a href="#">accessories</a></li>
-									<li><a href="#">top 100 offer</a></li>
-									<li><a href="#">sunglass</a></li>
-									<li><a href="#">watch</a></li>
-									<li><a href="#">man’s product</a></li>
-									<li><a href="#">ladies</a></li>
-									<li><a href="#">westrn dress</a></li>
-									<li><a href="#">denim </a></li>
+									<?php 
+										//Get All Main Categories
+										$main_cats = get_all_rows_data('categories','parent_id',0);
+										//start to fetch all main categories
+										foreach($main_cats as $parent_cat){
+											//check if category had sub categories
+											$sub_cats = get_data_column_count('categories','parent_id',$parent_cat['id']);
+												echo '<li><a href="category.php?id='.$parent_cat['id'].'">'.$parent_cat['name'];
+												if($sub_cats > 0){
+													echo '<i class="fa fa-angle-right" aria-hidden="true"></i></a>
+													<ul class="sub-category">';
+														$sub_categories = get_all_rows_data('categories','parent_id',$parent_cat['id']);
+														foreach($sub_categories as $sub_cat){
+															echo '<li><a href="category.php?id='.$sub_cat['id'].'">'.$sub_cat['name'].'</a></li>';
+														}
+													echo'</ul></li>';
+												}
+												else{
+													echo '</a></li>';
+												}
+										}
+									?>
 								</ul>
 							</div>
 						</div>
@@ -257,22 +221,14 @@
 									<div class="navbar-collapse">	
 										<div class="nav-inner">	
 											<ul class="nav main-menu menu navbar-nav">
-													<li class="active"><a href="#">Home</a></li>
-													<li><a href="#">Product</a></li>												
-													<li><a href="#">Service</a></li>
-													<li><a href="#">Shop<i class="ti-angle-down"></i><span class="new">New</span></a>
-														<ul class="dropdown">
-															<li><a href="cart.html">Cart</a></li>
-															<li><a href="checkout.html">Checkout</a></li>
-														</ul>
-													</li>
-													<li><a href="#">Pages</a></li>									
-													<li><a href="#">Blog<i class="ti-angle-down"></i></a>
-														<ul class="dropdown">
-															<li><a href="blog-single-sidebar.html">Blog Single Sidebar</a></li>
-														</ul>
-													</li>
-													<li><a href="contact.html">Contact Us</a></li>
+													<li class="active"><a href="index.php">Home</a></li>
+													<?php 
+														$pages = get_all_rows_data('pages','status',1);
+														foreach($pages as $page){
+															echo '<li><a href="page.php?id='.$page['id'].'">'.$page['title'].'</a></li>';
+														}
+													?>
+													<li><a href="contact.php">Contact Us</a></li>
 												</ul>
 										</div>
 									</div>

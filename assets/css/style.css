@@ -4978,6 +4978,10 @@ Version:1.0
 	color:#fff;
 	text-decoration:underline;
 }
+/*new style*/
+.site_name{
+	font-size:2.25rem
+}
 /*=============================
 	End Footer CSS
 ===============================*/

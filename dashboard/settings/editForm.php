@@ -2,12 +2,12 @@
     $row = get_row_data('settings','id','1');
 ?>                   
 <form class="form-horizontal" action="<?php $_SERVER['PHP_SELF'] ?>" method="POST" enctype="multipart/form-data">
-                                    <input type="hidden" name="userid" value="<?php echo $userid ?>" />
+                                    <input type="hidden" name="userid" value="<?=$userid ?>" />
                                     <!-- Start site name Field -->
                                     <div class="form-group form-group-lg">
                                         <label class="col-sm-2 control-label">Site Name</label>
                                         <div class="col-sm-10 col-md-12">
-                                            <input type="text" name="site_name" class="form-control" value="<?php echo $row['site_name'] ?>" required="required" />
+                                            <input type="text" name="site_name" class="form-control" value="<?=$row['site_name'] ?>" required="required" />
                                         </div>
                                     </div>
                                     
@@ -15,7 +15,7 @@
                                     <div class="form-group form-group-lg">
                                         <label class="col-sm-2 control-label">Site Email</label>
                                         <div class="col-sm-10 col-md-12">
-                                            <input type="email" name="site_email" value="<?php echo $row['site_email'] ?>" class="form-control" required="required" />
+                                            <input type="email" name="site_email" value="<?= $row['site_email'] ?>" class="form-control" required="required" />
                                         </div>
                                     </div>
                                     <!-- End Email Field -->
@@ -23,10 +23,50 @@
                                     <div class="form-group form-group-lg">
                                         <label class="col-sm-2 control-label">Site Phone</label>
                                         <div class="col-sm-10 col-md-12">
-                                            <input type="text" name="site_phone" value="<?php echo $row['site_phone'] ?>" class="form-control" required="required" />
+                                            <input type="text" name="site_phone" value="<?= $row['site_phone'] ?>" class="form-control" required="required" />
                                         </div>
                                     </div>
                                     <!-- End site phone Field -->
+                                    <!-- Start address Field -->
+                                    <div class="form-group form-group-lg">
+                                        <label class="col-sm-2 control-label">Site Address</label>
+                                        <div class="col-sm-10 col-md-12">
+                                            <input type="text" name="site_address" value="<?= $row['site_address'] ?>" class="form-control" required="required" />
+                                        </div>
+                                    </div>
+                                    <!-- End site adress Field -->
+                                    <!-- Start facebook url Field -->
+                                     <div class="form-group form-group-lg">
+                                        <label class="col-sm-2 control-label">Facebook Url</label>
+                                        <div class="col-sm-10 col-md-12">
+                                            <input type="text" name="fb_url" value="<?= $row['fb_url'] ?>" class="form-control" required="required" />
+                                        </div>
+                                    </div>
+                                    <!-- End facebook_url Field -->
+                                    <!-- Start twitter url Field -->
+                                    <div class="form-group form-group-lg">
+                                        <label class="col-sm-2 control-label">Twitter Url</label>
+                                        <div class="col-sm-10 col-md-12">
+                                            <input type="text" name="tw_url" value="<?= $row['tw_url'] ?>" class="form-control" required="required" />
+                                        </div>
+                                    </div>
+                                    <!-- End twitter url Field -->
+                                    <!-- Start linkedin url Field -->
+                                    <div class="form-group form-group-lg">
+                                        <label class="col-sm-2 control-label">LinkedIn Url</label>
+                                        <div class="col-sm-10 col-md-12">
+                                            <input type="text" name="ln_url" value="<?= $row['ln_url'] ?>" class="form-control" required="required" />
+                                        </div>
+                                    </div>
+                                    <!-- End linkedin url Field -->
+                                    <!-- Start whattsapp url Field -->
+                                    <div class="form-group form-group-lg">
+                                        <label class="col-sm-2 control-label">Whattsapp Url</label>
+                                        <div class="col-sm-10 col-md-12">
+                                            <input type="text" name="wh_url" value="<?= $row['wh_url'] ?>" class="form-control" required="required" />
+                                        </div>
+                                    </div>
+                                    <!-- End whattsapp url Field -->
                                     <!-- Start site description Field -->
                                     <div class="form-group form-group-lg">
                                         <label class="col-sm-2 control-label">Site Description</label>
@@ -43,6 +83,14 @@
                                         </div>
                                     </div>
                                     <!-- End site description Field -->
+                                    <!-- Start site summery Text Field -->
+                                    <div class="form-group form-group-lg">
+                                        <label class="col-sm-2 control-label">Site Summery</label>
+                                        <div class="col-sm-10 col-md-12">
+                                            <textarea class="form-control" name="site_summery"><?=$row['site_summery']?></textarea>
+                                        </div>
+                                    </div>
+                                    <!-- End site summery Text Field -->
                                     <!-- Start site status Field -->
                                     <div class="form-group form-group-lg">
                                         <label class="col-sm-2 control-label">Site Status</label>
@@ -78,7 +126,7 @@
                                     <!-- End site logo Field -->
                                     <!---- site logo preview ----->
                                     <div class="col-md-6 col-md-offset-3">
-                                        <img id="preview" src="<?=$row['site_logo']?>" class="img-thumbnail img-responsive" />
+                                        <img id="preview" src="../<?=$row['site_logo']?>" class="img-thumbnail img-responsive" />
                                         <br/><br>
                                     </div>
                                     
