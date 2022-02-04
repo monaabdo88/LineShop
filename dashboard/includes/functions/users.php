@@ -15,7 +15,10 @@ if(! function_exists('add_user')){
             $password          = sha1($_POST['password']);
             $trust_user        = $_POST['trust_user'];
             $role_id           = $_POST['role_id'];
-           
+            $country_id        = @$_POST['country_id'];
+            $city_id           = @$_POST['city_id'];
+            $state_id          = @$_POST['state_id'];
+            $phone             = @$_POST['phone'];
             //check if user is already exists
             if(checkItem('username','users',$user_name) == 1){
                 $msg = show_msg('Error','This UserName is already exists');
@@ -37,7 +40,10 @@ if(! function_exists('add_user')){
                 //add new user to database
                 $stmt = $con->prepare("INSERT INTO 
                     users(username, email, password, role_id,status,trust_user,avatar)
-                    VALUES(:zusername, :zemail, :zpassword, :zrole_id, :zstatus,:ztrust_user,:zavatar)");
+                    VALUES(:zusername, :zemail, :zpassword, 
+                    :zrole_id, :zstatus,:ztrust_user,:zavatar,
+                    :zcountry_id,:zcity_id,:zstate_id,:zphone
+                    )");
                 $stmt->execute(array(
                     'zusername' 	=> $user_name,
                     'zemail' 	    => $email,
@@ -45,7 +51,11 @@ if(! function_exists('add_user')){
                     'zrole_id' 	    => $role_id,
                     'zstatus'       => $status,
                     'ztrust_user'   => $trust_user,
-                    'zavatar'       => $image
+                    'zavatar'       => $image,
+                    'zcountry_id'   => $country_id,
+                    'zcity_id'      => $city_id,
+                    'zstate_id'     => $state_id,
+                    'zphone'        => $phone
                 ));
                 // Echo Success Message
                 $msg = show_msg('success',"Record Inserted Successsfully");
@@ -72,6 +82,10 @@ if(! function_exists('update_user')){
             $status            = $_POST['status'];
             $trust_user        = $_POST['trust_user'];
             $role_id           = $_POST['role_id'];
+            $country_id        = @$_POST['country_id'];
+            $city_id           = @$_POST['city_id'];
+            $state_id          = @$_POST['state_id'];
+            $phone             = @$_POST['phone'];
             if(isset($_POST['password']) && $_POST['password'] != '')
                 $password  = sha1($_POST['password']);
             else
@@ -111,11 +125,15 @@ if(! function_exists('update_user')){
                                         trust_user = ?,
                                         status = ?,
                                         role_id = ?,
-                                        avatar  = ?
+                                        avatar  = ?,
+                                        country_id = ?,
+                                        city_id = ?,
+                                        state_id = ?,
+                                        phone=?
                                         WHERE
                                         id = ?
                                         ");
-                $upData =$stmt->execute(array($user_name,$email,$password,$trust_user,$status,$role_id,$image,$id));
+                $upData =$stmt->execute(array($user_name,$email,$password,$trust_user,$status,$role_id,$image,$country_id,$city_id,$state_id,$phone,$id));
                 //Update Message
                 if($upData){
                     $msg = show_msg('success','user Updated Successfully');

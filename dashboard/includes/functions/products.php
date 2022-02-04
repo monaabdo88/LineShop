@@ -19,15 +19,15 @@ if(! function_exists('upload_product_images')){
                 
                 if(move_uploaded_file($tempFile, $targetPath.$targetFile)){
                     $stmtImg = $con->prepare("INSERT INTO files (product_id,file_name,file_size,file_dir) VALUES (:zproduct_id,:zfile_name,:zfile_size,:zfile_dir)");
-                        $stmtImg->execute(array(
+                    $stmtImg->execute(array(
                             'zproduct_id'       => $product_id,
                             'zfile_name'        => $targetFile,
                             'zfile_size'        => $file_size,
                             'zfile_dir'         => $targetPath
                         ));
-                        $msg = show_msg('success',"Images Inserted Successsfully");
                     
                 }       
+                $msg = show_msg('success',"Images Inserted Successsfully");
             }
         }
         echo $msg;
@@ -79,7 +79,7 @@ if(! function_exists('add_product')){
                     //add product tags code
                     product_tags($_POST['tag'],$last_id);
                 // Echo Success Message
-                $msg = show_msg('success',"Record Inserted Successsfully");
+                $msg = show_msg('success',"Product Inserted Successsfully You will Redirect To Add Media Tho This Product");
                 
             }
             echo $msg;

@@ -19,11 +19,14 @@
 						<div class="single-footer links">
 							<h4>Information</h4>
 							<ul>
-								<li><a href="#">About Us</a></li>
-								<li><a href="#">Faq</a></li>
-								<li><a href="#">Terms & Conditions</a></li>
-								<li><a href="#">Contact Us</a></li>
-								<li><a href="#">Help</a></li>
+								<li><a href="index.php">Home</a></li>
+								<?php 
+									$pages = get_all_rows_data('pages','status',1,3);
+									foreach($pages as $page){
+										echo '<li><a href="page.php?id='.$page['id'].'">'.strtoupper($page['title']).'</a></li>';
+									}
+								?>
+								<li><a href="contact.php">Contact Us</a></li>
 							</ul>
 						</div>
 						<!-- End Single Widget -->
@@ -31,13 +34,14 @@
 					<div class="col-lg-2 col-md-6 col-12">
 						<!-- Single Widget -->
 						<div class="single-footer links">
-							<h4>Customer Service</h4>
+							<h4>Categories</h4>
 							<ul>
-								<li><a href="#">Payment Methods</a></li>
-								<li><a href="#">Money-back</a></li>
-								<li><a href="#">Returns</a></li>
-								<li><a href="#">Shipping</a></li>
-								<li><a href="#">Privacy Policy</a></li>
+							<?php 
+								$cats = get_all_rows_data('categories','status',1,5);
+								foreach($cats as $cat){
+									echo '<li><a href="category.php?id='.$cat['id'].'">'.strtoupper($cat['name']).'</a></li>';
+								}
+							?>
 							</ul>
 						</div>
 						<!-- End Single Widget -->

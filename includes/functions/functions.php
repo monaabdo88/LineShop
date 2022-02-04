@@ -40,10 +40,10 @@ Function to display active class to the current page
 take on parametar page name
 */
 if(! function_exists('isActive')){
-    function isActive($pageName){
+    function isActive($pageName,$page = 3){
         $uri_path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
         $uri_segments = explode('/', $uri_path);
-        if($uri_segments[3] == $pageName)
+        if($uri_segments[$page] == $pageName)
         {
             return 'active';
         }
@@ -137,10 +137,16 @@ function to fetch all data from tabel
 take tblname , column name and the id
 */
 if(! function_exists('get_all_rows_data')){
-    function get_all_rows_data($tbl,$col,$id){
+    function get_all_rows_data($tbl,$col,$id,$limit = ''){
         global $con;
-        $stmt = $con->prepare("SELECT * FROM $tbl WHERE $col = ?");
-        $stmt->execute(array($id));
+        if($limit == ''){
+            $stmt = $con->prepare("SELECT * FROM $tbl WHERE $col = ? ORDER BY id DESC");
+            $stmt->execute(array($id));  
+        }else{
+            $stmt = $con->prepare("SELECT * FROM $tbl WHERE $col = ? ORDER BY id DESC LIMIT $limit");
+            $stmt->execute(array($id));  
+                
+        }  
         $rows = $stmt->fetchAll();
         return $rows;
     }
@@ -240,11 +246,15 @@ function to Resize And Upload Image
 get path,tmp_name and file type
 */
 if(! function_exists('resize_image')){
-    function resize_image($path,$tmp_name,$tmp_type) {
+    function resize_image($path,$tmp_name,$tmp_type,$nwidth=null,$nheight=null) {
         $file=$tmp_name;
         list($width,$height)=getimagesize($file);
-        $nwidth=$width/4;
-        $nheight=$height/4;
+        if(!$nwidth)
+            $nwidth=$width/4;
+        
+        if(!$nheight)
+            $nheight = $height/4;
+    
         $newimage=imagecreatetruecolor($nwidth,$nheight);
         $file_name = '';
         if($tmp_type=='image/jpeg'){
@@ -334,3 +344,4 @@ if(! function_exists('get_user_permission')){
         }
     }
 }
+

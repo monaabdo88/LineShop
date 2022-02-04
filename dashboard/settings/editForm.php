@@ -116,17 +116,30 @@
                                         </div>
                                     </div>
                                     <!-- End site Copyrights Text Field -->
-                                    <!-- Start site logo Field -->
+                                    <!-- Start site Fav Icon Field -->
                                     <div class="form-group form-group-lg">
-                                        <label class="col-sm-2 control-label">Site Logo</label>
+                                        <label class="col-sm-2 control-label">Site Fav Icon</label>
                                         <div class="col-sm-10 col-md-12">
                                             <input type="file" name="site_logo" onchange="readURL(this);" class="form-control" />
                                         </div>
                                     </div>
-                                    <!-- End site logo Field -->
-                                    <!---- site logo preview ----->
+                                    <!-- End site Fav Icon Field -->
+                                    <!---- site Fav icon preview ----->
                                     <div class="col-md-6 col-md-offset-3">
                                         <img id="preview" src="../<?=$row['site_logo']?>" class="img-thumbnail img-responsive" />
+                                        <br/><br>
+                                    </div>
+                                     <!-- Start site slider background Field -->
+                                     <div class="form-group form-group-lg">
+                                        <label class="col-sm-4 control-label">Site Slider Background</label>
+                                        <div class="col-sm-10 col-md-12">
+                                            <input type="file" name="slider_background" onchange="readURL2(this);" class="form-control" />
+                                        </div>
+                                    </div>
+                                    <!-- End site site slider background Field -->
+                                    <!---- site site slider background preview ----->
+                                    <div class="col-md-6 col-md-offset-3">
+                                        <img id="preview2" src="../<?=$row['slider_background']?>" class="img-thumbnail img-responsive" />
                                         <br/><br>
                                     </div>
                                     

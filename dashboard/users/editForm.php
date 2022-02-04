@@ -36,6 +36,14 @@ if($rowsCount > 0){
         </div>
     </div>
                                     <!-- End  User Password  Field -->
+                                    <!-- Start User phone Field -->
+                                    <div class="form-group form-group-lg">
+                                        <label class="col-sm-2 control-label">User Phone</label>
+                                        <div class="col-sm-10 col-md-12">
+                                            <input type="text" name="phone" class="form-control" value="<?=$row['phone']?>"/>
+                                        </div>
+                                    </div>
+                                    <!-- End  User phone  Field -->
                                     <!-- Start User Status Field -->
                                     <div class="form-group form-group-lg">
                                         <label class="col-sm-2 control-label">User Status</label>
@@ -54,6 +62,44 @@ if($rowsCount > 0){
                                         </div>
                                     </div>
                                     <!-- End  User Trusted  Field -->
+                                    <div class="form-group form-group-lg">
+                                        <label class="col-sm-2 control-label">Country</label>
+                                        <div class="col-sm-10 col-md-12">
+                                            <select class="form-control" name="country_id" id="country-dropdown">
+                                                <?php 
+                                                $countries = get_rows('countries');
+                                                foreach($countries as $country):
+                                                    ($country['id'] == $row['country_id'])? $selected = 'selected' : $selected = '';
+                                                    echo '<option value='.$country['id'].' '.$selected.'>'.$country['name'].'</option>';
+                                                endforeach;
+                                                ?>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                    <label class="col-sm-2 control-label">State</label>
+                                        <div class="col-sm-10 col-md-12">
+                                            <select name="state_id" class="form-control" id="state-dropdown">
+                                                <?php 
+                                                if($row['state_id'] != 0)
+                                                    echo '<option value="'.$row['state_id'].'">'.get_item('name','states','id',$row['state_id']).'</option>';
+                                                ?>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                    <label class="col-sm-2 control-label">City</label>
+                                        <div class="col-sm-10 col-md-12">
+                                            <select name="city_id" class="form-control" id="city-dropdown">
+                                            <?php 
+                                                if($row['city_id'] != 0)
+                                                    echo '<option value="'.$row['city_id'].'">'.get_item('name','cities','id',$row['city_id']).'</option>';
+                                                ?>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    
                                     <!-- Start  Role  Field -->
                                     <div class="form-group form-group-lg">
                                         <label class="col-sm-2 control-label">Role </label>
@@ -105,3 +151,37 @@ if($rowsCount > 0){
         redirectPage('users.php');
     }
     ?>
+<script>
+$(document).ready(function() {
+    $('#country-dropdown').on('change', function() {
+            var country_id = this.value;
+            $.ajax({
+                url: "getStates.php",
+                type: "POST",
+                data: {
+                    country_id: country_id
+                },
+                cache: false,
+                success: function(result){
+                    $("#state-dropdown").html(result);
+                    $('#city-dropdown').html('<option value="">Select State First</option>'); 
+                    console.log("this is "+ result);
+                }
+            }); 
+    });    
+    $('#state-dropdown').on('change', function() {
+            var state_id = this.value;
+            $.ajax({
+                url: "getCities.php",
+                type: "POST",
+                data: {
+                    state_id: state_id
+                },
+                cache: false,
+                success: function(result){
+                    $("#city-dropdown").html(result);
+                }
+            }); 
+    });
+});
+</script>

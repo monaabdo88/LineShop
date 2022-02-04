@@ -81,9 +81,13 @@
 						<!-- Top Right -->
 						<div class="right-content">
 							<ul class="list-main">
+								<?php if(isset($_SESSION['user_id']) && $_SESSION['user_id'] != ''): ?>
 								<li><i class="ti-user"></i><a href="profile.php">My account</a></li>
+								<li><i class="ti-power-off"></i><a href="login.php">Logout</a></li>
+								<?php else: ?>
 								<li><i class="ti-user"></i><a href="singup.php">Singup</a></li>
 								<li><i class="ti-power-off"></i><a href="login.php">Login</a></li>
+								<?php endif ?>
 							</ul>
 						</div>
 						<!-- End Top Right -->
@@ -185,9 +189,15 @@
 			<div class="container">
 				<div class="cat-nav-head">
 					<div class="row">
-						<div class="col-lg-3">
-							<div class="all-category">
-								<h3 class="cat-heading"><i class="fa fa-bars" aria-hidden="true"></i>CATEGORIES</h3>
+					<?php 
+						if(isActive('index.php',2) == 'active'):
+					?>	
+					<div class="col-lg-3">
+							
+						<div class="all-category">
+								
+							<h3 class="cat-heading"><i class="fa fa-bars" aria-hidden="true"></i>CATEGORIES</h3>
+								
 								<ul class="main-category">
 									<?php 
 										//Get All Main Categories
@@ -212,23 +222,28 @@
 										}
 									?>
 								</ul>
+								
 							</div>
+							
 						</div>
-						<div class="col-lg-9 col-12">
+						<?php endif; ?>
+						<div class="col-lg-<?=(isActive('index.php',2) == 'active')? '9' : '12'?> col-12">
 							<div class="menu-area">
 								<!-- Main Menu -->
 								<nav class="navbar navbar-expand-lg">
 									<div class="navbar-collapse">	
 										<div class="nav-inner">	
 											<ul class="nav main-menu menu navbar-nav">
-													<li class="active"><a href="index.php">Home</a></li>
+													<li class="<?=isActive('index.php',2)?>"><a href="index.php">Home</a></li>
+													<li class="<?=isActive('categories.php',2)?>"><a href="categories.php">All Categories</a></li>
+													<li class="<?=isActive('products.php',2)?>"><a href="products.php">Products</a></li>
 													<?php 
-														$pages = get_all_rows_data('pages','status',1);
+														$pages = get_all_rows_data('pages','status',1,3);
 														foreach($pages as $page){
 															echo '<li><a href="page.php?id='.$page['id'].'">'.$page['title'].'</a></li>';
 														}
 													?>
-													<li><a href="contact.php">Contact Us</a></li>
+													<li class="<?=isActive('contact.php',2)?>"><a href="contact.php">Contact Us</a></li>
 												</ul>
 										</div>
 									</div>

@@ -227,4 +227,7 @@ include "includes/functions/users.php";
                 reader.readAsDataURL(input.files[0]);
             }
         }
+        
+
+
 </script>
