@@ -156,7 +156,7 @@ $(document).ready(function() {
     $('#country-dropdown').on('change', function() {
             var country_id = this.value;
             $.ajax({
-                url: "getStates.php",
+                url: "../getStates.php",
                 type: "POST",
                 data: {
                     country_id: country_id
@@ -165,14 +165,13 @@ $(document).ready(function() {
                 success: function(result){
                     $("#state-dropdown").html(result);
                     $('#city-dropdown').html('<option value="">Select State First</option>'); 
-                    console.log("this is "+ result);
                 }
             }); 
     });    
     $('#state-dropdown').on('change', function() {
             var state_id = this.value;
             $.ajax({
-                url: "getCities.php",
+                url: "../getCities.php",
                 type: "POST",
                 data: {
                     state_id: state_id

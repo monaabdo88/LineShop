@@ -1,3 +1,8 @@
+<?php 
+ob_start();
+session_start();
+
+?>
 <!DOCTYPE html>
 <html lang="zxx">
 <head>
@@ -83,7 +88,7 @@
 							<ul class="list-main">
 								<?php if(isset($_SESSION['user_id']) && $_SESSION['user_id'] != ''): ?>
 								<li><i class="ti-user"></i><a href="profile.php">My account</a></li>
-								<li><i class="ti-power-off"></i><a href="login.php">Logout</a></li>
+								<li><i class="ti-power-off"></i><a href="logout.php">Logout</a></li>
 								<?php else: ?>
 								<li><i class="ti-user"></i><a href="singup.php">Singup</a></li>
 								<li><i class="ti-power-off"></i><a href="login.php">Login</a></li>
@@ -123,7 +128,7 @@
 					<div class="col-lg-8 col-md-7 col-12">
 						<div class="search-bar-top">
 							<div class="search-bar">
-								<select>
+								<select class="nice-select">
 									<option selected="selected">All Category</option>
 									<?php 
 									foreach(get_all_rows_data('categories','parent_id',0) as $cat){

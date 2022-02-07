@@ -2,7 +2,7 @@
 include "../init.php";
 ob_start();
 session_start();
-if(!$_SESSION['admin_email']){
+if(!$_SESSION['admin_id']){
   header("Location: login.php");
   exit();
 }

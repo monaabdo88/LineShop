@@ -119,5 +119,18 @@
 	<script src="<?=$js_front?>easing.js"></script>
 	<!-- Active JS -->
 	<script src="<?=$js_front?>active.js"></script>
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+	<script type="text/javascript">
+			//show Success Message
+			function successFn(msg,status){
+				swal("Good Job!", msg, status);
+			}
+			//show error message
+			function errorFn(msg,status){
+				swal("Error!", msg, status);
+			}
+	</script>
+
 </body>
 </html>

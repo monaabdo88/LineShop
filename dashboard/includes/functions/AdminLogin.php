@@ -28,7 +28,7 @@ if(! function_exists('admin_login')){
 
         //check if user already exists if row count > 0 
         if($count > 0 ){
-          $_SESSION['admin_email']  = $email;
+          $_SESSION['admin_email']  = $row['email'];
           $_SESSION['admin_id']     = $row['id'];
           $_SESSION['admin_name']   = $row['username'];
           $_SESSION['admin_img']    = $row['avatar'];
