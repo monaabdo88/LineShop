@@ -48,7 +48,35 @@ session_start();
 	<link rel="stylesheet" href="<?=$css_front?>reset.css">
 	<link rel="stylesheet" href="<?=$css_front?>style.css">
     <link rel="stylesheet" href="<?=$css_front?>responsive.css">
-	
+	<style>
+.msg-container { 
+  height: 100%;
+  position: relative;
+}
+
+.msg-box {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+</style>
+	<?php 
+		$site_status = get_item('site_status','settings','id',1);
+		$text_close = get_item('site_text_close','settings','id',1);
+		if($site_status == 0)
+		{
+			echo '
+				<div class="col-md-12 msg-container">
+					<div class="alert alert-danger msg-box">
+						<p class="text-center"><b>'.$text_close.'</b></p>
+					</div>
+				</div>';
+				die();
+		}
+	?>
 	
 	
 </head>
@@ -239,7 +267,7 @@ session_start();
 									<div class="navbar-collapse">	
 										<div class="nav-inner">	
 											<ul class="nav main-menu menu navbar-nav">
-													<li class="<?=isActive('index.php',2)?>"><a href="index.php">Home</a></li>
+													<li class="<?=isActive('index.php',2)?><?=isActive('',2)?>"><a href="index.php">Home</a></li>
 													<li class="<?=isActive('categories.php',2)?>"><a href="categories.php">All Categories</a></li>
 													<li class="<?=isActive('products.php',2)?>"><a href="products.php">Products</a></li>
 													<?php 

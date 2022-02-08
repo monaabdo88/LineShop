@@ -1,6 +1,10 @@
 <?php 
 include "init.php"; 
 include $tpl."header.php";
+include "includes/functions/mail.php"; 
+if ($_SERVER['REQUEST_METHOD'] == 'POST'){
+	$errors = send_email();
+}																	
 ?>
 
 	<!-- Breadcrumbs -->
@@ -11,7 +15,7 @@ include $tpl."header.php";
 					<div class="bread-inner">
 						<ul class="bread-list">
 							<li><a href="index.php">Home<i class="ti-arrow-right"></i></a></li>
-							<li class="active"><a href="blog-single.html">Contact</a></li>
+							<li class="active"><a href="contact.php">Contact</a></li>
 						</ul>
 					</div>
 				</div>
@@ -21,17 +25,33 @@ include $tpl."header.php";
 	<!-- End Breadcrumbs -->
   
 	<!-- Start Contact -->
-	<section id="contact-us" class="contact-us section">
+	<section id="contact-us" class="contact-us section" style="padding-bottom:0">
 		<div class="container">
 				<div class="contact-head">
 					<div class="row">
 						<div class="col-lg-8 col-12">
 							<div class="form-main">
+							<?php 
+							//show error message
+								if(isset($errors) && $errors != ''){
+									foreach($errors as $key => $value){
+										($key == 'error') ? $type = 'danger': $type='success';
+											echo '<div class="alert alert-'.$type.' alert-dismissible fade show" role="alert">
+												<strong class="text-center">'.$value.'</strong>
+												<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+													<span aria-hidden="true">&times;</span>
+												</button>
+												</div>';
+											if($type == 'success') header('refresh:5;url='.$_SERVER['HTTP_REFERER']);
+									}
+												
+								}
+							?>
 								<div class="title">
 									<h4>Get in touch</h4>
 									<h3>Write us a message</h3>
 								</div>
-								<form class="form" method="post" action="mail/mail.php">
+								<form class="form"  action="<?=$_SERVER['PHP_SELF']?>" method="POST">
 									<div class="row">
 										<div class="col-lg-6 col-12">
 											<div class="form-group">
@@ -54,7 +74,7 @@ include $tpl."header.php";
 										<div class="col-lg-6 col-12">
 											<div class="form-group">
 												<label>Your Phone<span>*</span></label>
-												<input name="company_name" type="text" placeholder="">
+												<input name="phone" type="text" placeholder="">
 											</div>	
 										</div>
 										<div class="col-12">
@@ -78,23 +98,21 @@ include $tpl."header.php";
 									<i class="fa fa-phone"></i>
 									<h4 class="title">Call us Now:</h4>
 									<ul>
-										<li>+123 456-789-1120</li>
-										<li>+522 672-452-1120</li>
+										<li><?=get_item('site_phone','settings','id',1);?></li>
 									</ul>
 								</div>
 								<div class="single-info">
 									<i class="fa fa-envelope-open"></i>
 									<h4 class="title">Email:</h4>
 									<ul>
-										<li><a href="mailto:info@yourwebsite.com">info@yourwebsite.com</a></li>
-										<li><a href="mailto:info@yourwebsite.com">support@yourwebsite.com</a></li>
+										<li><a href="mailto:<?=get_item('site_email','settings','id',1);?>"><?=get_item('site_email','settings','id',1);?></a></li>
 									</ul>
 								</div>
 								<div class="single-info">
 									<i class="fa fa-location-arrow"></i>
 									<h4 class="title">Our Address:</h4>
 									<ul>
-										<li>KA-62/1, Travel Agency, 45 Grand Central Terminal, New York.</li>
+										<li><?=get_item('site_address','settings','id',1);?></li>
 									</ul>
 								</div>
 							</div>
@@ -105,26 +123,5 @@ include $tpl."header.php";
 	</section>
 	<!--/ End Contact -->
 	
-	<!-- Start Shop Newsletter  -->
-	<section class="shop-newsletter section">
-		<div class="container">
-			<div class="inner-top">
-				<div class="row">
-					<div class="col-lg-8 offset-lg-2 col-12">
-						<!-- Start Newsletter Inner -->
-						<div class="inner">
-							<h4>Newsletter</h4>
-							<p> Subscribe to our newsletter and get <span>10%</span> off your first purchase</p>
-							<form action="mail/mail.php" method="get" target="_blank" class="newsletter-inner">
-								<input name="EMAIL" placeholder="Your email address" required="" type="email">
-								<button class="btn">Subscribe</button>
-							</form>
-						</div>
-						<!-- End Newsletter Inner -->
-					</div>
-				</div>
-			</div>
-		</div>
-	</section>
-	<!-- End Shop Newsletter -->
+	<?php include "subscribe.php" ?>
 <?php include $tpl."footer.php" ?>
