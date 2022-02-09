@@ -138,6 +138,8 @@ if($rowsCount > 0){
         }
         //ckeditor
         CKEDITOR.replace( 'editor1', {
-            customConfig: 'config.js'
+            filebrowserUploadUrl: '../upload.php?command=QuickUpload&type=Images&responseType=json',
+            filebrowserUploadMethod: "form"
+
         } );
 </script>

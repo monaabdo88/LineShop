@@ -27,7 +27,9 @@ if(!$_SESSION['admin_id']){
   <link rel="stylesheet" href="<?= $css_cp?>adminlte.min.css">
   <script src="<?=$js_cp?>jquery-1.12.1.min.js"></script>
 	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-  <script src="../<?=$js_front?>ckeditor/ckeditor.js"></script>
+  <script src="https://cdn.ckeditor.com/4.17.2/full-all/ckeditor.js"></script>
+
+
   <script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
   <script type="text/javascript">
 			//show Success Message

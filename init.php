@@ -3,6 +3,8 @@
 include "dashboard/config.php";
 //Main Functions file
 include "includes/functions/functions.php";
+//base url for lineshope project
+$base_url = "http://localhost/lineshop/";
 //Front End Folders Path
 $tpl            = "includes/templates/";
 $css_front      = "assets/css/";

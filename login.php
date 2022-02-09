@@ -70,9 +70,15 @@ if(isset($_SESSION['user_id']))
 										</div>
 										
 										<div class="col-12">
-											<div class="form-group button">
-												<button type="submit" class="btn ">Login</button>
+											<div class="col-md-4 float-left">
+												<div class="form-group button">
+													<button type="submit" class="btn ">Login</button>
+												</div>
+											</div>	
+											<div class="col-md-4 float-right">
+												<a href="forget.php" class="float-right">Forget Password</a>
 											</div>
+											
 										</div>
 									</div>
 								</form>

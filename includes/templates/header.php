@@ -223,7 +223,7 @@ session_start();
 				<div class="cat-nav-head">
 					<div class="row">
 					<?php 
-						if(isActive('index.php',2) == 'active'):
+						if(isActive('index.php',2) == 'active'|| isActive('',2) == 'active'):
 					?>	
 					<div class="col-lg-3">
 							
@@ -260,7 +260,7 @@ session_start();
 							
 						</div>
 						<?php endif; ?>
-						<div class="col-lg-<?=(isActive('index.php',2) == 'active')? '9' : '12'?> col-12">
+						<div class="col-lg-<?=(isActive('index.php',2) == 'active' || isActive('',2) == 'active')? '9' : '12'?> col-12">
 							<div class="menu-area">
 								<!-- Main Menu -->
 								<nav class="navbar navbar-expand-lg">
@@ -273,7 +273,8 @@ session_start();
 													<?php 
 														$pages = get_all_rows_data('pages','status',1,3);
 														foreach($pages as $page){
-															echo '<li><a href="page.php?id='.$page['id'].'">'.$page['title'].'</a></li>';
+															(isset($_GET['page_id']) && $_GET['page_id'] == $page['id'])? $class='active' : $class = '';
+															echo '<li class="'.$class.'"><a href="page.php?page_id='.$page['id'].'">'.$page['title'].'</a></li>';
 														}
 													?>
 													<li class="<?=isActive('contact.php',2)?>"><a href="contact.php">Contact Us</a></li>

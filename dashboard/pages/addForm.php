@@ -39,9 +39,11 @@
 <!---- preview image before upload code ----->
 
 <script type="text/javascript">
+        //ckeditor
         CKEDITOR.replace( 'editor1', {
-            customConfig: 'config.js'
+            filebrowserUploadUrl: '../upload.php',
+            filebrowserUploadMethod: "form"
+
         } );
-        
 </script>  
    

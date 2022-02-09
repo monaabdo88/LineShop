@@ -344,4 +344,3 @@ if(! function_exists('get_user_permission')){
         }
     }
 }
-

@@ -92,8 +92,11 @@
 <!---- preview image before upload code ----->
 
 <script type="text/javascript">
+        //ckeditor
         CKEDITOR.replace( 'editor1', {
-            customConfig: 'config.js'
+            filebrowserUploadUrl: '../upload.php?command=QuickUpload&type=Images&responseType=json',
+            filebrowserUploadMethod: "form"
+
         } );
         
 </script>  
