@@ -2,7 +2,7 @@
 include "init.php"; 
 include $tpl."header.php";
 include "includes/functions/mail.php"; 
-if ($_SERVER['REQUEST_METHOD'] == 'POST'){
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['do_send']) && $_POST['do_send'] == 'send_email'){
 	$errors = send_email();
 }																	
 ?>
@@ -85,7 +85,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 										</div>
 										<div class="col-12">
 											<div class="form-group button">
-												<button type="submit" class="btn ">Send Message</button>
+												<button type="submit" class="btn " name="do_send" value="send_email">Send Message</button>
 											</div>
 										</div>
 									</div>
@@ -123,5 +123,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 	</section>
 	<!--/ End Contact -->
 	
-	<?php include "subscribe.php" ?>
-<?php include $tpl."footer.php" ?>
+<?php 
+include $tpl."subscribe.php"; 
+include $tpl."footer.php"; 
+?>

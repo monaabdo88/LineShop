@@ -143,8 +143,8 @@ session_start();
 							<div class="top-search"><a href="#0"><i class="ti-search"></i></a></div>
 							<!-- Search Form -->
 							<div class="search-top">
-								<form class="search-form">
-									<input type="text" placeholder="Search here..." name="search">
+								<form class="search-form" method="GET" action="search.php">
+									<input type="text" placeholder="Search here..." name="search_key">
 									<button value="search" type="submit"><i class="ti-search"></i></button>
 								</form>
 							</div>
@@ -172,6 +172,7 @@ session_start();
 						</div>
 					</div>
 					<div class="col-lg-2 col-md-3 col-12">
+						<?php if(isset($_SESSION['user_id'])): ?>
 						<div class="right-bar">
 							<!-- Search Form -->
 							<div class="sinlge-bar">
@@ -213,6 +214,7 @@ session_start();
 								<!--/ End Shopping Item -->
 							</div>
 						</div>
+						<?php endif; ?>
 					</div>
 				</div>
 			</div>

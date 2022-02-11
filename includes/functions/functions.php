@@ -156,9 +156,12 @@ function to get rows related to another column
 get tbl name, column name and column value
 */
 if(! function_exists('get_related_data')){
-    function get_related_data($tbl,$col_name,$col_val){
+    function get_related_data($tbl,$col_name,$col_val, $limit = ''){
         global $con;
-        $stmt = $con->prepare("SELECT * FROM $tbl WHERE $col_name = ?");
+        if($limit == '')
+            $stmt = $con->prepare("SELECT * FROM $tbl WHERE $col_name = ?");
+        else
+            $stmt = $con->prepare("SELECT * FROM $tbl WHERE $col_name = ? LIMIT $limit");
         $stmt->execute(array($col_val));
         $row = $stmt->fetchall();
         return $row;

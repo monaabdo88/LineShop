@@ -1,6 +1,6 @@
 <?php 
 include "includes/functions/mail.php"; 
-if ($_SERVER['REQUEST_METHOD'] == 'POST'){
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_subscribe']) && $_POST['add_subscribe'] == 'subscribe'){
 	$errors = add_mail();
 }																	
 ?>
@@ -32,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 							<p> Subscribe to our newsletter and get <span>10%</span> off your first purchase</p>
 							<form action="<?=$_SERVER['PHP_SELF']?>" method="POST" class="newsletter-inner">
 								<input name="email" placeholder="Your email address" required="" type="email">
-								<button class="btn" type="submit" value="subscribe">Subscribe</button>
+								<button class="btn" type="submit" name="add_subscribe" value="subscribe">Subscribe</button>
 							</form>
 						</div>
 						<!-- End Newsletter Inner -->
