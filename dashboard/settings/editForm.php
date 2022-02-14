@@ -142,7 +142,6 @@
                                         <img id="preview2" src="../<?=$row['slider_background']?>" class="img-thumbnail img-responsive" />
                                         <br/><br>
                                     </div>
-                                    
                                     <!-- Start Submit Field -->
                                     
                                     <div class="col-md-12">

@@ -84,4 +84,5 @@ include "includes/functions/settings.php";
                 reader.readAsDataURL(input.files[0]);
             }
         }
+        
 </script>

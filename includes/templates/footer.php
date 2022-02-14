@@ -130,6 +130,13 @@
 			function errorFn(msg,status){
 				swal("Error!", msg, status);
 			}
+			$(document).ready(function() {
+
+				$('#search_cats').on('change', function() {
+				var cat_id = this.value;
+				$("#cat_id").val(cat_id);
+    		});
+			});
 	</script>
 
 </body>

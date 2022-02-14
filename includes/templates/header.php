@@ -143,7 +143,7 @@ session_start();
 							<div class="top-search"><a href="#0"><i class="ti-search"></i></a></div>
 							<!-- Search Form -->
 							<div class="search-top">
-								<form class="search-form" method="GET" action="search.php">
+								<form class="search-form" method="GET" action="searchresult.php">
 									<input type="text" placeholder="Search here..." name="search_key">
 									<button value="search" type="submit"><i class="ti-search"></i></button>
 								</form>
@@ -156,7 +156,7 @@ session_start();
 					<div class="col-lg-8 col-md-7 col-12">
 						<div class="search-bar-top">
 							<div class="search-bar">
-								<select class="nice-select">
+								<select class="nice-select" id="search_cats">
 									<option selected="selected">All Category</option>
 									<?php 
 									foreach(get_all_rows_data('categories','parent_id',0) as $cat){
@@ -164,9 +164,10 @@ session_start();
 									}
 									?>
 								</select>
-								<form>
-									<input name="search" placeholder="Search Products Here....." type="search">
-									<button class="btnn"><i class="ti-search"></i></button>
+								<form method="GET" action="searchresult.php">
+									<input name="search_key" placeholder="Search Products Here....." type="search">
+									<input type="hidden" name="category_id" id="cat_id" value="" />
+									<button class="btnn" type="submit" name="doSearch"><i class="ti-search"></i></button>
 								</form>
 							</div>
 						</div>

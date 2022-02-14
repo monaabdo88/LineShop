@@ -108,41 +108,6 @@
             </div>
     </div>
 	<!-- End Product Area -->
-	
-	<!-- Start Midium Banner  -->
-	<section class="midium-banner">
-		<div class="container">
-			<div class="row">
-				<?php 
-					$discount_products = get_related_data('products','status',1,2);
-					foreach($discount_products as $product):
-						if($product['discount'] != 0):
-							$img = get_item('file_name','files','product_id',$product['id']);
-				?>
-				<!-- Single Banner  -->
-				<div class="col-lg-6 col-md-6 col-12">
-					<div class="single-banner">
-						<img src="<?=$base_url?>assets/uploads/products/<?=$img?>" alt="#">
-						<div class="content">
-							<p><?=get_item('name','categories','id',$product['category_id'])?></p>
-							<h3><?=$product['title']?> <br> up to <span><?=$product['discount']?>%</span></h3>
-							<a href="product.php?product_id=<?=$product['id']?>" class="btn">Shop Now</a>
-						</div>
-					</div>
-				</div>
-				<!-- /End Single Banner  -->
-				<?php		
-						endif;
-					endforeach;
-				?>
-				
-				
-			</div>
-		</div>
-	</section>
-	<!-- End Midium Banner -->
-	
-
 	<!-- Start Shop Home List  -->
 	<section class="shop-home-list section" style="margin-top:50px;">
 		<div class="container">
