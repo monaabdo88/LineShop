@@ -120,123 +120,70 @@
 							</div>
 						</div>
 					</div>
+					<?php 
+						$products_sale = get_related_data('products','status',1,3,'discount');
+						foreach($products_sale as $sale):
+					?>
 					<!-- Start Single List  -->
 					<div class="single-list">
 						<div class="row">
 							<div class="col-lg-6 col-md-6 col-12">
 								<div class="list-image overlay">
-									<img src="https://via.placeholder.com/115x140" alt="#">
-									<a href="#" class="buy"><i class="fa fa-shopping-bag"></i></a>
+									<img src="assets/uploads/products/<?=get_item('file_name','files','product_id',$sale['id'])?>" alt="#">
+									<a href="product.php?product_id=<?=$sale['id']?>" class="buy"><i class="fa fa-shopping-bag"></i></a>
 								</div>
 							</div>
 							<div class="col-lg-6 col-md-6 col-12 no-padding">
 								<div class="content">
-									<h4 class="title"><a href="#">Licity jelly leg flat Sandals</a></h4>
-									<p class="price with-discount">$59</p>
+									<h4 class="title"><a href="product.php?product_id=<?=$sale['id']?>"><?=$sale['title']?></a></h4>
+									<p class="price with-discount">$<?=$sale['price']?></p>
 								</div>
 							</div>
 						</div>
 					</div>
 					<!-- End Single List  -->
-					<!-- Start Single List  -->
-					<div class="single-list">
-						<div class="row">
-							<div class="col-lg-6 col-md-6 col-12">
-								<div class="list-image overlay">
-									<img src="https://via.placeholder.com/115x140" alt="#">
-									<a href="#" class="buy"><i class="fa fa-shopping-bag"></i></a>
-								</div>
-							</div>
-							<div class="col-lg-6 col-md-6 col-12 no-padding">
-								<div class="content">
-									<h5 class="title"><a href="#">Licity jelly leg flat Sandals</a></h5>
-									<p class="price with-discount">$44</p>
-								</div>
-							</div>
-						</div>
-					</div>
-					<!-- End Single List  -->
-					<!-- Start Single List  -->
-					<div class="single-list">
-						<div class="row">
-							<div class="col-lg-6 col-md-6 col-12">
-								<div class="list-image overlay">
-									<img src="https://via.placeholder.com/115x140" alt="#">
-									<a href="#" class="buy"><i class="fa fa-shopping-bag"></i></a>
-								</div>
-							</div>
-							<div class="col-lg-6 col-md-6 col-12 no-padding">
-								<div class="content">
-									<h5 class="title"><a href="#">Licity jelly leg flat Sandals</a></h5>
-									<p class="price with-discount">$89</p>
-								</div>
-							</div>
-						</div>
-					</div>
-					<!-- End Single List  -->
+					<?php 
+						endforeach;
+					?>
+					
+					
 				</div>
 				<div class="col-lg-4 col-md-6 col-12">
 					<div class="row">
 						<div class="col-12">
 							<div class="shop-section-title">
-								<h1>Best Seller</h1>
+								<h1>Latest Items</h1>
 							</div>
 						</div>
 					</div>
+					<?php 
+						$products_sale = get_related_data('products','status',1,3);
+						foreach($products_sale as $sale):
+					?>
 					<!-- Start Single List  -->
 					<div class="single-list">
 						<div class="row">
 							<div class="col-lg-6 col-md-6 col-12">
 								<div class="list-image overlay">
-									<img src="https://via.placeholder.com/115x140" alt="#">
-									<a href="#" class="buy"><i class="fa fa-shopping-bag"></i></a>
+									<img src="assets/uploads/products/<?=get_item('file_name','files','product_id',$sale['id'])?>" alt="#">
+									<a href="product.php?product_id=<?=$sale['id']?>" class="buy"><i class="fa fa-shopping-bag"></i></a>
 								</div>
 							</div>
 							<div class="col-lg-6 col-md-6 col-12 no-padding">
 								<div class="content">
-									<h5 class="title"><a href="#">Licity jelly leg flat Sandals</a></h5>
-									<p class="price with-discount">$65</p>
+									<h4 class="title"><a href="product.php?product_id=<?=$sale['id']?>"><?=$sale['title']?></a></h4>
+									<p class="price with-discount">$<?=$sale['price']?></p>
 								</div>
 							</div>
 						</div>
 					</div>
 					<!-- End Single List  -->
-					<!-- Start Single List  -->
-					<div class="single-list">
-						<div class="row">
-							<div class="col-lg-6 col-md-6 col-12">
-								<div class="list-image overlay">
-									<img src="https://via.placeholder.com/115x140" alt="#">
-									<a href="#" class="buy"><i class="fa fa-shopping-bag"></i></a>
-								</div>
-							</div>
-							<div class="col-lg-6 col-md-6 col-12 no-padding">
-								<div class="content">
-									<h5 class="title"><a href="#">Licity jelly leg flat Sandals</a></h5>
-									<p class="price with-discount">$33</p>
-								</div>
-							</div>
-						</div>
-					</div>
-					<!-- End Single List  -->
-					<!-- Start Single List  -->
-					<div class="single-list">
-						<div class="row">
-							<div class="col-lg-6 col-md-6 col-12">
-								<div class="list-image overlay">
-									<img src="https://via.placeholder.com/115x140" alt="#">
-									<a href="#" class="buy"><i class="fa fa-shopping-bag"></i></a>
-								</div>
-							</div>
-							<div class="col-lg-6 col-md-6 col-12 no-padding">
-								<div class="content">
-									<h5 class="title"><a href="#">Licity jelly leg flat Sandals</a></h5>
-									<p class="price with-discount">$77</p>
-								</div>
-							</div>
-						</div>
-					</div>
-					<!-- End Single List  -->
+					<?php 
+						endforeach;
+					?>
+					
+					
+					
 				</div>
 				<div class="col-lg-4 col-md-6 col-12">
 					<div class="row">
@@ -246,60 +193,31 @@
 							</div>
 						</div>
 					</div>
+					<?php 
+						$products_sale = get_related_data('products','status',1,3,'views');
+						foreach($products_sale as $sale):
+					?>
 					<!-- Start Single List  -->
 					<div class="single-list">
 						<div class="row">
 							<div class="col-lg-6 col-md-6 col-12">
 								<div class="list-image overlay">
-									<img src="https://via.placeholder.com/115x140" alt="#">
-									<a href="#" class="buy"><i class="fa fa-shopping-bag"></i></a>
+									<img src="assets/uploads/products/<?=get_item('file_name','files','product_id',$sale['id'])?>" alt="#">
+									<a href="product.php?product_id=<?=$sale['id']?>" class="buy"><i class="fa fa-shopping-bag"></i></a>
 								</div>
 							</div>
 							<div class="col-lg-6 col-md-6 col-12 no-padding">
 								<div class="content">
-									<h5 class="title"><a href="#">Licity jelly leg flat Sandals</a></h5>
-									<p class="price with-discount">$22</p>
+									<h4 class="title"><a href="product.php?product_id=<?=$sale['id']?>"><?=$sale['title']?></a></h4>
+									<p class="price with-discount">$<?=$sale['price']?></p>
 								</div>
 							</div>
 						</div>
 					</div>
 					<!-- End Single List  -->
-					<!-- Start Single List  -->
-					<div class="single-list">
-						<div class="row">
-							<div class="col-lg-6 col-md-6 col-12">
-								<div class="list-image overlay">
-									<img src="https://via.placeholder.com/115x140" alt="#">
-									<a href="#" class="buy"><i class="fa fa-shopping-bag"></i></a>
-								</div>
-							</div>
-							<div class="col-lg-6 col-md-6 col-12 no-padding">
-								<div class="content">
-									<h5 class="title"><a href="#">Licity jelly leg flat Sandals</a></h5>
-									<p class="price with-discount">$35</p>
-								</div>
-							</div>
-						</div>
-					</div>
-					<!-- End Single List  -->
-					<!-- Start Single List  -->
-					<div class="single-list">
-						<div class="row">
-							<div class="col-lg-6 col-md-6 col-12">
-								<div class="list-image overlay">
-									<img src="https://via.placeholder.com/115x140" alt="#">
-									<a href="#" class="buy"><i class="fa fa-shopping-bag"></i></a>
-								</div>
-							</div>
-							<div class="col-lg-6 col-md-6 col-12 no-padding">
-								<div class="content">
-									<h5 class="title"><a href="#">Licity jelly leg flat Sandals</a></h5>
-									<p class="price with-discount">$99</p>
-								</div>
-							</div>
-						</div>
-					</div>
-					<!-- End Single List  -->
+					<?php 
+						endforeach;
+					?>
 				</div>
 			</div>
 		</div>

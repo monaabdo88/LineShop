@@ -156,12 +156,12 @@ function to get rows related to another column
 get tbl name, column name and column value
 */
 if(! function_exists('get_related_data')){
-    function get_related_data($tbl,$col_name,$col_val, $limit = ''){
+    function get_related_data($tbl,$col_name,$col_val, $limit = '',$orderBy = 'id'){
         global $con;
         if($limit == '')
-            $stmt = $con->prepare("SELECT * FROM $tbl WHERE $col_name = ?");
+            $stmt = $con->prepare("SELECT * FROM $tbl WHERE $col_name = ? ORDER BY $orderBy DESC");
         else
-            $stmt = $con->prepare("SELECT * FROM $tbl WHERE $col_name = ? LIMIT $limit");
+            $stmt = $con->prepare("SELECT * FROM $tbl WHERE $col_name = ? ORDER BY $orderBy DESC LIMIT $limit");
         $stmt->execute(array($col_val));
         $row = $stmt->fetchall();
         return $row;
