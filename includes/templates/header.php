@@ -48,21 +48,8 @@ session_start();
 	<link rel="stylesheet" href="<?=$css_front?>reset.css">
 	<link rel="stylesheet" href="<?=$css_front?>style.css">
     <link rel="stylesheet" href="<?=$css_front?>responsive.css">
-	<style>
-.msg-container { 
-  height: 100%;
-  position: relative;
-}
+	<link rel="stylesheet" href="<?=$css_front?>myStyle.css">
 
-.msg-box {
-  margin: 0;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  -ms-transform: translate(-50%, -50%);
-  transform: translate(-50%, -50%);
-}
-</style>
 	<?php 
 		$site_status = get_item('site_status','settings','id',1);
 		$text_close = get_item('site_text_close','settings','id',1);
@@ -77,7 +64,6 @@ session_start();
 				die();
 		}
 	?>
-	
 	
 </head>
 <body class="js">
@@ -242,13 +228,13 @@ session_start();
 										foreach($main_cats as $parent_cat){
 											//check if category had sub categories
 											$sub_cats = get_data_column_count('categories','parent_id',$parent_cat['id']);
-												echo '<li><a href="category.php?id='.$parent_cat['id'].'">'.$parent_cat['name'];
+												echo '<li><a href="category.php?category_id='.$parent_cat['id'].'">'.$parent_cat['name'];
 												if($sub_cats > 0){
 													echo '<i class="fa fa-angle-right" aria-hidden="true"></i></a>
 													<ul class="sub-category">';
 														$sub_categories = get_all_rows_data('categories','parent_id',$parent_cat['id']);
 														foreach($sub_categories as $sub_cat){
-															echo '<li><a href="category.php?id='.$sub_cat['id'].'">'.$sub_cat['name'].'</a></li>';
+															echo '<li><a href="category.php?category_id='.$sub_cat['id'].'">'.$sub_cat['name'].'</a></li>';
 														}
 													echo'</ul></li>';
 												}

@@ -34,9 +34,13 @@
 									<?php 
 										$categories = get_all_rows_data('categories','status',1,6);
 										foreach($categories as $index =>$category){
-											$class = '';
-											if($index == 0) $class = 'active';
-											echo '<li class="nav-item"><a class="nav-link '.$class.'" data-toggle="tab" href="#'.$category['id'].'" role="tab">'.$category['name'].'</a></li>';
+											$productCount = checkItem('category_id','products',$category['id']);
+											if($productCount > 5):
+												$class = '';
+												if($index == 0) $class = 'active';
+												
+												echo '<li class="nav-item"><a class="nav-link '.$class.'" data-toggle="tab" href="#'.$category['id'].'" role="tab">'.$category['name'].'</a></li>';
+											endif;
 										}
 									?>
 								</ul>
@@ -47,8 +51,11 @@
 								<?php 
 								$categories = get_all_rows_data('categories','status',1,6);
 								foreach($categories as $index =>$category):
-									$class = '';
-									if($index == 0) $class = 'active show';
+									$productCount = checkItem('category_id','products',$category['id']);
+									if($productCount > 5):
+										$class = '';
+										if($index == 0) $class = 'active show';
+										
 								?>
 								<!-- Start Single Tab -->
 								<div class="tab-pane fade <?=$class?>" id="<?=$category['id']?>" role="tabpanel">
@@ -98,7 +105,10 @@
 								</div>
 								<!--/ End Single Tab -->
 								
-								<?php endforeach;?>
+								<?php 
+									endif;
+									endforeach;
+								?>
 								
 								
 							</div>

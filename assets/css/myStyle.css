@@ -1,0 +1,21 @@
+/*New Style*/
+.msg-container { 
+	height: 100%;
+	position: relative;
+  }
+  
+  .msg-box {
+	margin: 0;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	-ms-transform: translate(-50%, -50%);
+	transform: translate(-50%, -50%);
+  }
+  .pagination {
+	  display: -ms-flexbox;
+	  display: flex;
+	  padding-left: 0;
+	  list-style: none;
+	  border-radius: .25rem
+  }

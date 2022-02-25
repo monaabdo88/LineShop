@@ -361,3 +361,38 @@ if(! function_exists('search_products')){
         return $rows;
     }
 }
+/*
+function to get page num in pagination
+*/
+if(! function_exists('records_total')){
+    function records_total($tblname,$colName,$colVal,$limit){
+        global $con;
+        // Calculate Total pages
+        $stmt = $con->query("SELECT count(*) FROM $tblname WHERE $colName = $colVal");
+        $total_results = $stmt->fetchColumn();
+        $total_pages = ceil($total_results / $limit);
+        return $total_pages;
+    }
+}
+/*
+function to paginate records
+take tablename & limit
+*/
+if(! function_exists('paginate_records')){
+    function paginate_records($tblname,$colname,$colVal,$limit){
+        global $con;
+        $perPage = $limit;
+        
+
+        // Current page
+        $page = isset($_GET['page']) ? $_GET['page'] : 1;
+        $starting_limit = ($page - 1) * $perPage;
+
+        // Query to fetch data
+        $query = "SELECT * FROM $tblname  WHERE $colname = $colVal ORDER BY id DESC LIMIT $starting_limit,$perPage";
+
+        // Fetch all data for current page
+        $data = $con->query($query)->fetchAll();
+        return $data;
+    }
+}
