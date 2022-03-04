@@ -37,8 +37,7 @@ if(isset($_SESSION['user_id']))
 									if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 										$errors = add_user();
 									}
-								?>
-								<?php 
+								
 									//show error message
 									if(isset($errors) && $errors != ''){
 										foreach($errors as $key => $value){

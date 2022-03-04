@@ -19,3 +19,10 @@
 	  list-style: none;
 	  border-radius: .25rem
   }
+  .profile-list{
+	  padding:0 !important;
+	  height:auto !important;
+  }
+  .profile-list .single-info{
+	  margin-bottom:0;
+  }

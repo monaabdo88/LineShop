@@ -101,7 +101,7 @@ session_start();
 						<div class="right-content">
 							<ul class="list-main">
 								<?php if(isset($_SESSION['user_id']) && $_SESSION['user_id'] != ''): ?>
-								<li><i class="ti-user"></i><a href="profile.php">My account</a></li>
+								<li><i class="ti-user"></i><a href="profile.php"><?=$_SESSION['username']?></a></li>
 								<li><i class="ti-power-off"></i><a href="logout.php">Logout</a></li>
 								<?php else: ?>
 								<li><i class="ti-user"></i><a href="singup.php">Singup</a></li>
@@ -145,7 +145,7 @@ session_start();
 								<select class="nice-select" id="search_cats">
 									<option selected="selected">All Category</option>
 									<?php 
-									foreach(get_all_rows_data('categories','parent_id',0) as $cat){
+									foreach(get_all_rows_data('categories','status',1) as $cat){
 										echo '<option value="'.$cat['id'].'">'.$cat['name'].'</option>';
 									}
 									?>
@@ -228,6 +228,7 @@ session_start();
 										foreach($main_cats as $parent_cat){
 											//check if category had sub categories
 											$sub_cats = get_data_column_count('categories','parent_id',$parent_cat['id']);
+											if($parent_cat['status'] == 1):
 												echo '<li><a href="category.php?category_id='.$parent_cat['id'].'">'.$parent_cat['name'];
 												if($sub_cats > 0){
 													echo '<i class="fa fa-angle-right" aria-hidden="true"></i></a>
@@ -241,7 +242,9 @@ session_start();
 												else{
 													echo '</a></li>';
 												}
-										}
+											endif;
+									
+											}
 									?>
 								</ul>
 								

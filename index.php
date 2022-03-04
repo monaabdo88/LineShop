@@ -151,6 +151,7 @@
 							</div>
 						</div>
 					</div>
+					
 					<!-- End Single List  -->
 					<?php 
 						endforeach;

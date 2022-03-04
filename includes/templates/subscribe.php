@@ -1,7 +1,7 @@
 <?php 
 include "includes/functions/mail.php"; 
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_subscribe']) && $_POST['add_subscribe'] == 'subscribe'){
-	$errors = add_mail();
+	$errors_msg = add_mail();
 }																	
 ?>
 <!-- Start Shop Newsletter  -->
@@ -12,8 +12,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_subscribe']) && $_
 					<div class="col-lg-8 offset-lg-2 col-12">
 					  <?php 
 					  //show error message
-						if(isset($errors) && $errors != ''){
-							foreach($errors as $key => $value){
+						if(isset($errors_msg) && $errors_msg != ''){
+							foreach($errors_msg as $key => $value){
 								($key == 'error') ? $type = 'danger': $type='success';
 									echo '<div class="alert alert-'.$type.' alert-dismissible fade show" role="alert">
 										<strong class="text-center">'.$value.'</strong>
