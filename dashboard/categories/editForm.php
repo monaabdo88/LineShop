@@ -43,7 +43,7 @@ if($rowsCount > 0){
                                                     
             <?php
             foreach(fetchCategoryTree() as $cat){
-                if($cat['id'] == $row['id'] && $row['parent_id'] !=0)
+                if($cat['id'] == $row['parent_id'] && $row['parent_id'] !=0)
                     $select = "selected";
                 else
                     $select = "";

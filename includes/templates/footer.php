@@ -39,7 +39,7 @@
 							<?php 
 								$cats = get_all_rows_data('categories','status',1,5);
 								foreach($cats as $cat){
-									echo '<li><a href="category.php?id='.$cat['id'].'">'.strtoupper($cat['name']).'</a></li>';
+									echo '<li><a href="category.php?category_id='.$cat['id'].'">'.strtoupper($cat['name']).'</a></li>';
 								}
 							?>
 							</ul>
@@ -120,6 +120,8 @@
 	<!-- Active JS -->
 	<script src="<?=$js_front?>active.js"></script>
 	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+	<script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+	<script src="https://cdn.ckeditor.com/4.17.2/full-all/ckeditor.js"></script>
 
 	<script type="text/javascript">
 			//show Success Message

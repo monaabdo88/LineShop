@@ -31,7 +31,7 @@ if(! function_exists('upload_product_images')){
             }
         }
         echo $msg;
-        redirectPage('products.php');
+        redirectPage('products.php.php');
         
     }
 }
@@ -83,8 +83,56 @@ if(! function_exists('add_product')){
                 
             }
             echo $msg;
-            redirectPage('products.php?do=addMedia&product_id='.$last_id);
+            redirectPage('products.php.php?do=addMedia&product_id='.$last_id);
             
+        }
+    }
+}
+/*
+function to add new product in front website
+*/
+if(! function_exists('add_front_product')){
+    function add_front_product(){
+        global $con;
+        $errors = array();
+        //check if method is post
+        if($_SERVER['REQUEST_METHOD'] == 'POST'){
+            //prepare values from add form
+            $title              = $_POST['title'];
+            $userId             = $_POST['user_id'];
+            $category_id        = $_POST['category_id'];
+            $details            = $_POST['details'];
+            $price              = $_POST['price'];
+            $quantity           = $_POST['quantity'];
+            $discount           = $_POST['discount'];
+            //check if product is already exists
+            if(checkItem('title','products',$title) == 1){
+                $errors['error'] = 'This product is already exists';
+            }else{
+                //add new product to database
+                $stmt = $con->prepare("INSERT INTO 
+                    products(title, details, category_id, user_id,price,quantity,discount)
+                    VALUES(:ztitle, :zdesc, :zparent, :zuser,:zprice,:zquantity,:zdiscount)");
+                $stmt->execute(array(
+                    'ztitle' 	=> $title,
+                    'zdesc' 	=> $details,
+                    'zparent' 	=> $category_id,
+                    'zuser' 	=> $userId,
+                    'zprice'    => $price,
+                    'zdiscount' => $discount,
+                    'zquantity' => $quantity
+                ));
+                //get row id
+                $last_id = $con->lastInsertId();
+                
+                //check if tag added
+                if(isset($_POST['tag']))
+                    //add product tags code
+                    product_tags($_POST['tag'],$last_id);
+                // Echo Success Message
+                $errors['success'] ="Product Inserted Successsfully You will Redirect To Add Media Tho This Product";
+            }
+            redirectPage('?do=addMedia&product_id='.$last_id);
         }
     }
 }
@@ -143,7 +191,7 @@ if(! function_exists('update_product')){
         
             }
             echo $msg;
-            redirectPage('products.php');
+            redirectPage('products.php.php');
         }
     }
 }
@@ -174,7 +222,7 @@ if(! function_exists('delete_product')){
                 $msg = show_msg('Error','This product is Not Found');
             }
             echo $msg;
-            redirectPage('products.php');
+            redirectPage('products.php.php');
     }
 }
 /*
@@ -254,9 +302,12 @@ take product_id
 if(! function_exists('delete_product_tags')){
     function delete_product_tags($product_id){
         global $con;
-        $stmt = $con->prepare("DELETE FROM product_tags WHERE product_id = :zproduct_id");
-        $stmt->bindParam(":zproduct_id", $product_id);
-        $stmt->execute();
+        $tags_count = get_data_column_count('product_tags','product_id',$product_id);
+        if($tags_count > 0):
+            $stmt = $con->prepare("DELETE FROM product_tags WHERE product_id = :zproduct_id");
+            $stmt->bindParam(":zproduct_id", $product_id);
+            $stmt->execute();
+        endif;
     }
 }
 /*
@@ -266,14 +317,17 @@ take product_id
 if(! function_exists('delete_product_images')){
     function delete_product_images($product_id){
         global $con;
-        //unlink images from folder
-        $images = get_row_data('files','product_id',$product_id);
-        foreach($images as $img){
-            unlink($img['file_dir'].$img['file_name']);
-        }
-        //delete product images from database
-        $stmt = $con->prepare("DELETE FROM files WHERE product_id = :zproduct_id");
-        $stmt->bindParam(":zproduct_id", $product_id);
-        $stmt->execute();
+        $images_count = get_data_column_count('files','product_id',$product_id);
+        if($images_count > 0):
+            //unlink images from folder
+            $images = get_row_data('files','product_id',$product_id);
+            foreach($images as $img){
+                unlink($img['file_dir'].$img['file_name']);
+            }
+            //delete product images from database
+            $stmt = $con->prepare("DELETE FROM files WHERE product_id = :zproduct_id");
+            $stmt->bindParam(":zproduct_id", $product_id);
+            $stmt->execute();
+        endif;
     }
 }

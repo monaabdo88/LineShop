@@ -22,10 +22,13 @@ if(! function_exists('redirectPage')){
         if($url === NULL)
         {
             $url = "index.php";
-        }elseif(isset($url) && $url != NULL){
+        }
+        elseif(isset($url) && $url != NULL)
+        {
             $url;
         }
-        else{
+        else
+        {
             if (isset($_SERVER['HTTP_REFERER']) && $_SERVER['HTTP_REFERER'] !== '') {
                 $url = $_SERVER['HTTP_REFERER'];
             }
@@ -102,16 +105,18 @@ return array of categories
 if(! function_exists('fetchCategoryTree')){
     function fetchCategoryTree($parent = 0, $spacing = '', $user_tree_array = '') {
         global $con;
-        if (!is_array($user_tree_array))
+        if (!is_array($user_tree_array)) {
             $user_tree_array = array();
-            $stmt = $con->prepare("SELECT * FROM categories WHERE 1 AND parent_id = ? ORDER BY id ASC");
+        }
+            $stmt = $con->prepare("SELECT * FROM `categories` WHERE 1 AND `parent_id` = ? ORDER BY `id` ASC");
             $stmt->execute(array($parent));
             $rows = $stmt->fetchAll();
         if ($stmt->rowCount() > 0) {
           foreach ($rows as $row) {
-            $user_tree_array[] = array("id" => $row['id'], "name" => $spacing . $row['name']);
-            $user_tree_array = fetchCategoryTree($row['id'], $spacing . '&nbsp;&nbsp;', $user_tree_array);
-          }
+                $user_tree_array[] = array("id" => $row['id'], "name" => $spacing . $row['name'],"parent"=> $row['parent_id']);
+                $user_tree_array = fetchCategoryTree($row['id'], $spacing . '&nbsp;&nbsp;', $user_tree_array);
+        
+            }
         }
         return $user_tree_array;
       }
@@ -321,7 +326,7 @@ if(! function_exists('delete_all_rows')){
         }
 
         echo $msg;
-        redirectPage('back');
+        //redirectPage('');
     }
 }
 /*

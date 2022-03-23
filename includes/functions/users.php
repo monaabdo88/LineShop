@@ -106,9 +106,8 @@ if(! function_exists('login_user')){
                     email = ? 
                     AND 
                     password = ? 
-                    AND 
-                    status =?");
-            $stmt->execute(array($email,$hashedPass,0));
+                    ");
+            $stmt->execute(array($email,$hashedPass));
             $row = $stmt->fetch();
 		    $count = $stmt->rowCount();
             if($count > 0 ){

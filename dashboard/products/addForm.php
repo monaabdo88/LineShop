@@ -90,14 +90,5 @@
                                     <!-- End Submit Field -->
                                 </form>
 <!---- preview image before upload code ----->
-
-<script type="text/javascript">
-        //ckeditor
-        CKEDITOR.replace( 'editor1', {
-            filebrowserUploadUrl: '../upload.php?command=QuickUpload&type=Images&responseType=json',
-            filebrowserUploadMethod: "form"
-
-        } );
-        
-</script>  
+ 
    

@@ -26,3 +26,7 @@
   .profile-list .single-info{
 	  margin-bottom:0;
   }
+  .btn-non{
+	  color:#fff !important;
+	  padding:5px 10px;
+  }

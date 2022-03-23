@@ -147,6 +147,8 @@
 								<div class="content">
 									<h4 class="title"><a href="product.php?product_id=<?=$sale['id']?>"><?=$sale['title']?></a></h4>
 									<p class="price with-discount">$<?=$sale['price']?></p>
+                                    <p><b>Quantity: </b><?=$sale['quantity']?></p>
+									<p><b>By: </b><a href="userProducts.php?user_id=<?=$sale['user_id']?>"><?=get_item('username','users','id',$sale['user_id'])?></a></p>
 								</div>
 							</div>
 						</div>
@@ -184,6 +186,9 @@
 								<div class="content">
 									<h4 class="title"><a href="product.php?product_id=<?=$sale['id']?>"><?=$sale['title']?></a></h4>
 									<p class="price with-discount">$<?=$sale['price']?></p>
+									<p><b>Quantity: </b><?=$sale['quantity']?></p>
+									<p><b>By: </b><a href="userProducts.php?user_id=<?=$sale['user_id']?>"><?=get_item('username','users','id',$sale['user_id'])?></a></p>
+								
 								</div>
 							</div>
 						</div>
@@ -221,6 +226,9 @@
 								<div class="content">
 									<h4 class="title"><a href="product.php?product_id=<?=$sale['id']?>"><?=$sale['title']?></a></h4>
 									<p class="price with-discount">$<?=$sale['price']?></p>
+									<p><b>Quantity: </b><?=$sale['quantity']?></p>
+									<p><b>By: </b><a href="userProducts.php?user_id=<?=$sale['user_id']?>"><?=get_item('username','users','id',$sale['user_id'])?></a></p>
+								
 								</div>
 							</div>
 						</div>

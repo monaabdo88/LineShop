@@ -33,18 +33,21 @@ $rows = paginate_records('products','status',1,16);
 					?>
 				<div class="col-lg-3 col-md-3 float-left">
 					<!-- Start Single List  -->
-					<div class="single-list" style="height:350px">
+					<div class="single-list" style="height:400px">
 						<div class="row">
 							<div class="col-lg-12 col-md-6 col-12">
 								<div class="list-image overlay">
-									<img src="assets/uploads/products/<?=$image?>" alt="#" style="max-height:180px;">
+									<img src="assets/uploads/products/<?=$image?>" alt="#" style="height:180px;">
 								</div>
 							</div>
 							<div class="col-lg-12 col-md-6 col-12 no-padding">
 								<div class="content">
 									<h4 class="title"><a href="product.php?product_id=<?=$row['id']?>"><?=$row['title']?></a></h4>
-                                    <p><?=$row['created_at']?></p>
-                                    <p><?=get_item('username','users','id',$row['user_id'])?></p>
+                                    <p><b>price : </b><?=$row['price']?></p>
+									<p><b>Added At : </b><?=$row['created_at']?></p>
+                                    <p><b>Quantity: </b><?=$row['quantity']?></p>
+									<p><b>By: </b><a href="userProducts.php?user_id=<?=$row['user_id']?>"><?=get_item('username','users','id',$row['user_id'])?></a></p>
+								
 								</div>
 							</div>
 						</div>

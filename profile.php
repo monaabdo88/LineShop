@@ -19,7 +19,7 @@ if(isset($user_id)){
 					<div class="bread-inner">
 						<ul class="bread-list">
 							<li><a href="index.php">Home<i class="ti-arrow-right"></i></a></li>
-							<li class="active"><a href="#"><?=$user['username']?> Profile</a></li>
+							<li class="active"><?=$user['username']?> Profile</li>
 						</ul>
 					</div>
 				</div>
@@ -33,7 +33,7 @@ if(isset($user_id)){
 		<div class="container">
 				<div class="contact-head">
 					<div class="row">
-						<div class="col-lg-8 col-12">
+						<div class="col-lg-9 col-12">
 							<div class="form-main">
 							
 								<div class="title">
@@ -143,16 +143,16 @@ if(isset($user_id)){
 								</form>
 							</div>
 						</div>
-						<div class="col-lg-4 col-12">
+						<div class="col-lg-3 col-12">
 							<div class="single-head profile-list">
 								<div class="single-info">
 									
 									<ul class="list-group">
 										<li class="list-group-item active"><a href="profile.php">Edit Profile</a></li>
-										<li class="list-group-item"><a href="myProducts.php">My Products</a></li>
-										<li class="list-group-item"><a href="myFavs.php">My Favs</a></li>
-										<li class="list-group-item"><a href="myMessages.php">My Messages</a></li>
-										<li class="list-group-item"><a href="myOrders.php">My Orders</a></li>
+										<li class="list-group-item"><a href="userProducts.php">Products</a></li>
+										<li class="list-group-item"><a href="favs.php">Favs</a></li>
+										<li class="list-group-item"><a href="messages.php">Messages</a></li>
+										<li class="list-group-item"><a href="orders.php">Orders</a></li>
 									</ul>
 								</div>
 								

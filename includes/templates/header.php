@@ -1,7 +1,7 @@
 <?php 
 ob_start();
 session_start();
-
+include "includes/functions/functions.php";
 ?>
 <!DOCTYPE html>
 <html lang="zxx">
@@ -43,13 +43,16 @@ session_start();
     <link rel="stylesheet" href="<?=$css_front?>owl-carousel.css">
 	<!-- Slicknav -->
     <link rel="stylesheet" href="<?=$css_front?>slicknav.min.css">
-	
+	<!------------------Datatables style -------------------------------->
+	<link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" type="text/css" />
+
 	<!-- Eshop StyleSheet -->
 	<link rel="stylesheet" href="<?=$css_front?>reset.css">
 	<link rel="stylesheet" href="<?=$css_front?>style.css">
     <link rel="stylesheet" href="<?=$css_front?>responsive.css">
 	<link rel="stylesheet" href="<?=$css_front?>myStyle.css">
-
+	
 	<?php 
 		$site_status = get_item('site_status','settings','id',1);
 		$text_close = get_item('site_text_close','settings','id',1);
@@ -166,7 +169,7 @@ session_start();
 								<a href="#" class="single-icon"><i class="fa fa-heart-o" aria-hidden="true"></i></a>
 							</div>
 							<div class="sinlge-bar">
-								<a href="#" class="single-icon"><i class="fa fa-user-circle-o" aria-hidden="true"></i></a>
+								<a href="messages.php" class="single-icon"><i class="fa fa-envelope" aria-hidden="true"></i></a>
 							</div>
 							<div class="sinlge-bar shopping">
 								<a href="#" class="single-icon"><i class="ti-bag"></i> <span class="total-count">2</span></a>
