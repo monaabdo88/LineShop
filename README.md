@@ -1,5 +1,5 @@
 # <h2 align="center">🔥About LineShop Project🔥</h2>
-A Simple Ecommerce Project Developed by using PHP, MySQL, and adminlte for the dashboard.
+A Simple Ecommerce Project Developed by using PHP, MySQL, and adminlte for the dashboard.<br>
 <img src="https://github.com/monaabdo88/LineShop/blob/main/screenshot.png"/>
 ---
 <h2 align="center">🔰Project Structure🔰</h2>
