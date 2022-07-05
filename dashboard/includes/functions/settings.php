@@ -7,8 +7,6 @@ if(! function_exists('update_settings')){
         global $con;
         $logo = get_item('site_logo','settings','id',1);
         $slider = get_item('slider_background','settings','id',1);
-        $banner_one_img = get_item('banner_one_img','settings','id',1);
-        $banner_two_img = get_item('banner_two_img','settings','id',1);
         
         $msg = '';
         // Site fav icon check and upload start
@@ -31,26 +29,7 @@ if(! function_exists('update_settings')){
         }else{
             $slider_background = $slider;
         }// end site fav icon upload
-        // banner one img check and upload start
-        if($_FILES['banner_one_img']['size'] != 0){
-            unlink('assets/uploads/settings/'.$banner_one_img);
-            //upload Site logo
-            $target_dir = "assets/uploads/settings/";
-            $file_name = resize_image('../'.$target_dir,$_FILES['banner_one_img']['tmp_name'],$_FILES['banner_one_img']['type']);
-            $banner_one = $target_dir.$file_name;
-        }else{
-            $banner_one = $banner_one_img;
-        }// end banner one img upload
-        // banner two img check and upload start
-        if($_FILES['banner_two_img']['size'] != 0){
-            unlink('assets/uploads/settings/'.$banner_two_img);
-            //upload Site logo
-            $target_dir = "assets/uploads/settings/";
-            $file_name = resize_image('../'.$target_dir,$_FILES['banner_two_img']['tmp_name'],$_FILES['banner_two_img']['type']);
-            $banner_two = $target_dir.$file_name;
-        }else{
-            $banner_two= $banner_two_img;
-        }// end banner one img upload
+        
         //prepare data to update
         $site_name              = $_POST['site_name'];
         $site_email             = $_POST['site_email'];
@@ -66,12 +45,6 @@ if(! function_exists('update_settings')){
         $ln_url                 = $_POST['ln_url'];
         $wh_url                 = $_POST['wh_url'];
         $site_summery           = $_POST['site_summery'];   
-        $banner_one_title       = $_POST['banner_one_title']; 
-        $banner_one_details     = $_POST['banner_one_details']; 
-        $banner_one_link        = $_POST['banner_one_url']; 
-        $banner_two_title       = $_POST['banner_two_title']; 
-        $banner_two_details     = $_POST['banner_two_details']; 
-        $banner_two_link        = $_POST['banner_two_url']; 
         $userid                 = $_SESSION['admin_id'];
         //Validation
         if($site_name == ''){

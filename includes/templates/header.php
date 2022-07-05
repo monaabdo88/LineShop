@@ -156,7 +156,7 @@ include "includes/functions/functions.php";
 								<form method="GET" action="searchresult.php">
 									<input name="search_key" placeholder="Search Products Here....." type="search">
 									<input type="hidden" name="category_id" id="cat_id" value="" />
-									<button class="btnn" type="submit" name="doSearch"><i class="ti-search"></i></button>
+									<button class="btnn" type="submit"><i class="ti-search"></i></button>
 								</form>
 							</div>
 						</div>

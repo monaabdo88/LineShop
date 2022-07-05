@@ -80,6 +80,19 @@
                                         <div class="clearfix"></div>
                                     </div>
                                     <!-- End Product tags Field -->
+                                    <!-- Product Media Field --->
+                                    <div class="form-group form-group-lg">
+                                        <label class="col-sm-2 control-label">Product Images</label>
+                                        <div class="col-sm-10 col-md-12">
+                                                <input type="file" name="file[]" class="form-control image-file" multiple=""/>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <span id="selected-images"></span>
+                                        </div>
+                                    </div>  
+                                    <!-- end product media field -->
                                     <!-- Start Submit Field -->
                                     <div class="clearfix"></div>
                                     <div class="col-md-12">
@@ -90,5 +103,46 @@
                                     <!-- End Submit Field -->
                                 </form>
 <!---- preview image before upload code ----->
- 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script> 
+
+    $(document).ready(function() {
+        
+      if (window.File && window.FileList && window.FileReader) 
+      {
+        $(".image-file").on("change", function(e) 
+        {
+          var file = e.target.files,
+          imagefiles = $(".image-file")[0].files;
+          var i = 0;
+          $.each(imagefiles, function(index, value){
+            var f = file[i];
+            var fileReader = new FileReader();
+            fileReader.onload = (function(e) {
+
+              $('<div class="pip col-md-3 float-left">' +
+                '<img style="width: 100%; height: 100px;" src="' + e.target.result + '" class="img-thumbnail img-responsive">'+
+                '<p class="btn btn-sm btn-danger cross-image remove" style="float:right;margin-top:5px;">Remove</p>'+
+                '<input type="hidden" name="image[]" value="' + e.target.result + '">' +
+                '<input type="hidden" name="imageName[]" value="' + value.name + '">' +
+                '</div>').insertAfter("#selected-images");
+                $(".remove").click(function(){
+                  $(this).parent(".pip").remove();
+                });
+            });
+            fileReader.readAsDataURL(f);
+            i++;
+          });
+        });
+      } else {
+        alert("Your browser doesn't support to File API")
+      }
+    });
+    //ckeditor
+    CKEDITOR.replace( 'editor1', {
+            filebrowserUploadUrl: '../upload.php?command=QuickUpload&type=Images&responseType=json',
+            filebrowserUploadMethod: "form"
+
+        } );
+</script>
    

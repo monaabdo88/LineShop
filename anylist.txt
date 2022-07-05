@@ -1,0 +1,11 @@
+-forget password
+-activate email
+-singup / login with social media
+-favs list
+-messages
+-cart
+-checkout
+-orders
+-comments
+-product details
+-search

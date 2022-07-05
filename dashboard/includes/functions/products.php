@@ -6,35 +6,30 @@ take product_id
 if(! function_exists('upload_product_images')){
     function upload_product_images($product_id){
         global $con;
-        $msg = '';
         if(isset($product_id) && is_numeric($product_id)){
             if (! empty($_FILES) && isset($_FILES['file'])) {
-                $imagePath = isset($_FILES["file"]["name"]) ? $_FILES["file"]["name"] : "Undefined";
-                $targetPath = "../assets/uploads/products/";
-                $imagePath = $targetPath . $imagePath;
-                $tempFile = $_FILES['file']['tmp_name'];
-                
-                $targetFile =time().rand(0,999). $_FILES['file']['name'];
-                $file_size = filesize($tempFile);
-                
-                if(move_uploaded_file($tempFile, $targetPath.$targetFile)){
-                    $stmtImg = $con->prepare("INSERT INTO files (product_id,file_name,file_size,file_dir) VALUES (:zproduct_id,:zfile_name,:zfile_size,:zfile_dir)");
-                    $stmtImg->execute(array(
-                            'zproduct_id'       => $product_id,
-                            'zfile_name'        => $targetFile,
-                            'zfile_size'        => $file_size,
-                            'zfile_dir'         => $targetPath
-                        ));
-                    
-                }       
-                $msg = show_msg('success',"Images Inserted Successsfully");
-            }
+                $countfiles = count($_FILES['file']['name']);
+                for($i=0;$i<$countfiles;$i++){
+                    $filename = $_FILES['file']['name'][$i];
+                    $tempFile = $_FILES['file']['tmp_name'][$i];
+                    $targetFile =time().rand(0,999).$filename;
+                    $targetPath = "../assets/uploads/products/";
+                    $file_size = filesize($tempFile);
+                    if(move_uploaded_file($tempFile,$targetPath.$targetFile)){
+                        $stmtImg = $con->prepare("INSERT INTO files (product_id,file_name,file_size,file_dir) VALUES (:zproduct_id,:zfile_name,:zfile_size,:zfile_dir)");
+                        $stmtImg->execute(array(
+                                'zproduct_id'       => $product_id,
+                                'zfile_name'        => $targetFile,
+                                'zfile_size'        => $file_size,
+                                'zfile_dir'         => $targetPath
+                            ));
+                    }
+                }
+            }       
         }
-        echo $msg;
-        redirectPage('products.php.php');
-        
-    }
+     }     
 }
+
 /*
 function to add new product
 */
@@ -73,17 +68,17 @@ if(! function_exists('add_product')){
                 ));
                 //get row id
                 $last_id = $con->lastInsertId();
-                
+                upload_product_images($last_id);
                 //check if tag added
                 if(isset($_POST['tag']))
                     //add product tags code
                     product_tags($_POST['tag'],$last_id);
                 // Echo Success Message
-                $msg = show_msg('success',"Product Inserted Successsfully You will Redirect To Add Media Tho This Product");
+                $msg = show_msg('success',"Product Inserted Successsfully");
                 
             }
             echo $msg;
-            redirectPage('products.php.php?do=addMedia&product_id='.$last_id);
+            redirectPage('products.php');
             
         }
     }
@@ -178,6 +173,8 @@ if(! function_exists('update_product')){
                 $upData =$stmt->execute(array($title,$details,$status,$userId,$category_id,$discount,$quantity,$price,$id));
                 //Update Message
                 if($upData){
+                    upload_product_images($_POST['product_id']);
+                
                     //check if tag added
                     if(isset($_POST['tag'])){
                         //delete previous product tags
@@ -191,7 +188,7 @@ if(! function_exists('update_product')){
         
             }
             echo $msg;
-            redirectPage('products.php.php');
+            redirectPage('products.php');
         }
     }
 }
@@ -222,7 +219,7 @@ if(! function_exists('delete_product')){
                 $msg = show_msg('Error','This product is Not Found');
             }
             echo $msg;
-            redirectPage('products.php.php');
+            redirectPage('products.php');
     }
 }
 /*
@@ -269,10 +266,11 @@ Take Image ID
 if(! function_exists('delImg')){
     function delImg(){
         global $con;
-        $img_name = $_GET['image_name'];
-        $product_id = $_GET['product_id'];
-        $img_dir = get_item('file_dir','files','file_name',$img_name);
-        if(isset($img_name) && isset($product_id)){
+        $img_id = intval($_GET['img_id']);
+        $img_name = get_item('file_name','files','id',$img_id);
+        $product_id = get_item('product_id','files','id',$img_id);
+        $img_dir = get_item('file_dir','files','id',$img_id);
+        if(isset($img_name) && isset($img_id)){
             unlink($img_dir.$img_name);
             $stmt = $con->prepare("DELETE FROM files WHERE file_name = :zimage AND product_id = :zproduct_id");
             $stmt->execute(array(

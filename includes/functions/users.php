@@ -193,3 +193,26 @@ if(! function_exists('edit_user')){
         }
     }
 }
+/*
+function to restore user password
+*/
+if(! function_exists('restore_pass')){
+    function restore_pass(){
+        global $con;
+        $errors = array();
+        if($_SERVER['REQUEST_METHOD'] == 'POST'){
+            $email = $_POST['email'];
+            //validation
+            if(empty($email)){
+                $errors['error'] = 'Please Write Your email';
+            }
+            //check if email exist
+            if(checkItem('email','users',$email) == 0){
+                $errors['error'] = 'This user Email is Not exists in database';
+            }else{
+
+            }
+        }
+        return $errors;
+    }
+}

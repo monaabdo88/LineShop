@@ -14,7 +14,7 @@ if(isset($_SESSION['user_id']))
 					<div class="bread-inner">
 						<ul class="bread-list">
 							<li><a href="index.php">Home<i class="ti-arrow-right"></i></a></li>
-							<li class="active"><a href="login.php">Login</a></li>
+							<li class="active"><a href="forgetPassword.php">Restore Password</a></li>
 						</ul>
 					</div>
 				</div>
@@ -31,7 +31,7 @@ if(isset($_SESSION['user_id']))
 						<div class="col-lg-8 offset-md-2 col-12">
 							<div class="form-main">
 								<div class="title">
-									<h4>New User</h4>
+									<h4>Restore Password</h4>
 								</div>
 								<?php 
 									if ($_SERVER['REQUEST_METHOD'] == 'POST'){
@@ -62,22 +62,15 @@ if(isset($_SESSION['user_id']))
 												<input name="email" type="email" required placeholder="Email">
 											</div>
 										</div>
-										<div class="col-lg-12 col-12">
-											<div class="form-group">
-												<label>Password<span>*</span></label>
-												<input name="password" type="password" required placeholder="Password">
-											</div>	
-										</div>
+										
 										
 										<div class="col-12">
-											<div class="col-md-4 float-left">
+											<div class="col-md-6 float-left">
 												<div class="form-group button">
-													<button type="submit" class="btn ">Login</button>
+													<button type="submit" class="btn ">Restore Password</button>
 												</div>
 											</div>	
-											<div class="col-md-4 float-right">
-												<a href="forgetPassword.php" class="float-right">Forget Password?</a>
-											</div>
+											
 											
 										</div>
 									</div>

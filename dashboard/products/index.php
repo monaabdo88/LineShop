@@ -11,7 +11,6 @@
                 <th>Status</th>
                 <th>Price</th>
                 <th>Qantity</th>
-                <th>Media</th>
                 <th>Created At</th>
                 <th>Options</th>
             </tr>
@@ -24,7 +23,6 @@
                 <th>Status</th>
                 <th>Price</th>
                 <th>Qantity</th>
-                <th>Media</th>
                 <th>Created At</th>
                 <th>Options</th>
             </tr>

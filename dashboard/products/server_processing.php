@@ -46,24 +46,17 @@ $columns = array(
     ),
     array('db'  => 'price',     'dt'    => 4),
     array('db'  => 'quantity',     'dt'    => 5),
-    array(
-        'db'        => 'id',
-        'dt'        => 6,
-        'formatter' => function ($d , $row){
-            return "
-            <a href='?do=showMedia&product_id=$d' class='btn btn-warning'> <i class='fa fa-image'></i></a>";
-        }
-    ),
+    
     array(
         'db'        => 'created_at',
-        'dt'        => 7,
+        'dt'        => 6,
         'formatter' => function( $d, $row ) {
             return date( 'jS M y', strtotime($d));
         }
     ),
     array(
         'db'        => 'id',
-        'dt'        => 8,
+        'dt'        => 7,
         'formatter' => function ($d , $row){
             return "
             <a href='?do=Edit&id=$d' class='btn btn-sm btn-warning'> <i class='fa fa-pen'></i></a>

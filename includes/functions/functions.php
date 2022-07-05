@@ -356,12 +356,11 @@ if(! function_exists('get_user_permission')){
 function to search in products
 */
 if(! function_exists('search_products')){
-    function search_products(){
+    function search_products($search_keyword , $cat_id = null){
         global $con;
-        $search_keyword = $_GET['search_key'];
-        $cat_id = intval($_GET['cat_id']);
-        $stmt = $con->prepare("SELECT * FROM products WHERE name = ? AND category_id = ?");
-        $stmt->execute(array($search_keyword,$cat_id));
+        
+        $stmt = $con->prepare("SELECT * FROM products WHERE title LIKE '%$search_keyword%' AND category_id LIKE '%$cat_id%' AND status = 1");
+        $stmt->execute();
         $rows = $stmt->fetchAll();
         return $rows;
     }
