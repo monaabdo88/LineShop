@@ -83,14 +83,14 @@ include "includes/functions/users.php";
                         }
                         //delete on record
                         elseif($do == 'Delete'){
-                          if(get_user_permission($_SESSION['role_id'],'delete user'))
+                          if(get_user_permission($_SESSION['role_id'],'delete users'))
                             delete_User();
                           else
                             echo '<div class="alert alert-danger"><p class="text-center">You dont Have Permission To Login To This Page</p></div>';
                         }
                         //delete All Selected users
                         elseif($do == 'deleteAll'){
-                          if(get_user_permission($_SESSION['role_id'],'delete user'))
+                          if(get_user_permission($_SESSION['role_id'],'delete users'))
                             delete_all_rows();
                           else
                             echo '<div class="alert alert-danger"><p class="text-center">You dont Have Permission To Login To This Page</p></div>';

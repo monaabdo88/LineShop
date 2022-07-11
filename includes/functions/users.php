@@ -68,7 +68,8 @@ if(! function_exists('add_user')){
                     'zcountry_id'   => $country_id,
                     'zcity_id'      => $city_id,
                     'zstate_id'     => $state_id,
-                    'zphone'        => $phone
+                    'zphone'        => $phone,
+                    
                 ));
                 // Echo Success Message
                 $errors['success'] = "Registration Done Successfully";

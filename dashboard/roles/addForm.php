@@ -6,9 +6,7 @@
                                         <div class="col-sm-10 col-md-12">
                                             <input type="text" name="role_name" class="form-control" required="required" />
                                         </div>
-                                    </div>
-                                    
-                                   
+                                    </div>   
                                     <!-- Start  Permissions Field -->
                                     <div class="form-group form-group-lg">
                                         <label class="col-sm-2 control-label">Permissions</label>

@@ -39,7 +39,7 @@ if(! function_exists('add_user')){
                 }
                 //add new user to database
                 $stmt = $con->prepare("INSERT INTO 
-                    users(username, email, password, role_id,status,trust_user,avatar)
+                    users(username, email, password, role_id,status,trust_user,avatar,country_id,city_id,state_id,phone)
                     VALUES(:zusername, :zemail, :zpassword, 
                     :zrole_id, :zstatus,:ztrust_user,:zavatar,
                     :zcountry_id,:zcity_id,:zstate_id,:zphone
@@ -164,15 +164,15 @@ if(! function_exists('delete_user')){
                 if(isset($userImg) && $userImg != 'no-image.png')
                   unlink("../assets/uploads/users/".$userImg);
 
-                $stmt = $con->prepare("DELETE FROM users WHERE id = :zid");
-                $stmt->bindParam(":zid", $user_id);
-                $stmt->execute();
+                  $stmt = $con->prepare("DELETE FROM users WHERE id = :zid");
+                  $stmt->bindParam(":zid", $user_id);
+                  $stmt->execute();
                 
                 $msg = show_msg('success','user Deleted Successfully');
             } else {
                 $msg = show_msg('Error','This user is Not Found');
             }
             echo $msg;
-            redirectPage('users.php');
+           // redirectPage('users.php');
     }
 }

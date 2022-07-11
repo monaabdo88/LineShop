@@ -31,7 +31,7 @@ $primaryKey = 'id';
 $columns = array(
     array('db'  => 'id', 'dt'   => 0,
             'formatter' => function($d){
-                if($d != 1)
+                if($d != 1 && $d !=2)
                     return "<input type='checkbox'  onchange='toggleCheckbox()' name='checkRole[]' value='$d'/>";
             }
         ),
@@ -48,14 +48,16 @@ $columns = array(
         'db'        => 'id',
         'dt'        => 4,
         'formatter' => function ($d , $row){
-            if($d != 1){
+            if($d != 1 && $d !=2){
                 return "
                 <a onclick='confirmation(event)' href='?do=Delete&id=$d' class='btn btn-danger'> <i class='fa fa-trash'></i></a>
+                <a href='?do=Edit&id=$d' class='btn btn-warning'> <i class='fa fa-pen'></i></a>
                 ";
             }
             else{
                 return "<a href='?do=Edit&id=$d' class='btn btn-warning'> <i class='fa fa-pen'></i></a>";
             }
+                   
             
         }
     )
