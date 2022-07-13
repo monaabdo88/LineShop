@@ -222,6 +222,17 @@ if(! function_exists('get_item')){
         }
     }
 }
+if(! function_exists('get_parent_name')){
+    function get_parent_name($id){
+        global $con;
+        $stmt = $con->prepare("SELECT name FROM categories WHERE parent_id = ?");
+        $stmt->execute(array($id));
+        $row = $stmt->fetch();
+        if($stmt->rowCount() > 0){
+            return $row['name'];
+        }
+    }
+}
 /*
 function to show return message
 take two var

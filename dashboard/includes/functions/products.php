@@ -4,7 +4,7 @@ function to upload product images
 take product_id
 */
 if(! function_exists('upload_product_images')){
-    function upload_product_images($product_id){
+    function upload_product_images($product_id,$type = 'cp'){
         global $con;
         if(isset($product_id) && is_numeric($product_id)){
             if (! empty($_FILES) && isset($_FILES['file'])) {
@@ -13,7 +13,11 @@ if(! function_exists('upload_product_images')){
                     $filename = $_FILES['file']['name'][$i];
                     $tempFile = $_FILES['file']['tmp_name'][$i];
                     $targetFile =time().rand(0,999).$filename;
-                    $targetPath = "../assets/uploads/products/";
+                    if($type == 'cp')
+                        $targetPath = "../assets/uploads/products/";
+                    else
+                        $targetPath = "assets/uploads/products/";
+                    
                     $file_size = filesize($tempFile);
                     if(move_uploaded_file($tempFile,$targetPath.$targetFile)){
                         $stmtImg = $con->prepare("INSERT INTO files (product_id,file_name,file_size,file_dir) VALUES (:zproduct_id,:zfile_name,:zfile_size,:zfile_dir)");
@@ -34,7 +38,7 @@ if(! function_exists('upload_product_images')){
 function to add new product
 */
 if(! function_exists('add_product')){
-    function add_product(){
+    function add_product($type = 'cp'){
         global $con;
         $msg = '';
         //check if method is post
@@ -42,7 +46,10 @@ if(! function_exists('add_product')){
             //prepare values from add form
             $title              = $_POST['title'];
             $userId             = $_POST['user_id'];
-            $status             = $_POST['status'];
+            if($type == 'cp')
+                $status         = $_POST['status'];
+            else
+                $status         = 0;
             $category_id        = $_POST['category_id'];
             $details            = $_POST['details'];
             $price              = $_POST['price'];
@@ -68,7 +75,7 @@ if(! function_exists('add_product')){
                 ));
                 //get row id
                 $last_id = $con->lastInsertId();
-                upload_product_images($last_id);
+                upload_product_images($last_id,$type);
                 //check if tag added
                 if(isset($_POST['tag']))
                     //add product tags code
@@ -78,56 +85,10 @@ if(! function_exists('add_product')){
                 
             }
             echo $msg;
-            redirectPage('products.php');
-            
-        }
-    }
-}
-/*
-function to add new product in front website
-*/
-if(! function_exists('add_front_product')){
-    function add_front_product(){
-        global $con;
-        $errors = array();
-        //check if method is post
-        if($_SERVER['REQUEST_METHOD'] == 'POST'){
-            //prepare values from add form
-            $title              = $_POST['title'];
-            $userId             = $_POST['user_id'];
-            $category_id        = $_POST['category_id'];
-            $details            = $_POST['details'];
-            $price              = $_POST['price'];
-            $quantity           = $_POST['quantity'];
-            $discount           = $_POST['discount'];
-            //check if product is already exists
-            if(checkItem('title','products',$title) == 1){
-                $errors['error'] = 'This product is already exists';
-            }else{
-                //add new product to database
-                $stmt = $con->prepare("INSERT INTO 
-                    products(title, details, category_id, user_id,price,quantity,discount)
-                    VALUES(:ztitle, :zdesc, :zparent, :zuser,:zprice,:zquantity,:zdiscount)");
-                $stmt->execute(array(
-                    'ztitle' 	=> $title,
-                    'zdesc' 	=> $details,
-                    'zparent' 	=> $category_id,
-                    'zuser' 	=> $userId,
-                    'zprice'    => $price,
-                    'zdiscount' => $discount,
-                    'zquantity' => $quantity
-                ));
-                //get row id
-                $last_id = $con->lastInsertId();
-                
-                //check if tag added
-                if(isset($_POST['tag']))
-                    //add product tags code
-                    product_tags($_POST['tag'],$last_id);
-                // Echo Success Message
-                $errors['success'] ="Product Inserted Successsfully You will Redirect To Add Media Tho This Product";
-            }
-            redirectPage('?do=addMedia&product_id='.$last_id);
+            if($type == 'cp')
+                redirectPage('products.php');
+            else
+                redirectPage('userProducts.php'); 
         }
     }
 }
@@ -135,20 +96,24 @@ if(! function_exists('add_front_product')){
 function to update product
 */
 if(! function_exists('update_product')){
-    function update_product(){
+    function update_product($type = 'cp'){
         global $con;
         $msg = '';
         if($_SERVER['REQUEST_METHOD'] == 'POST'){
             //Prepare Values from edit form
             $title              = $_POST['title'];
-            $userId             = $_POST['user_id'];
-            $status             = $_POST['status'];
+            //$userId             = $_POST['user_id'];
+            $id                 = $_POST['product_id'];
+            if($type == 'cp')
+                $status             = $_POST['status'];
+            else
+                $status = get_item('status','products','id',$id);
             $category_id        = $_POST['category_id'];
             $details            = $_POST['details'];
             $price              = $_POST['price'];
             $quantity           = $_POST['quantity'];
             $discount           = $_POST['discount'];
-            $id                 = $_POST['product_id'];
+            
             //check if the new product title is exists in another product
             if(checkItemUp('title','products',$title,$id) > 0){
                 $msg = show_msg('Error','This product title is Already exists');
@@ -162,7 +127,6 @@ if(! function_exists('update_product')){
                                         title = ?,
                                         details = ?,
                                         status = ?,
-                                        user_id = ?,
                                         category_id = ?,
                                         discount = ?,
                                         quantity = ? ,
@@ -170,10 +134,10 @@ if(! function_exists('update_product')){
                                         WHERE
                                         id = ?
                                         ");
-                $upData =$stmt->execute(array($title,$details,$status,$userId,$category_id,$discount,$quantity,$price,$id));
+                $upData =$stmt->execute(array($title,$details,$status,$category_id,$discount,$quantity,$price,$id));
                 //Update Message
                 if($upData){
-                    upload_product_images($_POST['product_id']);
+                    upload_product_images($id,$type);
                 
                     //check if tag added
                     if(isset($_POST['tag'])){
@@ -188,7 +152,10 @@ if(! function_exists('update_product')){
         
             }
             echo $msg;
-            redirectPage('products.php');
+            if($type == 'cp')
+                redirectPage('products.php');
+            else   
+                redirectPage('userProducts.php');
         }
     }
 }

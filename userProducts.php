@@ -17,20 +17,16 @@ if(isset($user_id)){
     //edit form
     }elseif($do == 'Insert')
     {
-        add_front_product();
+        add_product('front');
     }
     //edit product
     elseif ($do == 'Edit')
     {
       include "products/editPro.php";
     }
-    //show product media
-    elseif(($do == 'addMedia' && isset($_GET['product_id'])) || $do == 'showMedia'){
-      include "products/showMedia.php";
-    }
-    //upload product images
-    elseif($do == 'uploadImages'){
-      upload_product_images($_GET['product_id']);
+    //update product function
+    elseif($do == 'updateCode'){
+        update_product('front');
     }
     //delete product
     elseif($do == 'delProduct'){
@@ -81,8 +77,7 @@ if(isset($user_id)){
 										<th>Status</th>
 										<th>Price</th>
 										<th>Qantity</th>
-                    <th>Media</th>
-										<th>Options</th>
+                    <th>Options</th>
 									</tr>
 								</thead>
 								<tfoot>
@@ -93,8 +88,7 @@ if(isset($user_id)){
 										<th>Status</th>
 										<th>Price</th>
 										<th>Qantity</th>
-                    <th>Media</th>
-										<th>Options</th>
+                    <th>Options</th>
 									</tr>
 								</tfoot>
 								</table>

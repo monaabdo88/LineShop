@@ -5,12 +5,10 @@ $row = get_row_data('products','id',$productId);
 $rowsCount = checkItem('id','products',$productId);
 $media = get_row_data('files','product_id',$row['id']);
 //Check is Product ID is already exists
-
-//Check is Product ID is already exists
-if($rowsCount > 0){
+if($rowsCount > 0 ){
 ?>                
 <form class="form-horizontal" action="?do=updateCode" method="POST" enctype="multipart/form-data">
-    <input type="hidden" name="user_id" value="<?= $_SESSION['admin_id'] ?>" />
+    <input type="hidden" name="user_id" value="<?= $_SESSION['user_id'] ?>" />
     <input type="hidden" name="product_id" value="<?= $row['id']?>" />
 
     <!-- Start Product name Field -->
@@ -115,7 +113,7 @@ if($rowsCount > 0){
                     <?php 
                     foreach($media as $img){
                         echo'<div class="pip col-md-3 float-left">
-                                <img class="img-thumbnail img-responsive" style="width: 100%; height: 100px;" src="../assets/uploads/products/'.$img['file_name'].'" />
+                                <img class="img-thumbnail img-responsive" src="../assets/uploads/products/'.$img['file_name'].'" />
                                 <button type="button" data-id="'.$img['id'].'" class="btn btn-sm btn-danger remove-db cross-image remove">Remove</button>
                             </div>';
                     }
@@ -168,7 +166,7 @@ $(document).ready(function() {
               fileReader.onload = (function(e) {
   
                 $('<div class="pip col-md-3 float-left">' +
-                  '<img style="width: 100%; height: 100px;" src="' + e.target.result + '" class="img-thumbnail img-responsive">'+
+                  '<img src="' + e.target.result + '" class="img-thumbnail img-responsive">'+
                   '<p class="btn btn-sm btn-danger cross-image remove">Remove</p>'+
                   '<input type="hidden" name="image[]" value="' + e.target.result + '">' +
                   '<input type="hidden" name="imageName[]" value="' + value.name + '">' +

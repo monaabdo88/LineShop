@@ -20,6 +20,7 @@
  
 // DB table to use
 $table = 'categories';
+
 // Table's primary key
 $primaryKey = 'id';
 // Array of database columns which should be read and sent back to DataTables.

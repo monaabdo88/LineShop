@@ -121,7 +121,7 @@
             fileReader.onload = (function(e) {
 
               $('<div class="pip col-md-3 float-left">' +
-                '<img style="width: 100%; height: 100px;" src="' + e.target.result + '" class="img-thumbnail img-responsive">'+
+                '<img src="' + e.target.result + '" class="img-thumbnail img-responsive">'+
                 '<p class="btn btn-sm btn-danger cross-image remove" style="float:right;margin-top:5px;">Remove</p>'+
                 '<input type="hidden" name="image[]" value="' + e.target.result + '">' +
                 '<input type="hidden" name="imageName[]" value="' + value.name + '">' +

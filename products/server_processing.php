@@ -52,14 +52,6 @@ $columns = array(
     array(
         'db'        => 'id',
         'dt'        => 6,
-        'formatter' => function ($d , $row){
-            return "
-            <a href='?do=addMedia&product_id=$d' class='btn btn-warning btn-non'> <i class='fa fa-image'></i></a>";
-        }
-    ),
-    array(
-        'db'        => 'id',
-        'dt'        => 7,
         'formatter' => function ($d){
             return "
             <a href='?do=Edit&id=$d' class='btn btn-sm btn-warning btn-non'> <i class='fa fa-pencil'></i></a>
