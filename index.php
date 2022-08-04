@@ -91,7 +91,7 @@
 													<div class="product-content">
 														<h3><a href="product.php?product_id=<?=$product['id']?>"><?= $product['title'] ?></a></h3>
 														<div class="product-price">
-															<span><?=$product['price']?></span>
+															<span><?=$product['price']?>$</span>
 														</div>
 													</div>
 												</div>

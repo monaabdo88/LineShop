@@ -1,4 +1,9 @@
 <?php
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+use PHPMailer\PHPMailer\SMTP;
+require 'vendor\autoload.php';
+
 /*
 function to add new user
 */
@@ -197,8 +202,8 @@ if(! function_exists('edit_user')){
 /*
 function to restore user password
 */
-if(! function_exists('restore_pass')){
-    function restore_pass(){
+if(! function_exists('restore_password')){
+    function restore_password(){
         global $con;
         $errors = array();
         if($_SERVER['REQUEST_METHOD'] == 'POST'){
@@ -211,9 +216,44 @@ if(! function_exists('restore_pass')){
             if(checkItem('email','users',$email) == 0){
                 $errors['error'] = 'This user Email is Not exists in database';
             }else{
+                $mail = new PHPMailer; 
+ 
+                $mail->isSMTP();
+                $mail->Host = 'localhost';
+                $mail->SMTPAuth = false;
+                $mail->SMTPAutoTLS = false; 
+                $mail->Port = 25; 
 
+               // Enable SMTP authentication 
+                $mail->Username = 'monaabdo88@gmail.com';   // SMTP username 
+                $mail->Password = '@Jskdl2012';   // SMTP password 
+                //$mail->SMTPSecure = 'tls';            // Enable TLS encryption, `ssl` also accepted 
+                //$mail->Port = 25;                    // TCP port to connect to 
+                
+                // Sender info 
+                $mail->setFrom('monaabdo88@gmail.com', 'Mona Abdo');                 
+                // Add a recipient 
+                $mail->addAddress('dev.monaabdo@gmail.com'); 
+                // Set email format to HTML 
+                $mail->isHTML(true); 
+                
+                // Mail subject 
+                $mail->Subject = 'Email from Localhost by CodexWorld'; 
+                
+                // Mail body content 
+                $bodyContent = '<h1>How to Send Email from Localhost using PHP by CodexWorld</h1>'; 
+                $bodyContent .= '<p>This HTML email is sent from the localhost server using PHP by <b>CodexWorld</b></p>'; 
+                $mail->Body    = $bodyContent; 
+                
+                // Send email 
+                if(!$mail->send()) { 
+                    echo 'Message could not be sent. Mailer Error: '.$mail->ErrorInfo; 
+                } else { 
+                    echo 'Message has been sent.'; 
+                } 
+                                
             }
         }
-        return $errors;
+        //return $errors;
     }
 }
