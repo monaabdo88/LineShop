@@ -29,7 +29,7 @@ if(! function_exists('add_category')){
                         $imageTmp	    = $_FILES['image']['tmp_name'];
                         $imageType      = $_FILES['image']['type'];
                         //upload category Image
-                        $image = resize_image('../assets/uploads/categories/',$imageTmp,$imageType);
+                        $image = resize_image('../assets/uploads/categories/',$imageTmp,$imageType,101.5,101.5);
                     }else{
                         $image = '';
                     }
@@ -91,7 +91,7 @@ if(! function_exists('update_category')){
         $imageTmp	    = $_FILES['image']['tmp_name'];
         $imageType      = $_FILES['image']['type'];
         //upload category Image
-        $image = resize_image('../assets/uploads/categories/',$imageTmp,$imageType);
+        $image = resize_image('../assets/uploads/categories/',$imageTmp,$imageType,101.5,101.5);
 
     }else{
             $image = $_POST['oldImg'];

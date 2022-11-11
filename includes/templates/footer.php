@@ -88,7 +88,8 @@
 		</div>
 	</footer>
 	<!-- /End Footer Area -->
- 
+     <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ" crossorigin="anonymous"></script>
+
 	<!-- Jquery -->
 	<script src="<?=$js_front?>jquery.min.js"></script>
     <script src="<?=$js_front?>jquery-migrate-3.0.0.js"></script>
@@ -111,19 +112,28 @@
 	<script src="<?=$js_front?>nicesellect.js"></script>
 	<!-- Flex Slider JS -->
 	<script src="<?=$js_front?>flex-slider.js"></script>
+
 	<!-- ScrollUp JS -->
 	<script src="<?=$js_front?>scrollup.js"></script>
 	<!-- Onepage Nav JS -->
 	<script src="<?=$js_front?>onepage-nav.min.js"></script>
 	<!-- Easing JS -->
 	<script src="<?=$js_front?>easing.js"></script>
+
 	<!-- Active JS -->
 	<script src="<?=$js_front?>active.js"></script>
 	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 	<script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
 	<script src="https://cdn.ckeditor.com/4.17.2/full-all/ckeditor.js"></script>
-
-	<script type="text/javascript">
+    <script src="https://unpkg.com/imagesloaded@4/imagesloaded.pkgd.min.js"></script>
+    <script src="<?=$js_front?>jquery.exzoom.js"></script>
+    <script type="text/javascript">
+        $('.expand-img').imagesLoaded( function() {
+          $("#exzoom").exzoom({
+                autoPlay: false,
+            });
+          $("#exzoom").removeClass('hidden')
+        });
 			//show Success Message
 			function successFn(msg,status){
 				swal("Good Job!", msg, status);
@@ -139,7 +149,8 @@
 				$("#cat_id").val(cat_id);
     		});
 			});
-	</script>
 
+       
+    </script>
 </body>
 </html>

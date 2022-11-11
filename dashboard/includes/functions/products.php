@@ -58,6 +58,7 @@ if(! function_exists('add_product')){
             //check if product is already exists
             if(checkItem('title','products',$title) == 1){
                 $msg = show_msg('Error','This product is already exists');
+                
             }else{
                 //add new product to database
                 $stmt = $con->prepare("INSERT INTO 
@@ -81,14 +82,14 @@ if(! function_exists('add_product')){
                     //add product tags code
                     product_tags($_POST['tag'],$last_id);
                 // Echo Success Message
+                if($type == 'cp')
                 $msg = show_msg('success',"Product Inserted Successsfully");
+                
                 
             }
             echo $msg;
-            if($type == 'cp')
-                redirectPage('products.php');
-            else
-                redirectPage('userProducts.php'); 
+            ($type == 'cp')? redirectPage('products.php'): redirectPage('userProducts.php');
+            
         }
     }
 }
@@ -197,7 +198,7 @@ if(!function_exists('product_tags')){
     function product_tags($tags, $product_id){
         global $con;
         foreach($tags as $tag){
-            $stmt = $con->prepare("INSERT INTO product_Tags (product_id,tag_id) VALUES (:zproduct_id,:ztag_id)");
+            $stmt = $con->prepare("INSERT INTO product_tags (product_id,tag_id) VALUES (:zproduct_id,:ztag_id)");
             $stmt->execute(array(
                 'zproduct_id'   => $product_id,
                 'ztag_id'       => $tag

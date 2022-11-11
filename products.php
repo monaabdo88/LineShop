@@ -5,62 +5,37 @@ $rows = paginate_records('products','status',1,16);
 ?>
 	<!-- Breadcrumbs -->
     <div class="breadcrumbs">
-			<div class="container">
-				<div class="row">
-					<div class="col-12">
-						<div class="bread-inner">
-							<ul class="bread-list">
-								<li><a href="index.php">Home<i class="ti-arrow-right"></i></a></li>
-								<li class="active"><a href="products.php">products</a></li>
-							</ul>
-						</div>
+		<div class="container">
+			<div class="row">
+				<div class="col-12">
+					<div class="bread-inner">
+						<ul class="bread-list">
+							<li><a href="index.php">Home<i class="ti-arrow-right"></i></a></li>
+							<li class="active"><a href="products.php">products</a></li>
+						</ul>
 					</div>
 				</div>
 			</div>
 		</div>
+	</div>
 		<!-- End Breadcrumbs -->
-			
-		<!-- Start Shop Home List  -->
-	<section class="shop-home-list section">
+	<section class="product-area section" >
 		<div class="container">
-			<div class="row">
-				<div class="col-md-12">
-					
-					<?php 
-						foreach($rows as $row):
-							$image = get_item('file_name','files','product_id',$row['id']);
-
-					?>
-				<div class="col-lg-3 col-md-3 float-left">
-					<!-- Start Single List  -->
-					<div class="single-list" style="height:400px">
-						<div class="row">
-							<div class="col-lg-12 col-md-6 col-12">
-								<div class="list-image overlay">
-									<img src="assets/uploads/products/<?=$image?>" alt="#" style="height:180px;">
-								</div>
-							</div>
-							<div class="col-lg-12 col-md-6 col-12 no-padding">
-								<div class="content">
-									<h4 class="title"><a href="product.php?product_id=<?=$row['id']?>"><?=$row['title']?></a></h4>
-                                    <p><b>price : </b><?=$row['price']?></p>
-									<p><b>Added At : </b><?=$row['created_at']?></p>
-                                    <p><b>Quantity: </b><?=$row['quantity']?></p>
-									<p><b>By: </b><a href="userProducts.php?user_id=<?=$row['user_id']?>"><?=get_item('username','users','id',$row['user_id'])?></a></p>
-								
-								</div>
-							</div>
+					<div class="row">
+						<div class="col-lg-12 col-12">
+                            <div class="single-list">
+    						<div class="row">
+    						    <?php 
+    						        foreach($rows as $product):
+    						            if($product['status'] == 1):
+    						                 include $tpl."products.php"; 
+    							        endif;
+    							    endforeach;
+    							?>
+    						</div>
+    					    </div>
 						</div>
-					</div>
-					<!-- End Single List  -->
-					</div>
-				
-					<?php 
-						endforeach;
-					?>
-					
-					</div>
-					<?php 
+<?php 
 					//pagination
 					$total_records = records_total('products','status',1,16);
 					//check if records count > 18 show pagination
@@ -97,10 +72,10 @@ $rows = paginate_records('products','status',1,16);
 					</nav>
 					</div>
 					<?php endif; ?>
+					</div>
 			</div>
-		</div>
-	</section>
-	<!-- End Shop Home List  -->
+	</section>	
+
 
 <?php 
 include $tpl."footer.php";

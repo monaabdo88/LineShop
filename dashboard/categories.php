@@ -51,7 +51,7 @@ include "includes/functions/categories.php";
                         //show categories
                         if($do == 'Manage'){
                           if(get_user_permission($_SESSION['role_id'],'show categories'))
-                            include "categories/index.php";
+                            include "Categories/index.php";
                           else
                             echo '<div class="alert alert-danger"><p class="text-center">You dont Have Permission To Login To This Page</p></div>';
                         }
@@ -121,7 +121,7 @@ include "includes/functions/categories.php";
               "processing": true,
               "serverSide": true,
               "targets": 0,
-              "ajax": "categories/server_processing.php",
+              "ajax": "Categories/server_processing.php",
               "order": [[ 1, 'asc' ]]
             });
             t.on( 'order.dt search.dt', function () {

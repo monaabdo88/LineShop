@@ -44,6 +44,7 @@ if(! function_exists('update_settings')){
         $tw_url                 = $_POST['tw_url'];
         $ln_url                 = $_POST['ln_url'];
         $wh_url                 = $_POST['wh_url'];
+        $site_link              = $_POST['site_link'];
         $site_summery           = $_POST['site_summery'];   
         $userid                 = $_SESSION['admin_id'];
         //Validation
@@ -84,13 +85,14 @@ if(! function_exists('update_settings')){
             wh_url              = ?,
             site_address        = ?,
             slider_background   = ?,
+            site_link           = ?,
             userid              = ?
             ");
             $upData = $stmt->execute(array(
                 $site_name,$site_email,$site_phone,$site_desc,
                 $site_tags,$site_status,$site_text_close,
                 $site_copyrights,$target_file,$site_summery,
-                $fb_url,$tw_url,$ln_url,$wh_url,$site_address,$slider_background,$userid
+                $fb_url,$tw_url,$ln_url,$wh_url,$site_address,$slider_background,$site_link,$userid
             ));
             if($upData){
                 $msg =show_msg('success','Settings Updated Successfully');

@@ -6,6 +6,11 @@ $checkproduct = checkItem('id','products',$id);
 
 if(isset($id) && $checkproduct > 0){
 $row = get_row_data('products','id',$id);
+$authorInfo = get_row_data('users','id',$row['user_id']);
+$product_tags = get_all_rows_data('product_tags','product_id',$row['id']);
+$cats = get_rows('categories',4);
+$recent_products = get_rows('products',5);
+$recent_tags = get_rows('tags',5,1);
 ?>
 	<!-- Breadcrumbs -->
     <div class="breadcrumbs">
@@ -14,8 +19,9 @@ $row = get_row_data('products','id',$id);
 					<div class="col-12">
 						<div class="bread-inner">
 							<ul class="bread-list">
-								<li><a href="index.php">Home<i class="ti-arrow-right"></i></a></li>
-								<li class="active"><a href="blog-single.html"><?=$row['title']?></a></li>
+								<li><a href="index.php">Home</a></li>
+								<?=get_cat_parent($row['category_id'])?>
+								<li class="active"><i class="ti-arrow-right"></i> <a href="#"><?=$row['title']?></a></li>
 							</ul>
 						</div>
 					</div>
@@ -31,21 +37,57 @@ $row = get_row_data('products','id',$id);
 					<div class="col-lg-8 col-12">
 						<div class="blog-single-main">
 							<div class="row">
-								<div class="col-12">
-									<div class="image">
-										<img src="https://via.placeholder.com/950x460" alt="#">
-									</div>
+								<div class="col-md-12 expand-img">
+
+								    <!----- product Images Slider ----------->
+								
+								   <div class="exzoom hidden" id="exzoom">
+                                    <div class="exzoom_img_box">
+                                        <ul class='exzoom_img_ul'>
+                                                <?php 
+            									    $images = get_row_data('files','product_id',$row['id']);
+            									    foreach($images as $img):
+            									        echo'<li><img src="assets/uploads/products/'.$img['file_name'].'"></li>';
+            									    endforeach  
+        									    ?>
+                                            </ul>
+                                        </div>
+                                        <div class="exzoom_nav"></div>
+                                        <p class="exzoom_btn">
+                                            <a href="javascript:void(0);" class="exzoom_prev_btn"> < </a>
+                                            <a href="javascript:void(0);" class="exzoom_next_btn"> > </a>
+                                        </p>
+                                    </div>
+                                    <!------------------------------------------->
+								    <!-- Place somewhere in the <body> of your page -->
+                                    
 									<div class="blog-detail">
-										<h2 class="blog-title">What are the secrets to start- up success?</h2>
+										<h2 class="blog-title"><?=$row['title']?></h2>
 										<div class="blog-meta">
-											<span class="author"><a href="#"><i class="fa fa-user"></i>By Admin</a><a href="#"><i class="fa fa-calendar"></i>Dec 24, 2018</a><a href="#"><i class="fa fa-comments"></i>Comment (15)</a></span>
+											<span class="author"><a href="userProducts.php?user_id=<?=$row['user_id']?>"><i class="fa fa-user"></i>By <?=$authorInfo['username']?></a><a href="#"><i class="fa fa-calendar"></i><?=$row['created_at']?></a><a href="#"><i class="fa fa-comments"></i>Comment (<?=get_data_column_count('comments','product_id',$row['id'])?>)</a></span>
 										</div>
 										<div class="content">
-											<p>What a crazy time. I have five children in colleghigh school graduates.jpge or pursing post graduate studies  Each of my children attends college far from home, the closest of which is more than 800 miles away. While I miss being with my older children, I know that a college experience can be the source of great growth and experience can be the source of source of great growth and can provide them with even greater in future.</p>
-											<blockquote> <i class="fa fa-quote-left"></i> Do what you love to do and give it your very best. Whether it's business or baseball, or the theater, or any field. If you don't love what you're doing and you can't give it your best, get out of it. Life is too short. You'll be an old man before you know it. risus. Ut tincidunt, erat eget feugiat eleifend, eros magna dapibus diam.</blockquote>
-											<p>What a crazy time. I have five children in colleghigh school graduates.jpge or pursing post graduate studies  Each of my children attends college far from home, the closest of which is more than 800 miles away. While I miss being with my older children, I know that a college experience can be the source of great growth and experience can be the source of source of great growth and can provide them with even greater in future.</p>
-											<p>What a crazy time. I have five children in colleghigh school graduates.jpge or pursing post graduate studies  Each of my children attends college far from home, the closest of which is more than 800 miles away. While I miss being with my older children, I know that a college experience can be the source of great growth and experience can be the source of source of great growth and can provide them with even greater in future.</p>
+											<?=$row['details']?>
 										</div>
+										<?php if(isset($_SESSION['user_id']) && $_SESSION['user_id'] != $row['user_id']): ?>
+										    <br>
+										    <br>
+    										<div class="float-right">
+    										    <?php if(check_product($_SESSION['user_id'], $row['id'],'favs') == 0): ?>
+    										        <button class="btn btn-info button_fav">
+    										            <i class="ti-heart"></i> Add To Favourit
+    										            <input type="hidden" class="uid" value="<?=$_SESSION['user_id']?>"/>
+    										            <input type="hidden" class="pid" value="<?=$row['id']?>"/>
+    										            <input type="hidden" class="method" value="like"/>
+    										            <input type="hidden" class="func" value="<?=control_fav();?>" />
+    										        </button>
+    										    
+    										    <button class="btn btn-info"><i class="ti-bag"></i> Add To Cart</button>    
+    										<?php endif; ?>
+    										</div>
+    										<br><br>
+										<?php endif; ?>
+										
 									</div>
 									<div class="share-social">
 										<div class="row">
@@ -53,10 +95,17 @@ $row = get_row_data('products','id',$id);
 												<div class="content-tags">
 													<h4>Tags:</h4>
 													<ul class="tag-inner">
-														<li><a href="#">Glass</a></li>
-														<li><a href="#">Pant</a></li>
-														<li><a href="#">t-shirt</a></li>
-														<li><a href="#">swater</a></li>
+													    <?php foreach($product_tags as $tag): 
+													            $tagDetails = get_all_rows_data('tags','id',$tag['tag_id']);
+													            foreach($tagDetails as $tagInfo):
+													            
+													        ?>
+													            <li><a href="tagProducts.php?tag_id=<?=$tagInfo['id']?>"><?=$tagInfo['title']?></a></li>
+													    <?php 
+													        endforeach;
+													    endforeach; 
+													    ?>
+														
 													</ul>
 												</div>
 											</div>
@@ -65,7 +114,7 @@ $row = get_row_data('products','id',$id);
 								</div>
 								<div class="col-12">
 									<div class="comments">
-										<h3 class="comment-title">Comments (3)</h3>
+										<h3 class="comment-title">Comments (<?=get_data_column_count('comments','product_id',$row['id'])?>)</h3>
 										<!-- Single Comment -->
 										<div class="single-comment">
 											<img src="https://via.placeholder.com/80x80" alt="#">
@@ -90,20 +139,10 @@ $row = get_row_data('products','id',$id);
 											</div>
 										</div>
 										<!-- End Single Comment -->
-										<!-- Single Comment -->
-										<div class="single-comment">
-											<img src="https://via.placeholder.com/80x80" alt="#">
-											<div class="content">
-												<h4>megan mart <span>Feb 28, 2018 at 8:59 pm</span></h4>
-												<p>Enthusiastically leverage existing premium quality vectors with enterprise-wide innovation collaboration Phosfluorescently leverage others enterprisee  Phosfluorescently leverage.</p>
-												<div class="button">
-													<a href="#" class="btn"><i class="fa fa-reply" aria-hidden="true"></i>Reply</a>
-												</div>
-											</div>
-										</div>
-										<!-- End Single Comment -->
+										
 									</div>									
 								</div>											
+								<?php if(isset($_SESSION['user_id']) && $_SESSION['user_id'] != $row['user_id']): ?>
 								<div class="col-12">			
 									<div class="reply">
 										<div class="reply-head">
@@ -139,7 +178,8 @@ $row = get_row_data('products','id',$id);
 											<!-- End Comment Form -->
 										</div>
 									</div>			
-								</div>			
+								</div>	
+								<?php endif; ?>
 							</div>
 						</div>
 					</div>
@@ -148,68 +188,60 @@ $row = get_row_data('products','id',$id);
 							<!-- Single Widget -->
 							<div class="single-widget search">
 								<div class="form">
-									<input type="email" placeholder="Search Here...">
-									<a class="button" href="#"><i class="fa fa-search"></i></a>
+								    <form action="searchresult.php" method="get">
+								    <input type="text" name="search_key" placeholder="Search Here...">
+									<button type="submit" class="button"><i class="fa fa-search"></i></a>    
+								    </form>
+									
 								</div>
 							</div>
 							<!--/ End Single Widget -->
 							<!-- Single Widget -->
 							<div class="single-widget category">
-								<h3 class="title">Blog Categories</h3>
+								<h3 class="title">Categories</h3>
 								<ul class="categor-list">
-									<li><a href="#">Men's Apparel</a></li>
-									<li><a href="#">Women's Apparel</a></li>
-									<li><a href="#">Bags Collection</a></li>
-									<li><a href="#">Accessories</a></li>
-									<li><a href="#">Sun Glasses</a></li>
+								    <?php 
+								        foreach($cats as $cat):
+								            echo '<li><a href="category.php?category_id='.$cat['id'].'">'.$cat['name'].'</a></li>';
+								        endforeach;
+								    ?>
+								
 								</ul>
 							</div>
 							<!--/ End Single Widget -->
 							<!-- Single Widget -->
 							<div class="single-widget recent-post">
 								<h3 class="title">Recent post</h3>
-								<!-- Single Post -->
-								<div class="single-post">
-									<div class="image">
-										<img src="https://via.placeholder.com/100x100" alt="#">
-									</div>
-									<div class="content">
-										<h5><a href="#">Top 10 Beautyful Women Dress in the world</a></h5>
-										<ul class="comment">
-											<li><i class="fa fa-calendar" aria-hidden="true"></i>Jan 11, 2020</li>
-											<li><i class="fa fa-commenting-o" aria-hidden="true"></i>35</li>
-										</ul>
-									</div>
-								</div>
-								<!-- End Single Post -->
-								<!-- Single Post -->
-								<div class="single-post">
-									<div class="image">
-										<img src="https://via.placeholder.com/100x100" alt="#">
-									</div>
-									<div class="content">
-										<h5><a href="#">Top 10 Beautyful Women Dress in the world</a></h5>
-										<ul class="comment">
-											<li><i class="fa fa-calendar" aria-hidden="true"></i>Mar 05, 2019</li>
-											<li><i class="fa fa-commenting-o" aria-hidden="true"></i>59</li>
-										</ul>
-									</div>
-								</div>
-								<!-- End Single Post -->
-								<!-- Single Post -->
-								<div class="single-post">
-									<div class="image">
-										<img src="https://via.placeholder.com/100x100" alt="#">
-									</div>
-									<div class="content">
-										<h5><a href="#">Top 10 Beautyful Women Dress in the world</a></h5>
-										<ul class="comment">
-											<li><i class="fa fa-calendar" aria-hidden="true"></i>June 09, 2019</li>
-											<li><i class="fa fa-commenting-o" aria-hidden="true"></i>44</li>
-										</ul>
-									</div>
-								</div>
-								<!-- End Single Post -->
+								<?php 
+								    foreach($recent_products as $pro): 
+								        if($pro['id'] != $id):
+								?>
+    								<!-- Single Post -->
+    								<div class="single-post">
+    									<div class="image">
+    									    <?php 
+											$images = get_all_rows_data('files','product_id',$pro['id'],1);
+												foreach($images as $img):
+											?>
+												<img class="default-img" width="100%" height="100" src="assets/uploads/products/<?=$img['file_name']?>" alt="#">
+											<?php endforeach; ?>
+    										
+    									</div>
+    									<div class="content">
+    										<h5><a href="product.php?product_id=<?=$pro['id']?>"><?=$pro['title']?></a></h5>
+    										<ul class="comment">
+    											<li><i class="fa fa-calendar" aria-hidden="true"></i><?=$pro['created_at']?></li>
+    											<li><i class="fa fa-commenting-o" aria-hidden="true"></i><?=get_data_column_count('comments','product_id',$pro['id'])?></li>
+    										</ul>
+    									</div>
+    								</div>
+    								<!-- End Single Post -->
+								<?php
+								        endif;
+								    endforeach;
+								?>
+								
+								
 							</div>
 							<!--/ End Single Widget -->
 							<!-- Single Widget -->
@@ -218,18 +250,17 @@ $row = get_row_data('products','id',$id);
 							<div class="single-widget side-tags">
 								<h3 class="title">Tags</h3>
 								<ul class="tag">
-									<li><a href="#">business</a></li>
-									<li><a href="#">wordpress</a></li>
-									<li><a href="#">html</a></li>
-									<li><a href="#">multipurpose</a></li>
-									<li><a href="#">education</a></li>
-									<li><a href="#">template</a></li>
-									<li><a href="#">Ecommerce</a></li>
+								    <?php 
+								        foreach($recent_tags as $tag):
+								            echo'<li><a href="tagProducts.php?tag_id='.$tag['id'].'">'.$tag['title'].'</a></li>';
+								        endforeach;
+								    ?>
+									
 								</ul>
 							</div>
 							<!--/ End Single Widget -->
 							<!-- Single Widget -->
-							<div class="single-widget newsletter">
+							<!--<div class="single-widget newsletter">
 								<h3 class="title">Newslatter</h3>
 								<div class="letter-inner">
 									<h4>Subscribe & get news <br> latest updates.</h4>
@@ -238,7 +269,7 @@ $row = get_row_data('products','id',$id);
 										<a href="#">Submit</a>
 									</div>
 								</div>
-							</div>
+							</div>-->
 							<!--/ End Single Widget -->
 						</div>
 					</div>
@@ -252,3 +283,31 @@ $row = get_row_data('products','id',$id);
 	redirectproduct('index.php',1);
 }
 ?>
+<script>
+     $(document).ready(function($){
+          $('.button_fav').on('click', function(e){
+              e.preventDefault();
+              var user_id = $('.uid').val(); // Get the parameter user_id from the button
+              var product_id = $('.pid').val(); // Get the parameter director_id from the button
+              var method = $('.method').val();  // Get the parameter method from the button
+              var func_name = $(".func").val();
+              //alert(product_id);
+              if (method == "Like") {
+                $(this).attr('method', 'Unlike') // Change the div method attribute to Unlike
+                $('#' + product_id).replaceWith('<img class="favicon" id="' + product_id + '" src="favon.jpg">') // Replace the image with the liked button
+              } else {
+               $(this).attr('method', 'Like')
+               $('#' + product_id).replaceWith('<img class="favicon" id="' + product_id + '" src="favoff.png">')
+              }
+              $.ajax({
+                  type: 'GET',
+                  url: func_name, // Call favs.php to update the database
+                  data: {'user_id': user_id, 'product_id': product_id, 'method': method},
+                  cache: false,
+                  success: function(response){
+                      console.log(response);
+                  }
+              });
+          });
+      });
+</script>

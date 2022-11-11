@@ -76,11 +76,12 @@ $columns = array(
  
 // SQL server connection information
 $sql_details = array(
-    'user' => 'root',
-    'pass' => '',
-    'db'   => 'lineshop',
+    'user' => 'u482489328_lineshop',
+    'pass' => '@Jskdl2012',
+    'db'   => 'u482489328_lineshop',
     'host' => 'localhost'
 );
+ 
  
  
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *

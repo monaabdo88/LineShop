@@ -149,7 +149,7 @@ if(isset($user_id)){
 									
 									<ul class="list-group">
 										<li class="list-group-item active"><a href="profile.php">Edit Profile</a></li>
-										<li class="list-group-item"><a href="userProducts.php">Products</a></li>
+										<li class="list-group-item"><a href="myProducts.php">Products</a></li>
 										<li class="list-group-item"><a href="favs.php">Favs</a></li>
 										<li class="list-group-item"><a href="messages.php">Messages</a></li>
 										<li class="list-group-item"><a href="orders.php">Orders</a></li>
@@ -165,7 +165,6 @@ if(isset($user_id)){
 	<!--/ End Contact -->
 	
 <?php 
-    include $tpl."subscribe.php";
     include $tpl."footer.php";
 }else{
     redirectPage('index.php',1);

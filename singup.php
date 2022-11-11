@@ -1,6 +1,6 @@
 <?php 
 include "init.php"; 
-include "includes/templates/header.php";
+include $tpl."header.php";
 include "includes/functions/users.php";
 if(isset($_SESSION['user_id']))
 	header("Location: index.php");
@@ -146,7 +146,7 @@ if(isset($_SESSION['user_id']))
 	<!--/ End Contact -->
 	
 	
-<?php include "includes/templates/footer.php" ?>
+<?php include $tpl."footer.php" ?>
 <script>
 $(document).ready(function() {
     $('#country-dropdown').on('change', function() {

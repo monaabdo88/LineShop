@@ -1,6 +1,8 @@
 <?php 
 ob_start();
 session_start();
+ini_set("display_errors", 1); 
+error_reporting(E_ALL);
 include "includes/functions/functions.php";
 ?>
 <!DOCTYPE html>
@@ -38,7 +40,8 @@ include "includes/functions/functions.php";
 	<!-- Animate CSS -->
     <link rel="stylesheet" href="<?=$css_front?>animate.css">
 	<!-- Flex Slider CSS -->
-    <link rel="stylesheet" href="<?=$css_front?>flex-slider.min.css">
+	<link rel="stylesheet" href="<?=$css_front?>flex-slider.min.css">
+	<link rel="stylesheet" href="<?=$css_front?>jquery.exzoom.css"/>
 	<!-- Owl Carousel -->
     <link rel="stylesheet" href="<?=$css_front?>owl-carousel.css">
 	<!-- Slicknav -->
@@ -46,13 +49,18 @@ include "includes/functions/functions.php";
 	<!------------------Datatables style -------------------------------->
 	<link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" type="text/css" />
-
-	<!-- Eshop StyleSheet -->
+    <!-- Eshop StyleSheet -->
 	<link rel="stylesheet" href="<?=$css_front?>reset.css">
 	<link rel="stylesheet" href="<?=$css_front?>style.css">
     <link rel="stylesheet" href="<?=$css_front?>responsive.css">
 	<link rel="stylesheet" href="<?=$css_front?>myStyle.css">
-	
+    <style type="text/css">
+	    #removeFavourite {
+          display: none;
+        }
+        .hidden { display: none; }
+	</style>
+
 	<?php 
 		$site_status = get_item('site_status','settings','id',1);
 		$text_close = get_item('site_text_close','settings','id',1);
@@ -166,6 +174,9 @@ include "includes/functions/functions.php";
 						<div class="right-bar">
 							<!-- Search Form -->
 							<div class="sinlge-bar">
+								<a href="myProducts.php?do=addPro" class="single-icon"><i class="fa fa-plus" aria-hidden="true" title="Add New Product"></i></a>
+							</div>
+							<div class="sinlge-bar">
 								<a href="#" class="single-icon"><i class="fa fa-heart-o" aria-hidden="true"></i></a>
 							</div>
 							<div class="sinlge-bar">
@@ -215,7 +226,7 @@ include "includes/functions/functions.php";
 				<div class="cat-nav-head">
 					<div class="row">
 					<?php 
-						if(isActive('index.php',2) == 'active'|| isActive('',2) == 'active'):
+						if(isActive('index.php',1) == 'active'|| isActive('',1) == 'active'):
 					?>	
 					<div class="col-lg-3">
 							
@@ -255,16 +266,16 @@ include "includes/functions/functions.php";
 							
 						</div>
 						<?php endif; ?>
-						<div class="col-lg-<?=(isActive('index.php',2) == 'active' || isActive('',2) == 'active')? '9' : '12'?> col-12">
+						<div class="col-lg-<?=(isActive('index.php',1) == 'active' || isActive('',1) == 'active')? '9' : '12'?> col-12">
 							<div class="menu-area">
 								<!-- Main Menu -->
 								<nav class="navbar navbar-expand-lg">
 									<div class="navbar-collapse">	
 										<div class="nav-inner">	
 											<ul class="nav main-menu menu navbar-nav">
-													<li class="<?=isActive('index.php',2)?><?=isActive('',2)?>"><a href="index.php">Home</a></li>
-													<li class="<?=isActive('categories.php',2)?>"><a href="categories.php">All Categories</a></li>
-													<li class="<?=isActive('products.php',2)?>"><a href="products.php">Products</a></li>
+													<li class="<?=isActive('index.php',1)?><?=isActive('',1)?>"><a href="index.php">Home</a></li>
+													<li class="<?=isActive('categories.php',1)?>"><a href="categories.php">All Categories</a></li>
+													<li class="<?=isActive('products.php',1)?>"><a href="products.php">Products</a></li>
 													<?php 
 														$pages = get_all_rows_data('pages','status',1,3);
 														foreach($pages as $page){
@@ -272,7 +283,7 @@ include "includes/functions/functions.php";
 															echo '<li class="'.$class.'"><a href="page.php?page_id='.$page['id'].'">'.$page['title'].'</a></li>';
 														}
 													?>
-													<li class="<?=isActive('contact.php',2)?>"><a href="contact.php">Contact Us</a></li>
+													<li class="<?=isActive('contact.php',1)?>"><a href="contact.php">Contact Us</a></li>
 												</ul>
 										</div>
 									</div>

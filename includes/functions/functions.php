@@ -43,7 +43,7 @@ Function to display active class to the current page
 take on parametar page name
 */
 if(! function_exists('isActive')){
-    function isActive($pageName,$page = 3){
+    function isActive($pageName,$page = 2){
         $uri_path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
         $uri_segments = explode('/', $uri_path);
         if($uri_segments[$page] == $pageName)
@@ -89,9 +89,16 @@ function to get rows of table
 take on var table name
 */
 if(! function_exists('get_rows')){
-    function get_rows($tblname){
+    function get_rows($tblname,$limit = '',$rand = ''){
         global $con;
-        $stmt = $con->prepare("SELECT * FROM $tblname");
+        if($limit != '')
+            if($rand != '')
+                $stmt = $con->prepare("SELECT * FROM $tblname ORDER BY rand() LIMIT $limit");
+            else
+                $stmt = $con->prepare("SELECT * FROM $tblname WHERE `status` = 1 ORDER BY id DESC LIMIT $limit");
+        else
+            $stmt = $con->prepare("SELECT * FROM $tblname ORDER BY id DESC");
+        
         $stmt->execute();
         $rows = $stmt->fetchAll();
         return $rows;
@@ -222,7 +229,7 @@ if(! function_exists('get_item')){
         }
     }
 }
-if(! function_exists('get_parent_name')){
+/*if(! function_exists('get_parent_name')){
     function get_parent_name($id){
         global $con;
         $stmt = $con->prepare("SELECT name FROM categories WHERE parent_id = ?");
@@ -363,6 +370,7 @@ if(! function_exists('get_user_permission')){
         }
     }
 }
+
 /*
 function to search in products
 */
@@ -397,17 +405,72 @@ if(! function_exists('paginate_records')){
     function paginate_records($tblname,$colname,$colVal,$limit){
         global $con;
         $perPage = $limit;
-        
-
         // Current page
         $page = isset($_GET['page']) ? $_GET['page'] : 1;
         $starting_limit = ($page - 1) * $perPage;
-
         // Query to fetch data
         $query = "SELECT * FROM $tblname  WHERE $colname = $colVal ORDER BY id DESC LIMIT $starting_limit,$perPage";
-
         // Fetch all data for current page
         $data = $con->query($query)->fetchAll();
         return $data;
+    }
+}
+/*
+function to get category parents
+get parent_id
+*/
+if(! function_exists('get_cat_parent')){
+    function get_cat_parent($id){
+        $row = get_row_data('categories','id',$id);
+        $name = '';
+        if(isset($row['parent_id']) && $row['parent_id'] != 0){
+            $name.= get_cat_parent($row['parent_id']);
+            $name .= '<li>
+                        <a href="category.php?category_id='.$row['id'].'"><i class="ti-arrow-right"></i>'.$row['name'].'</a>
+                    </li>';
+            
+        }
+        else{
+            if(isset($row['name']))
+                $name = '<li><a href="category.php?category_id='.$row['id'].'"><i class="ti-arrow-right"></i>'.$row['name'].'</a></li>';
+        }
+  
+        return $name;
+    }
+}
+/*
+check fav
+*/
+if(! function_exists('check_product')){
+    function check_product($user_id , $product_id,$tbl){
+        global $con;
+        $stmt = $con->prepare("SELECT * FROM $tbl WHERE user_id = ? AND product_id = ?");
+        $stmt->execute(array($user_id , $product_id));
+        $row = $stmt->fetch();
+        return $stmt->rowCount();
+    }
+}
+/*
+control fav
+*/
+if(! function_exists('control_fav')){
+    function control_fav(){
+        global $con;
+        
+        $method = $_GET['method'];
+        $user_id = $_GET['user_id'];
+        $product_id = $_GET['product_id'];
+        if(check_product($user_id,$product_id,'favs') > 0 && $method == 'unlike'){
+            $stmt = $con->prepare("DELETE FROM favs WHERE product_id = :zproduct_id AND user_id = :zuser_id");
+                $stmt->bindParam([":product_id"=> $product_id,'user_id'=> $user_id]);
+                $stmt->execute();
+        }
+        else{
+            $stmt= $con->prepare("INSERT INTO favs (product_id,user_id) VALUES (:zproduct_id,:zuser_id)");
+                    $stmt->execute(array(
+                        'zproduct_id'       => $product_id,
+                        'zuser_id'          => $user_id
+                    ));
+        }
     }
 }

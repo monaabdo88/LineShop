@@ -124,6 +124,5 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['do_send']) && $_POST['
 	<!--/ End Contact -->
 	
 <?php 
-include $tpl."subscribe.php"; 
 include $tpl."footer.php"; 
 ?>
