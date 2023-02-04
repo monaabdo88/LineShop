@@ -16,7 +16,7 @@
 	<!-- End Breadcrumbs -->
   
 	<!-- Start Contact -->
-	<section id="contact-us" class="contact-us section" style="padding-bottom:0">
+	<section id="contact-us" class="contact-us section">
 		<div class="container">
 				<div class="contact-head">
 					<div class="row">

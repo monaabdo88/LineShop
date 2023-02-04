@@ -2,7 +2,7 @@
 include_once "init.php"; 
 include_once $tpl."header.php";
 $user_id = intval($_GET['user_id']);
-$user = get_row_data('users','id',$user_id);
+$user = get_row_data('users',$user_id);
 $products = get_all_rows_data('products','user_id',$user_id);
 ?>
 	<!-- Breadcrumbs -->

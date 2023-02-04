@@ -3,7 +3,7 @@ include "init.php";
 include $tpl."header.php";
 $id = intval($_GET['category_id']);
 $checkCat = checkItem('id','categories',$id);
-$catDetails = get_row_data('categories','id',$id);
+$catDetails = get_row_data('categories',$id);
 $subCats = get_data_column_count('categories','parent_id',$id);
 if(isset($id) && $checkCat > 0 ):
 ?>
@@ -87,7 +87,7 @@ if(isset($id) && $checkCat > 0 ):
 															<img class="default-img" width="100%" height="350" src="assets/uploads/products/<?=$img['file_name']?>" alt="#">
 															<?php endforeach; ?>
 														</a>
-														<?php include $tpl."addToButtons.php"?>
+														<?php //include $tpl."addToButtons.php"?>
 													</div>
 												<div class="product-content">
 													<h3><a href="product.php?product_id=<?=$product['id']?>"><?= $product['title'] ?></a></h3>

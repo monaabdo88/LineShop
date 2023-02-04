@@ -133,7 +133,7 @@ function to get data from table where id = ?
 return the data of row
 */
 if(! function_exists('get_row_data')){
-    function get_row_data($tbl,$col_name = 'id',$id){
+    function get_row_data($tbl,$id,$col_name ="id"){
         global $con;
         $stmt = $con->prepare("SELECT * FROM $tbl WHERE $col_name = ?");
         $stmt->execute(array($id));
@@ -421,7 +421,7 @@ get parent_id
 */
 if(! function_exists('get_cat_parent')){
     function get_cat_parent($id){
-        $row = get_row_data('categories','id',$id);
+        $row = get_row_data('categories',$id);
         $name = '';
         if(isset($row['parent_id']) && $row['parent_id'] != 0){
             $name.= get_cat_parent($row['parent_id']);
@@ -453,7 +453,7 @@ if(! function_exists('check_product')){
 /*
 control fav
 */
-if(! function_exists('control_fav')){
+/*if(! function_exists('control_fav')){
     function control_fav(){
         global $con;
         
@@ -473,4 +473,4 @@ if(! function_exists('control_fav')){
                     ));
         }
     }
-}
+}*/

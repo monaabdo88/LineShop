@@ -7,7 +7,7 @@ if(!isset($_SESSION['user_id']))
 
 if(isset($user_id)){
 	include "includes/functions/users.php";
-	$user = get_row_data('users','id',$user_id);
+	$user = get_row_data('users',$user_id);
 
 ?>
 
@@ -29,7 +29,7 @@ if(isset($user_id)){
 	<!-- End Breadcrumbs -->
   
 	<!-- Start Contact -->
-	<section id="contact-us" class="contact-us section" style="padding-bottom:0">
+	<section id="contact-us" class="contact-us section">
 		<div class="container">
 				<div class="contact-head">
 					<div class="row">

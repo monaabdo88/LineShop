@@ -25,7 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['do_send']) && $_POST['
 	<!-- End Breadcrumbs -->
   
 	<!-- Start Contact -->
-	<section id="contact-us" class="contact-us section" style="padding-bottom:0">
+	<section id="contact-us" class="contact-us section">
 		<div class="container">
 				<div class="contact-head">
 					<div class="row">
@@ -122,7 +122,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['do_send']) && $_POST['
 			</div>
 	</section>
 	<!--/ End Contact -->
-	
+	<div class="clearfix"></div>
 <?php 
 include $tpl."footer.php"; 
 ?>

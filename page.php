@@ -5,7 +5,7 @@ $id = intval($_GET['page_id']);
 $checkPage = checkItem('id','pages',$id);
 
 if(isset($id) && $checkPage > 0)
-	$row = get_row_data('pages','id',$id);
+	$row = get_row_data('pages',$id);
 
 if($row['status'] == 1){
 ?>

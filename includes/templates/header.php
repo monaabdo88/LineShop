@@ -6,14 +6,13 @@ error_reporting(E_ALL);
 include "includes/functions/functions.php";
 ?>
 <!DOCTYPE html>
-<html lang="zxx">
+<html lang="en">
 <head>
 	<!-- Meta Tag -->
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="description" content="<?=get_item('site_desc','settings','id',1)?>">
     <meta name="keywords" content="<?=get_item('site_tags','settings','id',1)?>">
-	<meta name='copyright' content=''>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<!-- Title Tag  -->
@@ -62,6 +61,7 @@ include "includes/functions/functions.php";
 	</style>
 
 	<?php 
+		$baseUrl = get_item('site_link','settings','id',1);
 		$site_status = get_item('site_status','settings','id',1);
 		$text_close = get_item('site_text_close','settings','id',1);
 		if($site_status == 0)
@@ -273,9 +273,9 @@ include "includes/functions/functions.php";
 									<div class="navbar-collapse">	
 										<div class="nav-inner">	
 											<ul class="nav main-menu menu navbar-nav">
-													<li class="<?=isActive('index.php',1)?><?=isActive('',1)?>"><a href="index.php">Home</a></li>
-													<li class="<?=isActive('categories.php',1)?>"><a href="categories.php">All Categories</a></li>
-													<li class="<?=isActive('products.php',1)?>"><a href="products.php">Products</a></li>
+													<li class="<?=isActive('index.php')?><?=isActive('')?>"><a href="index.php">Home</a></li>
+													<li class="<?=isActive('categories.php')?>"><a href="categories.php">All Categories</a></li>
+													<li class="<?=isActive('products.php')?>"><a href="products.php">Products</a></li>
 													<?php 
 														$pages = get_all_rows_data('pages','status',1,3);
 														foreach($pages as $page){
@@ -283,7 +283,7 @@ include "includes/functions/functions.php";
 															echo '<li class="'.$class.'"><a href="page.php?page_id='.$page['id'].'">'.$page['title'].'</a></li>';
 														}
 													?>
-													<li class="<?=isActive('contact.php',1)?>"><a href="contact.php">Contact Us</a></li>
+													<li class="<?=isActive('contact.php')?>"><a href="contact.php">Contact Us</a></li>
 												</ul>
 										</div>
 									</div>

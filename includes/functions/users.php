@@ -4,8 +4,8 @@ error_reporting(E_ALL);
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 use PHPMailer\PHPMailer\SMTP;
-require_once "/home/u482489328/public_html/backend/LineShop/vendor/autoload.php";
-
+//require_once "/home/u482489328/public_html/backend/LineShop/vendor/autoload.php";
+require_once "vendor/autoload.php";
 /*
 function to add new user
 */
@@ -249,7 +249,7 @@ if(! function_exists('restore_password')){
             //$link = "<a href='lineshop.mona-abdo.com/updatePassword.php?key=".$emailId."&token=".$token."'>Click To Reset password</a>";
             //start send email to user    
             $mail = new PHPMailer();
-            $user = get_row_data('users','email',$emailId);
+            $user = get_row_data('users',$emailId,'email');
             $username = $user['username'];
           
                 //Server settings
@@ -365,7 +365,7 @@ if(! function_exists('send_verify_link')){
     function send_verify_link($id){
         global $con;
         $errors = array();
-        $user = get_row_data('users','id',$id);
+        $user = get_row_data('users',$id);
         $username = $user['username'];
         $emailId = $user['email'];
         $token = $user['reset_link_token'];
@@ -453,7 +453,7 @@ if(! function_exists('verifyUser')){
                     //Update Message
                     if($upData){
                         $errors['success'] = 'Your Account had Verified Successfully';
-                        $user = get_row_data('users','email',$emailId);
+                        $user = get_row_data('users',$emailId,'email');
                         $_SESSION['user_id'] = $user['id'];
                         $_SESSION['username'] = $user['username'];
                     }

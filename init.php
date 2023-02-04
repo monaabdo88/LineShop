@@ -4,7 +4,7 @@ include "dashboard/config.php";
 //Main Functions file
 include "includes/functions/functions.php";
 //base url for lineshope project
-$base_url = "lineshop.mona-abdo.com";
+$base_url = "http://localhost/LineShop/";
 //Front End Folders Path
 $tpl            = "includes/templates/";
 $css_front      = "assets/css/";

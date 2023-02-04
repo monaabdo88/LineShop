@@ -5,8 +5,8 @@ $id = intval($_GET['product_id']);
 $checkproduct = checkItem('id','products',$id);
 
 if(isset($id) && $checkproduct > 0){
-$row = get_row_data('products','id',$id);
-$authorInfo = get_row_data('users','id',$row['user_id']);
+$row = get_row_data('products',$id);
+$authorInfo = get_row_data('users',$row['user_id']);
 $product_tags = get_all_rows_data('product_tags','product_id',$row['id']);
 $cats = get_rows('categories',4);
 $recent_products = get_rows('products',5);
@@ -45,7 +45,7 @@ $recent_tags = get_rows('tags',5,1);
                                     <div class="exzoom_img_box">
                                         <ul class='exzoom_img_ul'>
                                                 <?php 
-            									    $images = get_row_data('files','product_id',$row['id']);
+            									    $images = get_row_data('files',$row['id'],'product_id');
             									    foreach($images as $img):
             									        echo'<li><img src="assets/uploads/products/'.$img['file_name'].'"></li>';
             									    endforeach  
@@ -76,11 +76,8 @@ $recent_tags = get_rows('tags',5,1);
     										    <?php if(check_product($_SESSION['user_id'], $row['id'],'favs') == 0): ?>
     										        <button class="btn btn-info button_fav">
     										            <i class="ti-heart"></i> Add To Favourit
-    										            <input type="hidden" class="uid" value="<?=$_SESSION['user_id']?>"/>
-    										            <input type="hidden" class="pid" value="<?=$row['id']?>"/>
-    										            <input type="hidden" class="method" value="like"/>
-    										            <input type="hidden" class="func" value="<?=control_fav();?>" />
-    										        </button>
+    										            
+    										        </button>-->
     										    
     										    <button class="btn btn-info"><i class="ti-bag"></i> Add To Cart</button>    
     										<?php endif; ?>
@@ -280,11 +277,11 @@ $recent_tags = get_rows('tags',5,1);
 			
 <?php include $tpl."footer.php";
 }else{
-	redirectproduct('index.php',1);
+	redirectPage('index.php',1);
 }
 ?>
 <script>
-     $(document).ready(function($){
+    /* $(document).ready(function($){
           $('.button_fav').on('click', function(e){
               e.preventDefault();
               var user_id = $('.uid').val(); // Get the parameter user_id from the button
@@ -309,5 +306,5 @@ $recent_tags = get_rows('tags',5,1);
                   }
               });
           });
-      });
+      });*/
 </script>
