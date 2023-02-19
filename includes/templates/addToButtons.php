@@ -1,13 +1,13 @@
-<?php if(isset($_SESSION['user_id']) && $_SESSION['user_id'] != $product['user_id']): ?>
+<?php if(isset($_SESSION['user_id']) && $_SESSION['user_id'] != $row['user_id']): ?>
     <div class="button-head">
         <div class="product-action">
-    	    <a data-toggle="modal" data-target="#exampleModal" title="Quick View" href="#"><i class=" ti-eye"></i><span>Quick Shop</span></a>
-    	    <?php if(check_fav($_SESSION['user_id'],$product['id']) == 0): ?>
-    		<a title="Wishlist" href="#" id="addFavourite" class="button_fav" method="like" product_id="<?=$product['id']?>" user_id="<?=$_SESSION['user_id']?>">
+			<a data-toggle="modal" data-target="#exampleModal" title="Quick View" href="#"><i class=" ti-eye"></i><span>Quick Shop</span></a>
+    	    <?php if(check_product($_SESSION['user_id'], $row['id'],'favs') == 0): ?>
+    		<a title="Wishlist" href="#" id="addFavourite" class="button_fav" method="like" product_id="<?=$row['id']?>" user_id="<?=$_SESSION['user_id']?>">
     			<i class=" ti-heart "></i><span>Add to Wishlist</span>
     		</a>
     		<?php else: ?>
-    		<a title="Wishlist" href="#" id="addFavourite" class="button_fav" method="unlike" product_id="<?=$product['id']?>" user_id="<?=$_SESSION['user_id']?>">
+    		<a title="Wishlist" href="#" id="addFavourite" class="button_fav" method="unlike" product_id="<?=$row['id']?>" user_id="<?=$_SESSION['user_id']?>">
     			<i class=" ti-heart-broken"></i><span>Remove from Wishlist</span>
     		</a>
     		<?php endif; ?>
@@ -18,3 +18,6 @@
     		</div>
     </div>
 <?php endif; ?>
+<script>
+
+</script>

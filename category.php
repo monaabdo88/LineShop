@@ -14,10 +14,10 @@ if(isset($id) && $checkCat > 0 ):
     					<div class="col-12">
     						<div class="bread-inner">
     							<ul class="bread-list">
-    								<li><a href="index.php">Home</a></li>
+    								<li><a href="index">Home</a></li>
     								<?=get_cat_parent($catDetails['parent_id'])?>
     								<li class="active">
-    								    <a href="category.php?category_id=<?=$id?>">
+    								    <a href="category?category_id=<?=$id?>">
     								        <i class="ti-arrow-right"></i><?=$catDetails['name']?>
     								    </a>
     								</li>
@@ -73,33 +73,43 @@ if(isset($id) && $checkCat > 0 ):
 					    echo '<div class="single-list">
                                 <div class="row">';
 					    $rows = get_all_rows_data('products','category_id',$id,16);
-					    foreach($rows as $product):
-					        if($product['status'] == 1):
-					?>
-					            <div class="col-xl-3 col-lg-4 col-md-4 col-12">
-										<div class="single-product">
-											<div class="product-img" style="height:250px;">
-														<a href="product-details.html">
-															<?php 
-																$images = get_all_rows_data('files','product_id',$product['id'],1);
-																foreach($images as $img):
-															?>
-															<img class="default-img" width="100%" height="350" src="assets/uploads/products/<?=$img['file_name']?>" alt="#">
-															<?php endforeach; ?>
-														</a>
-														<?php //include $tpl."addToButtons.php"?>
+						//get category products count
+						$productCount = get_data_column_count('products','category_id',$id);
+						//check if category had products
+						if($productCount > 0){
+								foreach($rows as $product):
+									if($product['status'] == 1):
+							?>
+										<div class="col-xl-3 col-lg-4 col-md-4 col-12">
+												<div class="single-product">
+													<div class="product-img" style="height:250px;">
+																<a href="product-details.html">
+																	<?php 
+																		$images = get_all_rows_data('files','product_id',$product['id'],1);
+																		foreach($images as $img):
+																	?>
+																	<img class="default-img" width="100%" height="350" src="assets/uploads/products/<?=$img['file_name']?>" alt="#">
+																	<?php endforeach; ?>
+																</a>
+																<?php //include $tpl."addToButtons.php"?>
+															</div>
+														<div class="product-content">
+															<h3><a href="product.php?product_id=<?=$product['id']?>"><?= $product['title'] ?></a></h3>
+														<div class="product-price">
+															<span><?=$product['price']?>$</span>
+														</div>
 													</div>
-												<div class="product-content">
-													<h3><a href="product.php?product_id=<?=$product['id']?>"><?= $product['title'] ?></a></h3>
-												<div class="product-price">
-													<span><?=$product['price']?>$</span>
 												</div>
-											</div>
 										</div>
-								</div>
-					<?php
-					        endif;
-					   endforeach;
+							<?php
+									endif;
+							endforeach;
+						}
+						else{
+							echo '<div class=" col-md-12 alert alert-warning">
+										<p class="text-center">No Product Found In '.$catDetails['name'].' Category</p>
+									</div>';
+						}
 					   echo '</div></div>';
 					}
 					?>

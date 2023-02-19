@@ -1,5 +1,5 @@
 <?php 
-    $row = get_row_data('settings','id','1');
+    $row = get_row_data('settings','1');
 ?>                   
 <form class="form-horizontal" action="<?php $_SERVER['PHP_SELF'] ?>" method="POST" enctype="multipart/form-data">
                                     <input type="hidden" name="userid" value="<?=$userid ?>" />

@@ -12,8 +12,8 @@ $product_tags = get_all_rows_data('product_tags','tag_id',$tag_id);
 				<div class="col-12">
 					<div class="bread-inner">
 						<ul class="bread-list">
-							<li><a href="index.php">Home<i class="ti-arrow-right"></i></a></li>
-							<li class="active"><a href="products.php">products</a></li>
+							<li><a href="index">Home<i class="ti-arrow-right"></i></a></li>
+							<li class="active"><a href="products">products</a></li>
 						</ul>
 					</div>
 				</div>

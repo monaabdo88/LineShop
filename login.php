@@ -3,7 +3,7 @@ include "init.php";
 include $tpl."header.php";
 include "includes/functions/users.php";
 if(isset($_SESSION['user_id']))
-	header("Location: index.php");
+	header("Location: index");
 ?>
 
 	<!-- Breadcrumbs -->
@@ -13,8 +13,8 @@ if(isset($_SESSION['user_id']))
 				<div class="col-12">
 					<div class="bread-inner">
 						<ul class="bread-list">
-							<li><a href="index.php">Home<i class="ti-arrow-right"></i></a></li>
-							<li class="active"><a href="login.php">Login</a></li>
+							<li><a href="index">Home<i class="ti-arrow-right"></i></a></li>
+							<li class="active"><a href="login">Login</a></li>
 						</ul>
 					</div>
 				</div>
@@ -76,7 +76,7 @@ if(isset($_SESSION['user_id']))
 												</div>
 											</div>	
 											<div class="col-md-4 float-right">
-												<a href="forgetPassword.php" class="float-right">Forget Password?</a>
+												<a href="forgetPassword" class="float-right">Forget Password?</a>
 											</div>
 											
 										</div>

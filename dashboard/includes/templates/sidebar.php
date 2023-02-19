@@ -24,67 +24,67 @@
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
               <li class="nav-item">
-                <a href="index.php" class="nav-link <?=isActive('index.php')?>">
+                <a href="index.php" class="nav-link <?=isActive('index.php',3)?>">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Dashboard</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="settings.php" class="nav-link <?=isActive('settings.php')?>">
+                <a href="settings.php" class="nav-link <?=isActive('settings.php',3)?>">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Main Settings</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="categories.php" class="nav-link <?=isActive('categories.php')?>">
+                <a href="categories.php" class="nav-link <?=isActive('categories.php',3)?>">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Categories</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="tags.php" class="nav-link <?=isActive('tags.php')?>">
+                <a href="tags.php" class="nav-link <?=isActive('tags.php',3)?>">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Tags</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="products.php" class="nav-link <?=isActive('products.php')?>">
+                <a href="products.php" class="nav-link <?=isActive('products.php',3)?>">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Products</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="pages.php" class="nav-link <?=isActive('pages.php')?>">
+                <a href="pages.php" class="nav-link <?=isActive('pages.php',3)?>">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Pages</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="orders.php" class="nav-link <?=isActive('orders.php')?>">
+                <a href="orders.php" class="nav-link <?=isActive('orders.php',3)?>">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Orders</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="comments.php" class="nav-link <?=isActive('comments.php')?>">
+                <a href="comments.php" class="nav-link <?=isActive('comments.php',3)?>">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Comments</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="alerts.php" class="nav-link <?=isActive('Alerts.php')?>">
+                <a href="alerts.php" class="nav-link <?=isActive('Alerts.php',3)?>">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Alerts</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="roles.php" class="nav-link <?=isActive('roles.php')?>">
+                <a href="roles.php" class="nav-link <?=isActive('roles.php',3)?>">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Roles</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="users.php" class="nav-link <?=isActive('users.php')?>">
+                <a href="users.php" class="nav-link <?=isActive('users.php',3)?>">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Users</p>
                 </a>

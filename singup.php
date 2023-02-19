@@ -13,8 +13,8 @@ if(isset($_SESSION['user_id']))
 				<div class="col-12">
 					<div class="bread-inner">
 						<ul class="bread-list">
-							<li><a href="index.php">Home<i class="ti-arrow-right"></i></a></li>
-							<li class="active"><a href="singup.php">SingUp</a></li>
+							<li><a href="index">Home<i class="ti-arrow-right"></i></a></li>
+							<li class="active"><a href="singup">SingUp</a></li>
 						</ul>
 					</div>
 				</div>

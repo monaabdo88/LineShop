@@ -21,7 +21,7 @@ if(! function_exists('redirectPage')){
     function redirectPage($url = NULL , $seconds = 5){
         if($url === NULL)
         {
-            $url = "index.php";
+            $url = "index";
         }
         elseif(isset($url) && $url != NULL)
         {
@@ -451,26 +451,63 @@ if(! function_exists('check_product')){
     }
 }
 /*
-control fav
+check if product in user favourite list
 */
-/*if(! function_exists('control_fav')){
-    function control_fav(){
-        global $con;
-        
-        $method = $_GET['method'];
-        $user_id = $_GET['user_id'];
-        $product_id = $_GET['product_id'];
-        if(check_product($user_id,$product_id,'favs') > 0 && $method == 'unlike'){
-            $stmt = $con->prepare("DELETE FROM favs WHERE product_id = :zproduct_id AND user_id = :zuser_id");
-                $stmt->bindParam([":product_id"=> $product_id,'user_id'=> $user_id]);
-                $stmt->execute();
+if(! function_exists('check_fav')){
+    function check_fav($product_id , $user_id)
+    {
+        if(check_product($user_id,$product_id,'favs') == 0)
+        {
+            echo '<button class="btn btn-info button_fav" data-product-id="'.$product_id.'" data-user-id="'.$user_id.'" data-method="Like">
+                        <i class="ti-heart"></i> Add To Favourit
+                    </button>
+                    <button class="btn btn-info"><i class="ti-bag"></i> Add To Cart</button>  ';
         }
         else{
-            $stmt= $con->prepare("INSERT INTO favs (product_id,user_id) VALUES (:zproduct_id,:zuser_id)");
-                    $stmt->execute(array(
-                        'zproduct_id'       => $product_id,
-                        'zuser_id'          => $user_id
-                    ));
+            echo '<button class="btn btn-info button_fav" data-product-id="'.$product_id.'" data-user-id="'.$user_id.'" data-method="Unlike">
+                        <i class="ti-heart"></i> Remove From Favourit
+                    </button>';
         }
     }
-}*/
+}
+/*
+add new product to user favs list
+*/
+if(! function_exists('add_to_fav'))
+{
+    function add_to_fav($method,$user_id,$director_id)
+    {
+        global $con;
+            switch ($method) {
+                case "Like" :
+                    $query = 'INSERT INTO favs (user_id, product_id) VALUES (:mID, :pID)';
+                    break;
+                case "Unlike" :
+                    $query = 'DELETE FROM favs WHERE user_id=:mID and product_id=:pID';
+                    break;
+            }
+            $feedback = 'Fail'; // start with pessimistic feedback
+            if (isset($query)) {
+                $stmt = $con->prepare($query);
+                $stmt->bindParam(':mID', $user_id, PDO::PARAM_INT, 12);
+                $stmt->bindParam(':pID', $director_id, PDO::PARAM_INT, 12);
+                if ($stmt->execute()) {
+                    $feedback = $method;
+                } // feedback becomes method on success
+            }
+            echo json_encode(['id' => $director_id,
+                'feedback' => $feedback]);
+    }
+}
+/*
+function to clean all input data
+*/
+if(! function_exists('clean_input'))
+{
+    function clean_input($data) {
+        $data = trim($data);
+        $data = stripslashes($data);
+        $data = htmlspecialchars($data);
+        return $data;
+    }
+}

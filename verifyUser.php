@@ -18,8 +18,8 @@ if(! isset($email) && ! isset($token))
 				<div class="col-12">
 					<div class="bread-inner">
 						<ul class="bread-list">
-							<li><a href="index.php">Home<i class="ti-arrow-right"></i></a></li>
-							<li class="active"><a href="forgetPassword.php">Verify Your Account</a></li>
+							<li><a href="index">Home<i class="ti-arrow-right"></i></a></li>
+							<li class="active"><a href="forgetPassword">Verify Your Account</a></li>
 						</ul>
 					</div>
 				</div>
@@ -52,7 +52,7 @@ if(! isset($email) && ! isset($token))
 												<span aria-hidden="true">&times;</span>
 											</button>
 											</div>';
-											if($type == 'success') header('refresh:5;url=index.php');  
+											if($type == 'success') header('refresh:5;url=index');  
 											    
 											  
 									

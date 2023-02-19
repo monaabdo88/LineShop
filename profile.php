@@ -18,7 +18,7 @@ if(isset($user_id)){
 				<div class="col-12">
 					<div class="bread-inner">
 						<ul class="bread-list">
-							<li><a href="index.php">Home<i class="ti-arrow-right"></i></a></li>
+							<li><a href="index">Home<i class="ti-arrow-right"></i></a></li>
 							<li class="active"><?=$user['username']?> Profile</li>
 						</ul>
 					</div>
@@ -148,11 +148,11 @@ if(isset($user_id)){
 								<div class="single-info">
 									
 									<ul class="list-group">
-										<li class="list-group-item active"><a href="profile.php">Edit Profile</a></li>
-										<li class="list-group-item"><a href="myProducts.php">Products</a></li>
-										<li class="list-group-item"><a href="favs.php">Favs</a></li>
-										<li class="list-group-item"><a href="messages.php">Messages</a></li>
-										<li class="list-group-item"><a href="orders.php">Orders</a></li>
+										<li class="list-group-item active"><a href="profile">Edit Profile</a></li>
+										<li class="list-group-item"><a href="myProducts">Products</a></li>
+										<li class="list-group-item"><a href="favs">Favs</a></li>
+										<li class="list-group-item"><a href="messages">Messages</a></li>
+										<li class="list-group-item"><a href="orders">Orders</a></li>
 									</ul>
 								</div>
 								
@@ -167,7 +167,7 @@ if(isset($user_id)){
 <?php 
     include $tpl."footer.php";
 }else{
-    redirectPage('index.php',1);
+    redirectPage('index',1);
 }
 ?>
 <script>

@@ -15,8 +15,8 @@ $products = search_products($search_keyword,$cat_id);
 					<div class="col-12">
 						<div class="bread-inner">
 							<ul class="bread-list">
-								<li><a href="index.php">Home<i class="ti-arrow-right"></i></a></li>
-								<li class="active"><a href="products.php">Search Results For <?=$search_keyword?></a></li>
+								<li><a href="index">Home<i class="ti-arrow-right"></i></a></li>
+								<li class="active"><a href="products">Search Results For <?=$search_keyword?></a></li>
 							</ul>
 						</div>
 					</div>

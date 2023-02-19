@@ -10,8 +10,8 @@ $rows = paginate_records('categories','parent_id',0,16);
 					<div class="col-12">
 						<div class="bread-inner">
 							<ul class="bread-list">
-								<li><a href="index.php">Home<i class="ti-arrow-right"></i></a></li>
-								<li class="active"><a href="categories.php">Categories</a></li>
+								<li><a href="index">Home<i class="ti-arrow-right"></i></a></li>
+								<li class="active"><a href="categories">Categories</a></li>
 							</ul>
 						</div>
 					</div>
@@ -45,7 +45,7 @@ $rows = paginate_records('categories','parent_id',0,16);
 							</div>
 							<div class="col-lg-6 col-md-6 col-12 no-padding">
 								<div class="content">
-									<h4 class="title"><a href="category.php?category_id=<?=$row['id']?>"><?=$row['name']?></a></h4>
+									<h4 class="title"><a href="category?category_id=<?=$row['id']?>"><?=$row['name']?></a></h4>
 								</div>
 							</div>
 						</div>

@@ -112,15 +112,15 @@ include $tpl."header.php";
 							<div class="col-lg-6 col-md-6 col-12">
 								<div class="list-image overlay">
 									<img src="<?=$baseUrl?>assets/uploads/products/<?=get_item('file_name','files','product_id',$sale['id'])?>" alt="#">
-									<a href="product.php?product_id=<?=$sale['id']?>" class="buy"><i class="fa fa-shopping-bag"></i></a>
+									<a href="product?product_id=<?=$sale['id']?>" class="buy"><i class="fa fa-shopping-bag"></i></a>
 								</div>
 							</div>
 							<div class="col-lg-6 col-md-6 col-12 no-padding">
 								<div class="content">
-									<h4 class="title"><a href="product.php?product_id=<?=$sale['id']?>"><?=$sale['title']?></a></h4>
+									<h4 class="title"><a href="product?product_id=<?=$sale['id']?>"><?=$sale['title']?></a></h4>
 									<p class="price with-discount">$<?=$sale['price']?></p>
                                     <p><b>Quantity: </b><?=$sale['quantity']?></p>
-									<p><b>By: </b><a href="userProducts.php?user_id=<?=$sale['user_id']?>"><?=get_item('username','users','id',$sale['user_id'])?></a></p>
+									<p><b>By: </b><a href="userProducts?user_id=<?=$sale['user_id']?>"><?=get_item('username','users','id',$sale['user_id'])?></a></p>
 								</div>
 							</div>
 						</div>
@@ -151,15 +151,15 @@ include $tpl."header.php";
 							<div class="col-lg-6 col-md-6 col-12">
 								<div class="list-image overlay">
 									<img src="<?=$baseUrl?>assets/uploads/products/<?=get_item('file_name','files','product_id',$sale['id'])?>" alt="#">
-									<a href="product.php?product_id=<?=$sale['id']?>" class="buy"><i class="fa fa-shopping-bag"></i></a>
+									<a href="product?product_id=<?=$sale['id']?>" class="buy"><i class="fa fa-shopping-bag"></i></a>
 								</div>
 							</div>
 							<div class="col-lg-6 col-md-6 col-12 no-padding">
 								<div class="content">
-									<h4 class="title"><a href="product.php?product_id=<?=$sale['id']?>"><?=$sale['title']?></a></h4>
+									<h4 class="title"><a href="product?product_id=<?=$sale['id']?>"><?=$sale['title']?></a></h4>
 									<p class="price with-discount">$<?=$sale['price']?></p>
 									<p><b>Quantity: </b><?=$sale['quantity']?></p>
-									<p><b>By: </b><a href="userProducts.php?user_id=<?=$sale['user_id']?>"><?=get_item('username','users','id',$sale['user_id'])?></a></p>
+									<p><b>By: </b><a href="userProducts?user_id=<?=$sale['user_id']?>"><?=get_item('username','users','id',$sale['user_id'])?></a></p>
 								
 								</div>
 							</div>
@@ -191,15 +191,15 @@ include $tpl."header.php";
 							<div class="col-lg-6 col-md-6 col-12">
 								<div class="list-image overlay">
 									<img src="<?=$baseUrl?>assets/uploads/products/<?=get_item('file_name','files','product_id',$sale['id'])?>" alt="#">
-									<a href="product.php?product_id=<?=$sale['id']?>" class="buy"><i class="fa fa-shopping-bag"></i></a>
+									<a href="product?product_id=<?=$sale['id']?>" class="buy"><i class="fa fa-shopping-bag"></i></a>
 								</div>
 							</div>
 							<div class="col-lg-6 col-md-6 col-12 no-padding">
 								<div class="content">
-									<h4 class="title"><a href="product.php?product_id=<?=$sale['id']?>"><?=$sale['title']?></a></h4>
+									<h4 class="title"><a href="product?product_id=<?=$sale['id']?>"><?=$sale['title']?></a></h4>
 									<p class="price with-discount">$<?=$sale['price']?></p>
 									<p><b>Quantity: </b><?=$sale['quantity']?></p>
-									<p><b>By: </b><a href="userProducts.php?user_id=<?=$sale['user_id']?>"><?=get_item('username','users','id',$sale['user_id'])?></a></p>
+									<p><b>By: </b><a href="userProducts?user_id=<?=$sale['user_id']?>"><?=get_item('username','users','id',$sale['user_id'])?></a></p>
 								
 								</div>
 							</div>

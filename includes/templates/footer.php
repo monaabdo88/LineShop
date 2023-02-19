@@ -7,7 +7,7 @@
 						<!-- Single Widget -->
 						<div class="single-footer about">
 							<div class="logo">
-								<h4><a href="index.php" style="color:#fff;font-size:17px;font-weight:bold"><?=get_item('site_name','settings','id',1)?></a></h4>
+								<h4><a href="index" style="color:#fff;font-size:17px;font-weight:bold"><?=get_item('site_name','settings','id',1)?></a></h4>
 							</div>
 							<p class="text"><?=get_item('site_summery','settings','id',1);?></p>
 							<p class="call">Got Question? Call us 24/7<span><a href="<?=get_item('wh_url','settings','id',1)?>"><?=get_item('site_phone','settings','id',1)?></a></span></p>
@@ -19,7 +19,7 @@
 						<div class="single-footer links">
 							<h4>Information</h4>
 							<ul>
-								<li><a href="index.php">Home</a></li>
+								<li><a href="index">Home</a></li>
 								<?php 
 									$pages = get_all_rows_data('pages','status',1,3);
 									foreach($pages as $page){

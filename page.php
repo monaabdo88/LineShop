@@ -16,7 +16,7 @@ if($row['status'] == 1){
 					<div class="col-12">
 						<div class="bread-inner">
 							<ul class="bread-list">
-								<li><a href="index.php">Home<i class="ti-arrow-right"></i></a></li>
+								<li><a href="index">Home<i class="ti-arrow-right"></i></a></li>
 								<li class="active"><a href="blog-single.html"><?=$row['title']?></a></li>
 							</ul>
 						</div>
@@ -57,6 +57,6 @@ if($row['status'] == 1){
 			
 <?php include $tpl."footer.php";
 }else{
-	redirectPage('index.php',1);
+	redirectPage('index',1);
 }
 ?>

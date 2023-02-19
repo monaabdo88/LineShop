@@ -1,8 +1,8 @@
 <?php 
 $productId = isset($_GET['id']) && is_numeric($_GET['id']) ? intval($_GET['id']) : 0;
-$product_data = get_row_data('products','id',$productId);
+$product_data = get_row_data('products',$productId);
 $rowsCount = checkItem('id','products',$productId);
-$media = get_row_data('files','product_id',$product_data['id']);
+$media = get_row_data('files',$product_data['id'],'product_id');
 if($rowsCount > 0 && $user_id == $product_data['user_id']){
 ?>
 
@@ -13,7 +13,7 @@ if($rowsCount > 0 && $user_id == $product_data['user_id']){
 				<div class="col-12">
 					<div class="bread-inner">
 						<ul class="bread-list">
-							<li><a href="index.php">Home<i class="ti-arrow-right"></i></a></li>
+							<li><a href="index">Home<i class="ti-arrow-right"></i></a></li>
                             <li><a href="userProducts.php">My Products<i class="ti-arrow-right"></i></a></li>
 							<li class="active"><a href="#">Edit <?=$product_data['title']?></a></li>
 						</ul>

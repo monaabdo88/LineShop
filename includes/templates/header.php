@@ -132,7 +132,7 @@ include "includes/functions/functions.php";
 					<div class="col-lg-2 col-md-2 col-12">
 						<!-- Logo -->
 						<div class="logo">
-							<a href="index.php" class="navbar-brand site_name"><?=get_item('site_name','settings','id',1)?></a>
+							<a href="index" class="navbar-brand site_name"><?=get_item('site_name','settings','id',1)?></a>
 						</div>
 						<!--/ End Logo -->
 						<!-- Search Form -->
@@ -179,9 +179,7 @@ include "includes/functions/functions.php";
 							<div class="sinlge-bar">
 								<a href="#" class="single-icon"><i class="fa fa-heart-o" aria-hidden="true"></i></a>
 							</div>
-							<div class="sinlge-bar">
-								<a href="messages.php" class="single-icon"><i class="fa fa-envelope" aria-hidden="true"></i></a>
-							</div>
+							
 							<div class="sinlge-bar shopping">
 								<a href="#" class="single-icon"><i class="ti-bag"></i> <span class="total-count">2</span></a>
 								<!-- Shopping Item -->
@@ -226,7 +224,7 @@ include "includes/functions/functions.php";
 				<div class="cat-nav-head">
 					<div class="row">
 					<?php 
-						if(isActive('index.php',1) == 'active'|| isActive('',1) == 'active'):
+						if(isActive('index.php',1) == 'active'|| isActive(' ',1) == 'active'):
 					?>	
 					<div class="col-lg-3">
 							
@@ -266,24 +264,24 @@ include "includes/functions/functions.php";
 							
 						</div>
 						<?php endif; ?>
-						<div class="col-lg-<?=(isActive('index.php',1) == 'active' || isActive('',1) == 'active')? '9' : '12'?> col-12">
+						<div class="col-lg-<?=(isActive('index',1) == 'active' || isActive('',1) == 'active')? '9' : '12'?> col-12">
 							<div class="menu-area">
 								<!-- Main Menu -->
 								<nav class="navbar navbar-expand-lg">
 									<div class="navbar-collapse">	
 										<div class="nav-inner">	
 											<ul class="nav main-menu menu navbar-nav">
-													<li class="<?=isActive('index.php')?><?=isActive('')?>"><a href="index.php">Home</a></li>
-													<li class="<?=isActive('categories.php')?>"><a href="categories.php">All Categories</a></li>
-													<li class="<?=isActive('products.php')?>"><a href="products.php">Products</a></li>
+													<li class="<?=isActive('index')?><?=isActive('')?>"><a href="index">Home</a></li>
+													<li class="<?=isActive('categories')?>"><a href="categories">All Categories</a></li>
+													<li class="<?=isActive('allProducts')?>"><a href="allProducts">Products</a></li>
 													<?php 
 														$pages = get_all_rows_data('pages','status',1,3);
 														foreach($pages as $page){
 															(isset($_GET['page_id']) && $_GET['page_id'] == $page['id'])? $class='active' : $class = '';
-															echo '<li class="'.$class.'"><a href="page.php?page_id='.$page['id'].'">'.$page['title'].'</a></li>';
+															echo '<li class="'.$class.'"><a href="page?page_id='.$page['id'].'">'.$page['title'].'</a></li>';
 														}
 													?>
-													<li class="<?=isActive('contact.php')?>"><a href="contact.php">Contact Us</a></li>
+													<li class="<?=isActive('contact')?>"><a href="contact">Contact Us</a></li>
 												</ul>
 										</div>
 									</div>

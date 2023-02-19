@@ -19,7 +19,7 @@ $recent_tags = get_rows('tags',5,1);
 					<div class="col-12">
 						<div class="bread-inner">
 							<ul class="bread-list">
-								<li><a href="index.php">Home</a></li>
+								<li><a href="index">Home</a></li>
 								<?=get_cat_parent($row['category_id'])?>
 								<li class="active"><i class="ti-arrow-right"></i> <a href="#"><?=$row['title']?></a></li>
 							</ul>
@@ -45,6 +45,7 @@ $recent_tags = get_rows('tags',5,1);
                                     <div class="exzoom_img_box">
                                         <ul class='exzoom_img_ul'>
                                                 <?php 
+												//show product images
             									    $images = get_row_data('files',$row['id'],'product_id');
             									    foreach($images as $img):
             									        echo'<li><img src="assets/uploads/products/'.$img['file_name'].'"></li>';
@@ -59,31 +60,31 @@ $recent_tags = get_rows('tags',5,1);
                                         </p>
                                     </div>
                                     <!------------------------------------------->
-								    <!-- Place somewhere in the <body> of your page -->
-                                    
+								    
 									<div class="blog-detail">
 										<h2 class="blog-title"><?=$row['title']?></h2>
 										<div class="blog-meta">
-											<span class="author"><a href="userProducts.php?user_id=<?=$row['user_id']?>"><i class="fa fa-user"></i>By <?=$authorInfo['username']?></a><a href="#"><i class="fa fa-calendar"></i><?=$row['created_at']?></a><a href="#"><i class="fa fa-comments"></i>Comment (<?=get_data_column_count('comments','product_id',$row['id'])?>)</a></span>
+											<span class="author"><a href="userProducts?user_id=<?=$row['user_id']?>"><i class="fa fa-user"></i>By <?=$authorInfo['username']?></a><a href="#"><i class="fa fa-calendar"></i><?=$row['created_at']?></a><a href="#"><i class="fa fa-comments"></i>Comment (<?=get_data_column_count('comments','product_id',$row['id'])?>)</a></span>
 										</div>
 										<div class="content">
 											<?=$row['details']?>
 										</div>
-										<?php if(isset($_SESSION['user_id']) && $_SESSION['user_id'] != $row['user_id']): ?>
+										<?php
+											//check if user is logged in and diffrent than the product author 
+											if(isset($_SESSION['user_id']) && $_SESSION['user_id'] != $row['user_id']): ?>
 										    <br>
 										    <br>
-    										<div class="float-right">
-    										    <?php if(check_product($_SESSION['user_id'], $row['id'],'favs') == 0): ?>
-    										        <button class="btn btn-info button_fav">
-    										            <i class="ti-heart"></i> Add To Favourit
-    										            
-    										        </button>-->
-    										    
-    										    <button class="btn btn-info"><i class="ti-bag"></i> Add To Cart</button>    
-    										<?php endif; ?>
+    										<div class="float-right" id="fav_container">
+    										    <?php 
+												//check if this product is not in user favs list
+												check_fav($row['id'],$_SESSION['user_id']);
+												?>
+										
     										</div>
     										<br><br>
-										<?php endif; ?>
+											<?php 
+												endif; 
+											?>
 										
 									</div>
 									<div class="share-social">
@@ -97,7 +98,7 @@ $recent_tags = get_rows('tags',5,1);
 													            foreach($tagDetails as $tagInfo):
 													            
 													        ?>
-													            <li><a href="tagProducts.php?tag_id=<?=$tagInfo['id']?>"><?=$tagInfo['title']?></a></li>
+													            <li><a href="tagProducts?tag_id=<?=$tagInfo['id']?>"><?=$tagInfo['title']?></a></li>
 													    <?php 
 													        endforeach;
 													    endforeach; 
@@ -113,7 +114,7 @@ $recent_tags = get_rows('tags',5,1);
 									<div class="comments">
 										<h3 class="comment-title">Comments (<?=get_data_column_count('comments','product_id',$row['id'])?>)</h3>
 										<!-- Single Comment -->
-										<div class="single-comment">
+										<!--<div class="single-comment">
 											<img src="https://via.placeholder.com/80x80" alt="#">
 											<div class="content">
 												<h4>Alisa harm <span>At 8:59 pm On Feb 28, 2018</span></h4>
@@ -122,20 +123,9 @@ $recent_tags = get_rows('tags',5,1);
 													<a href="#" class="btn"><i class="fa fa-reply" aria-hidden="true"></i>Reply</a>
 												</div>
 											</div>
-										</div>
+										</div>-->
 										<!-- End Single Comment -->
-										<!-- Single Comment -->
-										<div class="single-comment left">
-											<img src="https://via.placeholder.com/80x80" alt="#">
-											<div class="content">
-												<h4>john deo <span>Feb 28, 2018 at 8:59 pm</span></h4>
-												<p>Enthusiastically leverage existing premium quality vectors with enterprise-wide innovation collaboration Phosfluorescently leverage others enterprisee  Phosfluorescently leverage.</p>
-												<div class="button">
-													<a href="#" class="btn"><i class="fa fa-reply" aria-hidden="true"></i>Reply</a>
-												</div>
-											</div>
-										</div>
-										<!-- End Single Comment -->
+										
 										
 									</div>									
 								</div>											
@@ -185,7 +175,7 @@ $recent_tags = get_rows('tags',5,1);
 							<!-- Single Widget -->
 							<div class="single-widget search">
 								<div class="form">
-								    <form action="searchresult.php" method="get">
+								    <form action="searchresult" method="get">
 								    <input type="text" name="search_key" placeholder="Search Here...">
 									<button type="submit" class="button"><i class="fa fa-search"></i></a>    
 								    </form>
@@ -199,7 +189,7 @@ $recent_tags = get_rows('tags',5,1);
 								<ul class="categor-list">
 								    <?php 
 								        foreach($cats as $cat):
-								            echo '<li><a href="category.php?category_id='.$cat['id'].'">'.$cat['name'].'</a></li>';
+								            echo '<li><a href="category?category_id='.$cat['id'].'">'.$cat['name'].'</a></li>';
 								        endforeach;
 								    ?>
 								
@@ -225,7 +215,7 @@ $recent_tags = get_rows('tags',5,1);
     										
     									</div>
     									<div class="content">
-    										<h5><a href="product.php?product_id=<?=$pro['id']?>"><?=$pro['title']?></a></h5>
+    										<h5><a href="product?product_id=<?=$pro['id']?>"><?=$pro['title']?></a></h5>
     										<ul class="comment">
     											<li><i class="fa fa-calendar" aria-hidden="true"></i><?=$pro['created_at']?></li>
     											<li><i class="fa fa-commenting-o" aria-hidden="true"></i><?=get_data_column_count('comments','product_id',$pro['id'])?></li>
@@ -249,25 +239,13 @@ $recent_tags = get_rows('tags',5,1);
 								<ul class="tag">
 								    <?php 
 								        foreach($recent_tags as $tag):
-								            echo'<li><a href="tagProducts.php?tag_id='.$tag['id'].'">'.$tag['title'].'</a></li>';
+								            echo'<li><a href="tagProducts?tag_id='.$tag['id'].'">'.$tag['title'].'</a></li>';
 								        endforeach;
 								    ?>
 									
 								</ul>
 							</div>
-							<!--/ End Single Widget -->
-							<!-- Single Widget -->
-							<!--<div class="single-widget newsletter">
-								<h3 class="title">Newslatter</h3>
-								<div class="letter-inner">
-									<h4>Subscribe & get news <br> latest updates.</h4>
-									<div class="form-inner">
-										<input type="email" placeholder="Enter your email">
-										<a href="#">Submit</a>
-									</div>
-								</div>
-							</div>-->
-							<!--/ End Single Widget -->
+							
 						</div>
 					</div>
 				</div>
@@ -277,34 +255,39 @@ $recent_tags = get_rows('tags',5,1);
 			
 <?php include $tpl."footer.php";
 }else{
-	redirectPage('index.php',1);
+	redirectPage('index',1);
 }
 ?>
-<script>
-    /* $(document).ready(function($){
-          $('.button_fav').on('click', function(e){
-              e.preventDefault();
-              var user_id = $('.uid').val(); // Get the parameter user_id from the button
-              var product_id = $('.pid').val(); // Get the parameter director_id from the button
-              var method = $('.method').val();  // Get the parameter method from the button
-              var func_name = $(".func").val();
-              //alert(product_id);
-              if (method == "Like") {
-                $(this).attr('method', 'Unlike') // Change the div method attribute to Unlike
-                $('#' + product_id).replaceWith('<img class="favicon" id="' + product_id + '" src="favon.jpg">') // Replace the image with the liked button
-              } else {
-               $(this).attr('method', 'Like')
-               $('#' + product_id).replaceWith('<img class="favicon" id="' + product_id + '" src="favoff.png">')
-              }
-              $.ajax({
-                  type: 'GET',
-                  url: func_name, // Call favs.php to update the database
-                  data: {'user_id': user_id, 'product_id': product_id, 'method': method},
-                  cache: false,
-                  success: function(response){
-                      console.log(response);
-                  }
-              });
-          });
-      });*/
+<script type="text/javascript">
+
+//Add to fav list ajax code
+$('.button_fav').click(function(e) {
+  //getting current element which is clicked
+  var button = $(this);
+   e.preventDefault();
+  $.getJSON('includes/helpers.php', {
+      user_id: $(this).attr('data-user-id'),
+      p_id: $(this).attr('data-product-id'),
+      method: $(this).attr('data-method'),
+	  action:'add_to_fav'
+    })
+    .done(function(json) {
+      switch (json.feedback) {
+        case 'Like':
+          button.attr('data-method', 'Unlike');
+          button.html('<i class="mi mi_sml text-danger" id="' + json.id + '"></i>Remove From Favorite').toggleClass('button mybtn'); // Replace the image with the liked button
+          break;
+        case 'Unlike':
+          button.html('<i class="mi mi_sml" id="' + json.id + '"></i>Add To Favorite').toggleClass('mybtn button');
+          button.attr('data-method', 'Like');
+          break;
+        case 'Fail':
+          console.log('The Favorite setting could not be changed.');
+          break;
+      }
+    })
+    .fail(function(jqXHR, textStatus, error) {
+      console.log("Error Changing Favorite: " + error);
+    });
+});
 </script>

@@ -20,7 +20,7 @@ if(! function_exists('add_user')){
             $email             = $_POST['email'];
             $password          = sha1($_POST['password']);
             $country_id        = $_POST['country_id'];
-            (isset($_POst['city_id'])) ? $city_id = $_POST['city_id'] : $city_id = '';
+            (isset($_POST['city_id'])) ? $city_id = $_POST['city_id'] : $city_id = '';
             $state_id          = $_POST['state_id'];
             $phone             = $_POST['phone'];
             $token             = md5($email).rand(10,9999);
@@ -58,14 +58,18 @@ if(! function_exists('add_user')){
                  //check Upload Image
                  if(isset($_FILES['avatar']) && $_FILES['avatar']['size'] != 0){
                     // Upload Variables
+                    
                     $imageTmp	    = $_FILES['avatar']['tmp_name'];
                     $imageType      = $_FILES['avatar']['type'];
-                    //upload category Image
+                    //upload user Image
                     $image = resize_image('assets/uploads/users/',$imageTmp,$imageType);
+                    $errors['success'] = $image;
                 }else{
                     $image = 'no-image.png';
                 }
                 //add new user to database
+                
+                $errors['success']  = $image;
                 $stmt = $con->prepare("INSERT INTO 
                     users(
                             username, email, password,
@@ -175,14 +179,14 @@ if(! function_exists('edit_user')){
                 //upload New Image if there file request
                 if(isset($_FILES['avatar']) && $_FILES['avatar']['size'] != 0){
                     $dirImg =  "assets/uploads/users/";
-                    //delete the prev category image
+                    //delete the prev user image
                     if($oldAvatar != 'no-image.png'){
                         unlink($dirImg.$oldAvatar);
                     }
                         // Upload Variables
                         $imageTmp	    = $_FILES['avatar']['tmp_name'];
                         $imageType      = $_FILES['avatar']['type'];
-                        //upload category Image
+                        //upload user Image
                         $image = resize_image('assets/uploads/users/',$imageTmp,$imageType);
                 
                     }else{
