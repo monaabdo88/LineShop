@@ -38,7 +38,12 @@ $columns = array(
             }
         ),
     array( 'db' => 'id', 'dt' => 1 ),
-    array( 'db' => 'title','dt' => 2),
+    array( 'db' => 'title','dt' => 2,
+            'formatter' => function($d,$title)
+            {
+                return "<a href='product?product_id=$d'>$title</a>";
+            }
+        ),
     array( 'db' => 'status',     'dt' => 3 ,
         'formatter' => function($d){
             if($d == 0)

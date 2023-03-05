@@ -19,8 +19,10 @@
  */
  
 // DB table to use
-$table = 'tags';
- 
+//$table = 'favs';
+$user_id = intval($_GET['user_id']);
+$table = '(SELECT * FROM favs WHERE user_id = '.$user_id.') tbl';
+
 // Table's primary key
 $primaryKey = 'id';
  
@@ -28,28 +30,23 @@ $primaryKey = 'id';
 // The `db` parameter represents the column name in the database, while the `dt`
 // parameter represents the DataTables column identifier. In this case simple
 // indexes
+
 $columns = array(
     array('db'  => 'id', 'dt'   => 0,
             'formatter' => function($d){
-                return "<input type='checkbox'  onchange='toggleCheckbox()' name='checkTag[]' value='$d'/>";
+                return "<input type='checkbox'  onchange='toggleCheckbox()' name='checkProduct[]' value='$d'/>";
             }
         ),
     array( 'db' => 'id', 'dt' => 1 ),
-    array( 'db' => 'title',   'dt' => 2 ),
-    array(
-        'db'        => 'created_at',
-        'dt'        => 3,
-        'formatter' => function( $d, $row ) {
-            return date( 'jS M y', strtotime($d));
-        }
-    ),
+    array( 'db' => 'title','dt' => 2),
+    array('db'  => 'price',     'dt'    => 3),
+    array('db'  => 'quantity',     'dt'    => 4),
     array(
         'db'        => 'id',
-        'dt'        => 4,
-        'formatter' => function ($d , $row){
+        'dt'        => 6,
+        'formatter' => function ($d){
             return "
-            <a href='?do=Edit&id=$d' class='btn btn-warning'> <i class='fa fa-pen'></i></a>
-            <a onclick='confirmation(event)' href='?do=Delete&id=$d' class='btn btn-danger'> <i class='fa fa-trash'></i></a>
+            <a onclick='confirmation(event)' href='?do=delProduct&id=$d' class='btn btn-sm btn-danger btn-non'> <i class='fa fa-trash'></i></a>
             ";
         }
     )
@@ -63,15 +60,16 @@ $sql_details = array(
     'db'   => 'lineshop',
     'host' => 'localhost'
 );
- 
+  
  
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  * If you just want to use the basic configuration for DataTables with PHP
  * server-side, there is no need to edit below this line.
  */
  
-require( '../ssp.class.php' );
- 
+require( '../dashboard/ssp.class.php' );
+
 echo json_encode(
-    SSP::simple( $_GET, $sql_details, $table, $primaryKey, $columns )
+   SSP::simple( $_GET, $sql_details, $table, $primaryKey, $columns )
+    //SSP::complex( $_GET, $sql_details, $table, $primaryKey, $columns ,$where,null)
 );

@@ -64,9 +64,49 @@ $recent_tags = get_rows('tags',5,1);
 									<div class="blog-detail">
 										<h2 class="blog-title"><?=$row['title']?></h2>
 										<div class="blog-meta">
-											<span class="author"><a href="userProducts?user_id=<?=$row['user_id']?>"><i class="fa fa-user"></i>By <?=$authorInfo['username']?></a><a href="#"><i class="fa fa-calendar"></i><?=$row['created_at']?></a><a href="#"><i class="fa fa-comments"></i>Comment (<?=get_data_column_count('comments','product_id',$row['id'])?>)</a></span>
+											<span class="author">
+												<i class="fa fa-user"></i>By
+												<a href="userProducts?user_id=<?=$row['user_id']?>">
+													<?=$authorInfo['username']?>
+												</a>
+												<a href="#">
+													<i class="fa fa-calendar"></i><?=$row['created_at']?>
+												</a>
+												<a href="#">
+													<i class="fa fa-comments"></i>Comment (<?=get_data_column_count('comments','product_id',$row['id'])?>)
+												</a>
+												<?php if(isset($_SESSION['user_id']) && $row['user_id'] != $_SESSION['user_id']): ?>
+													<a href="#">
+														<i class="fa fa-envelope"></i> Send Message
+													</a>
+												<?php endif; ?>
+												<?php if(isset($_SESSION['user_id']) && $row['user_id'] == $_SESSION['user_id']): ?>
+													<a href="#">
+														<i class="fa fa-pencil"></i> Edit
+													</a>
+												<?php endif?>
+											</span>
 										</div>
 										<div class="content">
+											<div class="d-inline p-2 bg-warning text-black" style="margin-right:2px"><b>Price: </b>
+												<?php
+													if($row['discount'] != 0) 
+														echo'<strike>'.$row['price'].'$</strike>';
+													else
+														echo $row['price'].'$';
+													
+													?>
+											</div>
+											
+											<?php if($row['discount'] != 0): ?>
+												<div class="d-inline p-2 bg-warning text-black"><b>Discount: </b><?=$row['discount']?>%</div>
+												<div class="d-inline p-2 bg-warning text-black" style="margin-right:2px"><b>Price After discount: </b>
+													<?=price_after_discount($row['price'],$row['discount']).'$';?>
+												</div>
+											<?php endif; ?>
+											<div class="d-inline p-2 bg-warning text-black"><b>Quantity: </b><?=$row['quantity']?></div>
+											
+											<br><br>
 											<?=$row['details']?>
 										</div>
 										<?php
@@ -77,7 +117,9 @@ $recent_tags = get_rows('tags',5,1);
     										<div class="float-right" id="fav_container">
     										    <?php 
 												//check if this product is not in user favs list
-												check_fav($row['id'],$_SESSION['user_id']);
+												check_fav($row['id'],$_SESSION['user_id'],$row['price'],$row['quantity']);
+												//check if the product in user cart
+												check_cart($row['id'],$_SESSION['user_id'],$row['price'],$row['quantity']);
 												?>
 										
     										</div>
@@ -89,7 +131,7 @@ $recent_tags = get_rows('tags',5,1);
 									</div>
 									<div class="share-social">
 										<div class="row">
-											<div class="col-12">
+											<div class="col-6 float-left">
 												<div class="content-tags">
 													<h4>Tags:</h4>
 													<ul class="tag-inner">
@@ -106,6 +148,18 @@ $recent_tags = get_rows('tags',5,1);
 														
 													</ul>
 												</div>
+											</div>
+											<div class="col-6 float-right">
+												<div class="content-tags">
+													<ul class="tag-inner">
+														<li><a href="http://www.facebook.com/share.php?u=[URL]&title=[TITLE]" class="social_link"><i class="fa fa-facebook"></i></a></li>
+														<li><a href="https://twitter.com/intent/tweet?text=[TEXT]" class="social_link"><i class="fa fa-twitter"></i></a></li>
+														<li><a href="http://www.reddit.com/submit?url=[EncodedURL]" class="social_link"><i class="fa fa-reddit"></i></a></li>
+														<li><a href="http://pinterest.com/pin/create/button/?url=[EncodedURL]&media={[MEDIA]}&description=[TITLE]" class="social_link"><i class="fa fa-pinterest"></i></a></li>
+													</ul>
+												</div>
+												
+												
 											</div>
 										</div>
 									</div>
@@ -135,9 +189,9 @@ $recent_tags = get_rows('tags',5,1);
 										<div class="reply-head">
 											<h2 class="reply-title">Leave a Comment</h2>
 											<!-- Comment Form -->
-											<form class="form" action="#">
+											<form class="form" action="#" method="post">
 												<div class="row">
-													<div class="col-lg-6 col-md-6 col-12">
+													<!--<div class="col-lg-6 col-md-6 col-12">
 														<div class="form-group">
 															<label>Your Name<span>*</span></label>
 															<input type="text" name="name" placeholder="" required="required">
@@ -148,16 +202,18 @@ $recent_tags = get_rows('tags',5,1);
 															<label>Your Email<span>*</span></label>
 															<input type="email" name="email" placeholder="" required="required">
 														</div>
-													</div>
+													</div>-->
+													<input type="hidden" name="user_id" class="user_comment" value="<?=$_SESSION['user_id']?>" />
+													<input type="hidden" name="product_id" class="product_comment" value="<?=$row['id']?>"/>
 													<div class="col-12">
 														<div class="form-group">
-															<label>Your Message<span>*</span></label>
-															<textarea name="message" placeholder=""></textarea>
+															<label>Your Comment<span>*</span></label>
+															<textarea name="comment" class="user_comment" placeholder="" required></textarea>
 														</div>
 													</div>
 													<div class="col-12">
 														<div class="form-group button">
-															<button type="submit" class="btn">Post comment</button>
+															<button type="submit" class="btn submit_comment">Post comment</button>
 														</div>
 													</div>
 												</div>
@@ -269,6 +325,8 @@ $('.button_fav').click(function(e) {
       user_id: $(this).attr('data-user-id'),
       p_id: $(this).attr('data-product-id'),
       method: $(this).attr('data-method'),
+	  price: $(this).attr('data-price'),
+	  quantity:$(this).attr('data-quantity'),
 	  action:'add_to_fav'
     })
     .done(function(json) {
@@ -287,7 +345,77 @@ $('.button_fav').click(function(e) {
       }
     })
     .fail(function(jqXHR, textStatus, error) {
-      console.log("Error Changing Favorite: " + error);
+      //console.log("Error Changing Favorite: " + error);
     });
 });
+	//Add to cart ajax code
+	$('.button_cart').click(function(e) {
+		//getting current element which is clicked
+		var button = $(this);
+		var orders_total = $("input[name=cart_total]").val();
+		//console.log('this is total : '+orders_total);
+		e.preventDefault();
+		$.getJSON('includes/helpers.php', {
+			user_id: $(this).attr('data-user-id'),
+			p_id: $(this).attr('data-product-id'),
+			method: $(this).attr('data-method'),
+			price: $(this).attr('data-price'),
+			action:'add_to_cart'
+			})
+			.done(function(json) {
+			switch (json.feedback) {
+				case 'addCart':
+					button.attr('data-method', 'delCart');
+					button.html('<i class="mi mi_sml text-danger" id="' + json.id + '"></i>Remove From Cart').toggleClass('button mybtn'); // Replace the image with the liked button
+					$(".total-count").text(json.items_count);
+					$(".shopping-list").append(json.product_data);
+					$('.total-amount').html("$ "+ json.total);
+
+				break;
+				case 'delCart':
+					button.html('<i class="mi mi_sml" id="' + json.id + '"></i>Add To Cart').toggleClass('mybtn button');
+					button.attr('data-method', 'addCart');
+					$(".total-count").text(json.items_count);
+					$("#"+json.id).remove();
+					$('.total-amount').html("$ "+ json.total);
+				break;
+				case 'Fail':
+					console.log('The Cart setting could not be changed.');
+					$(".total-count").text(json.items_count);
+				break;
+			}
+			})
+			.fail(function(jqXHR, textStatus, error) {
+			//console.log("Error Changing Cart: " + error);
+			});
+	});
+	//add comment ajax code
+	$('.submit_comment').click(function(e) {
+		//getting current element which is clicked
+		var button = $(this);
+		e.preventDefault();
+		$.getJSON('includes/helpers.php', {
+			user_id: $(this).attr('data-user-id'),
+			p_id: $(this).attr('data-product-id'),
+			})
+			.done(function(json) {
+			switch (json.feedback) {
+				case 'addCart':
+				button.attr('data-method', 'delCart');
+				button.html('<i class="mi mi_sml text-danger" id="' + json.id + '"></i>Remove From Cart').toggleClass('button mybtn'); // Replace the image with the liked button
+				break;
+				case 'delCart':
+				button.html('<i class="mi mi_sml" id="' + json.id + '"></i>Add To Cart').toggleClass('mybtn button');
+				button.attr('data-method', 'addCart');
+				break;
+				case 'Fail':
+				console.log('The Cart setting could not be changed.');
+				break;
+			}
+			
+			})
+			.fail(function(jqXHR, textStatus, error) {
+			//console.log("Error Changing Cart: " + error);
+			});
+	});
 </script>

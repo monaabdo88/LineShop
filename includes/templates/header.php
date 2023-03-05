@@ -177,35 +177,50 @@ include "includes/functions/functions.php";
 								<a href="myProducts.php?do=addPro" class="single-icon"><i class="fa fa-plus" aria-hidden="true" title="Add New Product"></i></a>
 							</div>
 							<div class="sinlge-bar">
-								<a href="#" class="single-icon"><i class="fa fa-heart-o" aria-hidden="true"></i></a>
+								<a href="favs.php" class="single-icon"><i class="fa fa-heart-o" aria-hidden="true"></i></a>
 							</div>
 							
 							<div class="sinlge-bar shopping">
-								<a href="#" class="single-icon"><i class="ti-bag"></i> <span class="total-count">2</span></a>
+								<a href="userCart.php" class="single-icon"><i class="ti-bag"></i> <span class="total-count"><?=get_data_column_count('orders','user_id',$_SESSION['user_id'])?></span></a>
 								<!-- Shopping Item -->
 								<div class="shopping-item">
 									<div class="dropdown-cart-header">
-										<span>2 Items</span>
-										<a href="#">View Cart</a>
+										<span class="total-count"><?=get_data_column_count('orders','user_id',$_SESSION['user_id'])?> </span> <span>Items</span>
+										<a href="userCart.php">View Cart</a>
 									</div>
 									<ul class="shopping-list">
-										<li>
-											<a href="#" class="remove" title="Remove this item"><i class="fa fa-remove"></i></a>
-											<a class="cart-img" href="#"><img src="https://via.placeholder.com/70x70" alt="#"></a>
-											<h4><a href="#">Woman Ring</a></h4>
-											<p class="quantity">1x - <span class="amount">$99.00</span></p>
-										</li>
-										<li>
-											<a href="#" class="remove" title="Remove this item"><i class="fa fa-remove"></i></a>
-											<a class="cart-img" href="#"><img src="https://via.placeholder.com/70x70" alt="#"></a>
-											<h4><a href="#">Woman Necklace</a></h4>
-											<p class="quantity">1x - <span class="amount">$35.00</span></p>
-										</li>
+										<?php 
+										//get the cart items
+										$order_products = get_all_rows_data('orders','user_id',$_SESSION['user_id']);
+										$total = 0;
+										foreach($order_products as $order_pro):
+											$pros = get_all_rows_data('products','id',$order_pro['product_id']);
+											foreach($pros as $pro):
+												$total  = get_orders_total($_SESSION['user_id']);
+												echo'
+												<li id="'.$pro['id'].'">
+													<a href="#" class="remove_cart" title="Remove this item"><i class="fa fa-remove"></i></a>
+													<a class="cart-img" href="product?product_id='.$pro['id'].'">';
+													$img_name = get_item('file_name','files','product_id',$pro['id']);
+													$img_dir = get_item('file_dir','files','product_id',$pro['id']);
+													echo'
+													<img src="'.$img_dir.'/'.$img_name.'" alt="#"></a>
+													<h4><a href="product?product_id='.$pro['id'].'">'.$pro['title'].'</a></h4>
+													<p class="quantity">1x - <span class="amount">$'.price_after_discount($pro['price'],$pro['discount']).'</span></p>
+												</li>';
+												
+											endforeach;
+										endforeach;
+										?>
+										
+										
 									</ul>
 									<div class="bottom">
 										<div class="total">
+											<input type="hidden" name="cart_total" value="<?=$total?>"/>
 											<span>Total</span>
-											<span class="total-amount">$134.00</span>
+											<span class="total-amount">$
+												<?=$total?></span>
 										</div>
 										<a href="checkout.html" class="btn animate">Checkout</a>
 									</div>

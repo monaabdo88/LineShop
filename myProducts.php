@@ -104,7 +104,7 @@ if(isset($user_id)){
 									
 									<ul class="list-group">
 										<li class="list-group-item"><a href="profile.php?user_id=<?=$user_id?>">Edit Profile</a></li>
-										<li class="list-group-item active"><a href="userProducts.php">Products</a></li>
+										<li class="list-group-item active"><a href="myProducts.php">Products</a></li>
 										<li class="list-group-item"><a href="favs.php">Favs</a></li>
 										<li class="list-group-item"><a href="messages.php">Messages</a></li>
 										<li class="list-group-item"><a href="orders.php">Orders</a></li>
@@ -188,7 +188,7 @@ if(isset($user_id)){
                       });     
                       //redirect back after deleting Product 5 seconds
                       setTimeout(function(){
-                            window.location.href = 'userProducts.php';
+                            window.location.href = 'myProducts';
                         }, 5000);
                     }
                   });
@@ -225,7 +225,7 @@ if(isset($user_id)){
                       });     
                       //redirect back after deleting Product 5 seconds
                       setTimeout(function(){
-                            window.location.href = 'userProducts.php';
+                            window.location.href = 'myProducts';
                         }, 5000);
                     }
                   });

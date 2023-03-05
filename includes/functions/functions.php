@@ -454,18 +454,42 @@ if(! function_exists('check_product')){
 check if product in user favourite list
 */
 if(! function_exists('check_fav')){
-    function check_fav($product_id , $user_id)
+    function check_fav($product_id , $user_id,$price,$quantity)
     {
         if(check_product($user_id,$product_id,'favs') == 0)
         {
             echo '<button class="btn btn-info button_fav" data-product-id="'.$product_id.'" data-user-id="'.$user_id.'" data-method="Like">
                         <i class="ti-heart"></i> Add To Favourit
-                    </button>
-                    <button class="btn btn-info"><i class="ti-bag"></i> Add To Cart</button>  ';
+                    </button>';
+                    
         }
         else{
             echo '<button class="btn btn-info button_fav" data-product-id="'.$product_id.'" data-user-id="'.$user_id.'" data-method="Unlike">
                         <i class="ti-heart"></i> Remove From Favourit
+                    </button>
+                    ';
+        }
+    }
+}
+/*
+check if the product is in user cart
+*/
+if(! function_exists('check_cart'))
+{
+    function check_cart($product_id , $user_id,$price,$quantity)
+    {
+        $get_discount = get_row_data('products',$product_id,'id');
+        $discount = ($price * $get_discount['discount']) /100;
+        $price_after_discount = $price - $discount;
+        if(check_product($user_id,$product_id,'orders') == 0 && $quantity != 0)
+        {
+            echo '<button class="btn btn-info button_cart"  data-product-id="'.$product_id.'" data-user-id="'.$user_id.'" data-price="'.$price_after_discount.'" data-quantity="'.$quantity.'" data-method="addCart">
+                            <i class="ti-bag"></i> Add To Cart
+                        </button>';
+        }
+        else{
+            echo '<button class="btn btn-info button_cart" data-product-id="'.$product_id.'" data-user-id="'.$user_id.'" data-price="'.$price_after_discount.'" data-quantity="'.$quantity.'" data-method="delCart">
+                        <i class="ti-bag"></i> Remove Cart
                     </button>';
         }
     }
@@ -485,6 +509,7 @@ if(! function_exists('add_to_fav'))
                 case "Unlike" :
                     $query = 'DELETE FROM favs WHERE user_id=:mID and product_id=:pID';
                     break;
+                
             }
             $feedback = 'Fail'; // start with pessimistic feedback
             if (isset($query)) {
@@ -495,8 +520,72 @@ if(! function_exists('add_to_fav'))
                     $feedback = $method;
                 } // feedback becomes method on success
             }
+            
             echo json_encode(['id' => $director_id,
                 'feedback' => $feedback]);
+    }
+}
+/*
+add to cart function
+*/
+if(! function_exists('add_to_cart'))
+{
+    function add_to_cart($method,$user_id,$director_id,$price,$cart_total)
+    {
+        global $con;
+            $total = $cart_total;
+            switch ($method) {
+                case "addCart" :
+                    $query = 'INSERT INTO orders (user_id, product_id,price) VALUES (:mID, :pID, :pb)';
+                break;
+                case "delCart" :
+                    $query = 'DELETE FROM orders WHERE user_id=:mID and product_id=:pID';
+                break;
+                
+            }
+            $product = '';
+            $feedback = 'Fail'; // start with pessimistic feedback
+            //get the product details to add to cart list in header
+            if($method == 'addCart')
+            {
+                //get product details
+                $img_name = get_item('file_name','files','product_id',$director_id);
+                $img_dir = get_item('file_dir','files','product_id',$director_id);
+                $product_title = get_item('title','products','id',$director_id);
+                //add product to cart in header
+                $product = '<li id="'.$director_id.'">
+                            <a href="#" class="remove_cart" title="Remove this item">
+                                <i class="fa fa-remove"></i>
+                            </a>
+                            <a class="cart-img" href="product?product_id='.$director_id.'">
+                                <img src="'.$img_dir.'/'.$img_name.'" alt="#">
+                            </a>
+                            <h4>
+                                <a href="product?product_id='.$director_id.'">
+                                '.$product_title.'</a>
+                            </h4>
+                            <p class="quantity">1x - <span class="amount">$'.$price.'</span></p></li>';
+            }
+            if (isset($query)) {
+                $stmt = $con->prepare($query);
+                $stmt->bindParam(':mID', $user_id, PDO::PARAM_INT, 12);
+                $stmt->bindParam(':pID', $director_id, PDO::PARAM_INT, 12);
+                if($method == 'addCart')
+                    $stmt->bindParam(':pb', $price);
+                    
+                if ($stmt->execute()) {
+                    $feedback = $method;
+                    $total = get_orders_total($user_id);
+                } // feedback becomes method on success
+            }
+            $items_count = get_data_column_count('orders','user_id',$user_id);
+            echo json_encode([
+                'id'            => $director_id,
+                'feedback'      => $feedback,
+                'items_count'   => $items_count,
+                'product_data'  => $product,
+                'total'         => $total
+            ]);
     }
 }
 /*
@@ -509,5 +598,36 @@ if(! function_exists('clean_input'))
         $data = stripslashes($data);
         $data = htmlspecialchars($data);
         return $data;
+    }
+}
+/*
+function to get total for user orders
+*/
+if(! function_exists('get_orders_total'))
+{
+    function get_orders_total($user_id)
+    {
+        $orders = get_all_rows_data('orders','user_id',$user_id);
+        $total = 0;
+        foreach($orders as $order)
+        {
+            $total += $order['price'];
+        }
+        return $total;
+    }
+}
+/*
+function to get price after discount
+*/
+if(! function_exists('price_after_discount'))
+{
+    function price_after_discount($price,$discount)
+    {
+        if($discount !=0)
+        {
+            $new_price = ($price * $discount) / 100;
+            $new_price = $price - $new_price;
+            return $new_price;
+        }
     }
 }

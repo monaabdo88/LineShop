@@ -88,7 +88,7 @@ if(! function_exists('add_product')){
                 
             }
             echo $msg;
-            ($type == 'cp')? redirectPage('products.php'): redirectPage('userProducts.php');
+            ($type == 'cp')? redirectPage('products.php'): redirectPage('myProducts.php');
             
         }
     }
@@ -156,7 +156,7 @@ if(! function_exists('update_product')){
             if($type == 'cp')
                 redirectPage('products.php');
             else   
-                redirectPage('userProducts.php');
+                redirectPage('myProducts.php');
         }
     }
 }
@@ -288,7 +288,8 @@ if(! function_exists('delete_product_images')){
             //unlink images from folder
             $images = get_row_data('files','product_id',$product_id);
             foreach($images as $img){
-                unlink($img['file_dir'].$img['file_name']);
+                $imgLink = __DIR__.$img['file_dir'].$img['file_name'];
+                unlink ($imgLink);
             }
             //delete product images from database
             $stmt = $con->prepare("DELETE FROM files WHERE product_id = :zproduct_id");
