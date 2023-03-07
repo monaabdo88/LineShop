@@ -75,7 +75,9 @@ include "includes/functions/functions.php";
 				die();
 		}
 	?>
+<script>
 	
+</script>	
 </head>
 <body class="js">
 	
@@ -196,17 +198,23 @@ include "includes/functions/functions.php";
 										foreach($order_products as $order_pro):
 											$pros = get_all_rows_data('products','id',$order_pro['product_id']);
 											foreach($pros as $pro):
+												if($pro['discount'] != 0)
+													$price_after_discount = price_after_discount($pro['price'], $pro['discount']);
+												else
+													$price_after_discount = $pro['price'];
 												$total  = get_orders_total($_SESSION['user_id']);
 												echo'
 												<li id="'.$pro['id'].'">
-													<a href="#" class="remove_cart" title="Remove this item"><i class="fa fa-remove"></i></a>
+													<a href="#" class="remove_cart" title="Remove this item" data-product-id="'.$pro['id'].'" data-user-id="'.$_SESSION['user_id'].'" data-price="'.$price_after_discount.'" data-method="delCart">
+														<i class="fa fa-remove"></i>
+													</a>
 													<a class="cart-img" href="product?product_id='.$pro['id'].'">';
 													$img_name = get_item('file_name','files','product_id',$pro['id']);
 													$img_dir = get_item('file_dir','files','product_id',$pro['id']);
 													echo'
 													<img src="'.$img_dir.'/'.$img_name.'" alt="#"></a>
 													<h4><a href="product?product_id='.$pro['id'].'">'.$pro['title'].'</a></h4>
-													<p class="quantity">1x - <span class="amount">$'.price_after_discount($pro['price'],$pro['discount']).'</span></p>
+													<p class="quantity">1x - <span class="amount">$'.$price_after_discount.'</span></p>
 												</li>';
 												
 											endforeach;

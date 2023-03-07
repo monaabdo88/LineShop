@@ -479,16 +479,19 @@ if(! function_exists('check_cart'))
     function check_cart($product_id , $user_id,$price,$quantity)
     {
         $get_discount = get_row_data('products',$product_id,'id');
-        $discount = ($price * $get_discount['discount']) /100;
-        $price_after_discount = $price - $discount;
+        if($get_discount['discount'] != 0)
+            $price_after_discount = price_after_discount($price, $get_discount['discount']);
+        else
+        $price_after_discount = $price;
+
         if(check_product($user_id,$product_id,'orders') == 0 && $quantity != 0)
         {
-            echo '<button class="btn btn-info button_cart"  data-product-id="'.$product_id.'" data-user-id="'.$user_id.'" data-price="'.$price_after_discount.'" data-quantity="'.$quantity.'" data-method="addCart">
+            echo '<button class="btn btn-info button_cart" id="btn-'.$product_id.'"  data-product-id="'.$product_id.'" data-user-id="'.$user_id.'" data-price="'.$price_after_discount.'" data-quantity="'.$quantity.'" data-method="addCart">
                             <i class="ti-bag"></i> Add To Cart
                         </button>';
         }
         else{
-            echo '<button class="btn btn-info button_cart" data-product-id="'.$product_id.'" data-user-id="'.$user_id.'" data-price="'.$price_after_discount.'" data-quantity="'.$quantity.'" data-method="delCart">
+            echo '<button class="btn btn-info button_cart" id="btn-'.$product_id.'" data-product-id="'.$product_id.'" data-user-id="'.$user_id.'" data-price="'.$price_after_discount.'" data-quantity="'.$quantity.'" data-method="delCart">
                         <i class="ti-bag"></i> Remove Cart
                     </button>';
         }
@@ -534,12 +537,16 @@ if(! function_exists('add_to_cart'))
     {
         global $con;
             $total = $cart_total;
+            $prev_quantity = get_row_data('products',$director_id);
+            
             switch ($method) {
                 case "addCart" :
                     $query = 'INSERT INTO orders (user_id, product_id,price) VALUES (:mID, :pID, :pb)';
+                    $new_quantity = $prev_quantity['quantity'] - 1;
                 break;
                 case "delCart" :
                     $query = 'DELETE FROM orders WHERE user_id=:mID and product_id=:pID';
+                    $new_quantity = $prev_quantity['quantity'] + 1;
                 break;
                 
             }
@@ -554,7 +561,7 @@ if(! function_exists('add_to_cart'))
                 $product_title = get_item('title','products','id',$director_id);
                 //add product to cart in header
                 $product = '<li id="'.$director_id.'">
-                            <a href="#" class="remove_cart" title="Remove this item">
+                            <a href="#" class="remove_cart" title="Remove this item" data-product-id="'.$director_id.'" data-user-id="'.$user_id.'" data-price="'.$price.'" data-method="delCart">
                                 <i class="fa fa-remove"></i>
                             </a>
                             <a class="cart-img" href="product?product_id='.$director_id.'">
@@ -576,6 +583,8 @@ if(! function_exists('add_to_cart'))
                 if ($stmt->execute()) {
                     $feedback = $method;
                     $total = get_orders_total($user_id);
+                    up_quantity($director_id,$new_quantity);
+                    $quantity = get_row_data('products',$director_id);
                 } // feedback becomes method on success
             }
             $items_count = get_data_column_count('orders','user_id',$user_id);
@@ -584,7 +593,8 @@ if(! function_exists('add_to_cart'))
                 'feedback'      => $feedback,
                 'items_count'   => $items_count,
                 'product_data'  => $product,
-                'total'         => $total
+                'total'         => $total,
+                'quantity'      => $quantity['quantity']
             ]);
     }
 }
@@ -629,5 +639,19 @@ if(! function_exists('price_after_discount'))
             $new_price = $price - $new_price;
             return $new_price;
         }
+    }
+}
+/*
+function to update product quantity
+*/
+if(! function_exists('up_quantity')){
+    function up_quantity($product_id,$quantity)
+    {
+        global $con;
+        $stmt = $con->prepare("UPDATE products SET quantity = ? WHERE id = ?");
+        $upData =$stmt->execute(array($quantity,$product_id));
+        //get updated quantity
+        $new_quantity = get_row_data('products',$product_id);
+        return $new_quantity['quantity'];          
     }
 }

@@ -127,6 +127,7 @@
 	<script src="https://cdn.ckeditor.com/4.17.2/full-all/ckeditor.js"></script>
     <script src="https://unpkg.com/imagesloaded@4/imagesloaded.pkgd.min.js"></script>
     <script src="<?=$js_front?>jquery.exzoom.js"></script>
+	<script src="<?=$js_front?>myCode.js"></script>
     <script type="text/javascript">
         $('.expand-img').imagesLoaded( function() {
           $("#exzoom").exzoom({
