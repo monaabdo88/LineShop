@@ -655,3 +655,31 @@ if(! function_exists('up_quantity')){
         return $new_quantity['quantity'];          
     }
 }
+/*
+function to send message between users
+*/
+if(! function_exists('send_product_msg'))
+{
+    function send_product_msg($author,$product_id,$sender_email,$sender_name,$sender_msg,$user_id,$msg,$subject)
+    {
+        global $con;
+        $stmt = $con->prepare('INSERT INTO messages (user_id, product_id,title,sender_name,sender_email,message,sender_id) VALUES 
+                                      (:muserID, :mPro_id, :mtitle,:msenderName,:msenderEmail,:mMsg,:msenderID)');
+            $stmt->execute(array(
+                'muserID' 	    => $author,
+                'mPro_id' 	    => $product_id,
+                'mtitle' 	    => $subject,
+                'msenderName' 	=> $sender_name,
+                'msenderEmail'   => $sender_email,
+                'mMsg'          => $sender_msg,
+                'msenderID'     => $user_id
+            ));
+            if($stmt)
+                $msg =  'Message Send Successfully';
+            else
+                $msg =  'Error in sending Message Please Try Again';
+            echo json_encode([
+                    'callback_msg'   => $msg   
+            ]);
+    }
+}

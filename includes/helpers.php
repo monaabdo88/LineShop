@@ -6,7 +6,13 @@ include "functions/functions.php";
         $method = isset($_GET['method'])? $_GET['method'] : null;
         $user_id = isset($_GET['user_id'])? $_GET['user_id']: null;
         $price = isset($_GET['price'])? $_GET['price']: null;    
-        $cart_total = isset($_GET['cart_total'])? $_GET['cart_total']: null; 
+        $cart_total = isset($_GET['cart_total'])? $_GET['cart_total']: null;
+        //send message vars
+        $sender_name = isset($_GET['sender_name'])? $_GET['sender_name']: null; 
+        $sender_email = isset($_GET['sender_email'])? $_GET['sender_email']: null;
+        $sender_msg = isset($_GET['sender_msg'])? $_GET['sender_msg']: null;
+        $p_author = isset($_GET['p_author'])? $_GET['p_author']: null;
+        $msg_sub = isset($_GET['subject'])? $_GET['subject']: null;
 //add to favourit list
 if(isset($_GET) && $_GET['action'] == 'add_to_fav'):
         add_to_fav($method,$user_id,$product_id);
@@ -15,3 +21,8 @@ endif;
 if(isset($_GET) && $_GET['action'] == 'add_to_cart'):
         add_to_cart($method,$user_id,$product_id,$price,$cart_total);
 endif;
+//send message in product page
+if(isset($_GET) && $_GET['action'] == 'send_product_msg')
+{
+        send_product_msg($p_author,$product_id,$sender_email,$sender_name,$sender_msg,$user_id,$sender_msg,$msg_sub);
+}

@@ -135,3 +135,86 @@ $('.button_fav').click(function(e) {
               //console.log("Error Changing Cart: " + error);
               });
       });
+      //validate code for sending message in product
+      $(document).ready(function() {
+        $("#myForm").submit(function(event) {
+          event.preventDefault();
+          var senderName = $("#senderName").val();
+          var senderMsg  = $("#senderMsg").val();
+          var senderEmail = $("#senderEmail").val();
+          var author = $("input[name=author]").val();
+          var user  = $("input[name=user_id]").val();
+          var method = $("input[name=method]").val();
+          var product_id = $("input[name=product_id]").val();
+          var msg_sub = $("#msgSubject").val();
+          //if form is valid submit
+          if(senderName.length > 3 && isValidEmail(senderEmail) && senderMsg.length > 10)
+          {
+              $(".error").text("");
+              //$(".submit_msg").text('Sending ...').attr("disabled", true);
+              //send message ajax code
+              $.getJSON('includes/helpers.php', {
+                    sender_name:senderName,
+                    sender_email:senderEmail,
+                    sender_msg:senderMsg,
+                    p_author:author,
+                    user_id:user,
+                    action:method,
+                    p_id:product_id,
+                    subject:msg_sub
+                })
+                .done(function(json) {
+                  $(".msg_status").html('<div class="alert alert-success"><p class="text-center">'+json.callback_msg+'</p></div>');
+                })
+                .fail(function(jqXHR, textStatus, error) {
+                  console.log("Error : " + error);         
+                });
+          }
+          else{
+            //validate email
+            if (senderEmail== '' || !isValidEmail(senderEmail)) {
+              $("#email-error").text("Please enter a valid email address.");
+            }
+            else{
+              $("#email-error").text("");
+            }
+            //validate message subject
+            if(msg_sub == '' || msg_sub.length < 3){
+                $("#subject-error").text("Message subject must be at least 3 characters long.");
+            }else{
+                $("#subject-error").text();
+            }
+            //validate sender email
+            if (senderName.length < 3) {
+              $("#name-error").text("Name must be at least 3 characters long.");
+            }else{
+              $("#name-error").text("");
+            } 
+            //validate sender message
+            if(senderMsg.length < 10)
+            {
+              $("#msg-error").text('Your Message must be at least 10 characters long.');
+            }
+            else{
+              $("#msg-error").text("");
+            }
+          }
+                   
+        });
+      });
+      //validate email
+      // Validation functions
+      function isValidEmail(email) {
+        var emailPattern = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
+        return emailPattern.test(email);
+      }//clear all data after close the modal
+      $('#exampleModalCenter').on('hidden.bs.modal', function (e) {
+        $(this)
+          .find("input,textarea")
+             .val('')
+             .end()
+        $(".msg_status").html("");
+          
+      })
+      
+      

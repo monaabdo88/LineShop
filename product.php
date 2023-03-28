@@ -76,9 +76,87 @@ $recent_tags = get_rows('tags',5,1);
 													<i class="fa fa-comments"></i>Comment (<?=get_data_column_count('comments','product_id',$row['id'])?>)
 												</a>
 												<?php if(isset($_SESSION['user_id']) && $row['user_id'] != $_SESSION['user_id']): ?>
-													<a href="#">
+													<a href="#" data-toggle="modal" data-target="#exampleModalCenter">
 														<i class="fa fa-envelope"></i> Send Message
 													</a>
+													<!-- Modal -->
+													<div class="col-md-8 offset-md-4">
+														<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+														<div class="modal-dialog modal-dialog-centered" role="document">
+															<div class="modal-content">
+																<div class="modal-header">
+																	<!--<h5 class="modal-title text-center" id="exampleModalLongTitle">Modal title</h5>-->
+																	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+																		<span aria-hidden="true">&times;</span>
+																	</button>
+																</div>
+																<div class="clearfix"></div>
+																<div class="modal-body">
+																	<div class="col-12">			
+																			<div class="reply">
+																				<div class="reply-head">
+																					<!-- Comment Form -->
+																					<form class="form" id="myForm" action="#" method="post">
+																						<div class="row">
+																							<div class="col-md-12">
+																								<div class="msg_status"></div>
+																							</div>	
+																							<div class="col-lg-6 col-md-6 col-12">
+																								<div class="form-group">
+																									<label>Your Name<span>*</span></label>
+																									<input type="text" name="name" id="senderName" placeholder="" >
+																									<span class="error text-danger" id="name-error"></span>
+																								</div>
+																							</div>
+																							<div class="col-lg-6 col-md-6 col-12">
+																								<div class="form-group">
+																									<label>Your Email<span>*</span></label>
+																									<input type="email" name="email" id="senderEmail" placeholder="">
+																									<span class="error text-danger" id="email-error"></span>
+																								</div>
+																							</div>
+																							<div class="col-lg-12">
+																								<div class="form-group">
+																									<label>Your Message Subject<span>*</span></label>
+																									<input type="text" name="msgSubject" id="msgSubject" placeholder="">
+																									<span class="error text-danger" id="subject-error"></span>
+																								</div>
+																							</div>
+																							<div class="col-12">
+																								<div class="form-group">
+																									<label>Your Message<span>*</span></label>
+
+																									<textarea name="message" id="senderMsg" placeholder="" ></textarea>
+																									<span class="error text-danger" id="msg-error"></span>
+																								</div>
+																							</div>
+																							<div class="col-12">
+																								<div class="form-group button">
+																								<input type="hidden" name="user_id" value="<?=$_SESSION['user_id']?>" />
+																								<input type="hidden" name="product_id" value="<?=$row['id']?>"/>
+																								<input type="hidden" name="author" value="<?=$row['user_id']?>" />
+																								<input type="hidden" name="method" value="send_product_msg" />
+																									<button type="submit" class="btn submit_msg">Send</button>
+																								</div>
+																							</div>
+																						</div>
+																					</form>
+																					<!-- End Comment Form -->
+																				</div>
+																			</div>			
+																		</div>	
+																	
+																</div>
+																<div class="clearfix"></div>
+																<!--<div class="modal-footer">
+																	<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+																	<button type="button" class="btn btn-primary">Save changes</button>
+																</div>-->
+															</div>
+														</div>
+														</div>
+													</div>
+													
 												<?php endif; ?>
 												<?php if(isset($_SESSION['user_id']) && $row['user_id'] == $_SESSION['user_id']): ?>
 													<a href="#">
