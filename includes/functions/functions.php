@@ -683,3 +683,49 @@ if(! function_exists('send_product_msg'))
             ]);
     }
 }
+/**
+ * function to update views
+ * 
+ */
+if(! function_exists('up_views'))
+{
+    function up_views($product_id)
+    {
+        global $con;
+        $pro = get_row_data('products',$product_id);
+        $views = $pro['views'] + 1;
+        $stmt = $con->prepare("UPDATE products SET views = ? WHERE id = ?");
+        $upData =$stmt->execute(array($views,$product_id));
+    }
+}
+/*
+function to add new comment
+*/
+if(! function_exists('add_new_comment'))
+{
+    function add_new_comment($user_id,$product_id,$comment)
+    {
+        global $con;
+        $stmt = $con->prepare('INSERT INTO comments (user_id, product_id,comment) VALUES 
+                                      (:muserID, :mPro_id, :mcomment)');
+            $stmt->execute(array(
+                'muserID' 	    => $user_id,
+                'mPro_id' 	    => $product_id,
+                'mcomment' 	    => $comment
+                
+            ));
+            if($stmt){
+                $msg =  'Your Comment Added Successfully';
+                $comments_count = get_data_column_count('comments','product_id',$product_id);
+
+            }else{
+                $msg =  'Error in adding new comment Please Try Again';
+            
+            }
+            echo json_encode([
+                    'callback_msg'   => $msg ,
+                    'comments_count'    => $comments_count
+            ]);
+
+    }
+}

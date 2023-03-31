@@ -11,6 +11,7 @@ $product_tags = get_all_rows_data('product_tags','product_id',$row['id']);
 $cats = get_rows('categories',4);
 $recent_products = get_rows('products',5);
 $recent_tags = get_rows('tags',5,1);
+$views = up_views($row['id']);
 ?>
 	<!-- Breadcrumbs -->
     <div class="breadcrumbs">
@@ -230,10 +231,10 @@ $recent_tags = get_rows('tags',5,1);
 											<div class="col-6 float-right">
 												<div class="content-tags">
 													<ul class="tag-inner">
-														<li><a href="http://www.facebook.com/share.php?u=[URL]&title=[TITLE]" class="social_link"><i class="fa fa-facebook"></i></a></li>
-														<li><a href="https://twitter.com/intent/tweet?text=[TEXT]" class="social_link"><i class="fa fa-twitter"></i></a></li>
-														<li><a href="http://www.reddit.com/submit?url=[EncodedURL]" class="social_link"><i class="fa fa-reddit"></i></a></li>
-														<li><a href="http://pinterest.com/pin/create/button/?url=[EncodedURL]&media={[MEDIA]}&description=[TITLE]" class="social_link"><i class="fa fa-pinterest"></i></a></li>
+														<li><a href="http://www.facebook.com/share.php?u=<?=$base_url.'product?product_id='.$row['id'];?>&title=<?=$row['title']?>" class="social_link"><i class="fa fa-facebook"></i></a></li>
+														<li><a href="https://twitter.com/intent/tweet?text=<?=$base_url.'product?product_id='.$row['id'];?>&title=<?=$row['title']?>" class="social_link"><i class="fa fa-twitter"></i></a></li>
+														<li><a href="http://www.reddit.com/submit?url=<?=$base_url.'product?product_id='.$row['id'];?>&title=<?=$row['title']?>" class="social_link"><i class="fa fa-reddit"></i></a></li>
+														<li><a href="http://pinterest.com/pin/create/button/?url=<?=$base_url.'product?product_id='.$row['id'];?>&title=<?=$row['title']?>" class="social_link"><i class="fa fa-pinterest"></i></a></li>
 													</ul>
 												</div>
 												
@@ -244,21 +245,29 @@ $recent_tags = get_rows('tags',5,1);
 								</div>
 								<div class="col-12">
 									<div class="comments">
-										<h3 class="comment-title">Comments (<?=get_data_column_count('comments','product_id',$row['id'])?>)</h3>
+										<h3 class="comment-title">Comments <span class="comments_count">(<?=get_data_column_count('comments','product_id',$row['id'])?>)</span></h3>
 										<!-- Single Comment -->
-										<!--<div class="single-comment">
-											<img src="https://via.placeholder.com/80x80" alt="#">
+										<?php 
+											$comments = get_all_rows_data('comments','product_id',$row['id']);
+											foreach($comments as $comment):
+										?>
+										<div class="single-comment">
+											<?php 
+												$user_data = get_row_data('users',$comment['user_id']);
+												echo '<h6>'.$user_data['username'].'</h6><img src="assets/uploads/users/'.$user_data['avatar'].'" alt="#">';
+											?>
+											
 											<div class="content">
-												<h4>Alisa harm <span>At 8:59 pm On Feb 28, 2018</span></h4>
-												<p>Enthusiastically leverage existing premium quality vectors with enterprise-wide innovation collaboration Phosfluorescently leverage others enterprisee  Phosfluorescently leverage.</p>
-												<div class="button">
+												<h4><?=$comment['created_at']?></h4>
+												<p><?=$comment['comment']?></p>
+												<!--<div class="button">
 													<a href="#" class="btn"><i class="fa fa-reply" aria-hidden="true"></i>Reply</a>
-												</div>
+												</div>-->
 											</div>
-										</div>-->
+										</div>
 										<!-- End Single Comment -->
 										
-										
+										<?php endforeach; ?>
 									</div>									
 								</div>											
 								<?php if(isset($_SESSION['user_id']) && $_SESSION['user_id'] != $row['user_id']): ?>
@@ -267,8 +276,9 @@ $recent_tags = get_rows('tags',5,1);
 										<div class="reply-head">
 											<h2 class="reply-title">Leave a Comment</h2>
 											<!-- Comment Form -->
-											<form class="form" action="#" method="post">
+											<form id="add_comment" action="#" method="post">
 												<div class="row">
+													<div class="col-md-12" id="success_add"></div>
 													<!--<div class="col-lg-6 col-md-6 col-12">
 														<div class="form-group">
 															<label>Your Name<span>*</span></label>
@@ -281,12 +291,15 @@ $recent_tags = get_rows('tags',5,1);
 															<input type="email" name="email" placeholder="" required="required">
 														</div>
 													</div>-->
-													<input type="hidden" name="user_id" class="user_comment" value="<?=$_SESSION['user_id']?>" />
-													<input type="hidden" name="product_id" class="product_comment" value="<?=$row['id']?>"/>
+													<input type="hidden" name="user_id" value="<?=$_SESSION['user_id']?>" />
+													<input type="hidden" name="product_id" id="product_comment" value="<?=$row['id']?>"/>
+													<input type="hidden" name="comment_method" value="add_comment"/>
 													<div class="col-12">
 														<div class="form-group">
 															<label>Your Comment<span>*</span></label>
 															<textarea name="comment" class="user_comment" placeholder="" required></textarea>
+															<span class="error text-danger" id="comment-error"></span>
+																								
 														</div>
 													</div>
 													<div class="col-12">

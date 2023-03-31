@@ -13,16 +13,23 @@ include "functions/functions.php";
         $sender_msg = isset($_GET['sender_msg'])? $_GET['sender_msg']: null;
         $p_author = isset($_GET['p_author'])? $_GET['p_author']: null;
         $msg_sub = isset($_GET['subject'])? $_GET['subject']: null;
+        $comment = isset($_GET['comment'])? $_GET['comment']: null;
+        $action = isset($_GET) ? $_GET['action'] : '';
 //add to favourit list
-if(isset($_GET) && $_GET['action'] == 'add_to_fav'):
+if($action == 'add_to_fav'):
         add_to_fav($method,$user_id,$product_id);
 endif;
 //add to cart
-if(isset($_GET) && $_GET['action'] == 'add_to_cart'):
+if($action == 'add_to_cart'):
         add_to_cart($method,$user_id,$product_id,$price,$cart_total);
 endif;
 //send message in product page
-if(isset($_GET) && $_GET['action'] == 'send_product_msg')
+if($action == 'send_product_msg')
 {
         send_product_msg($p_author,$product_id,$sender_email,$sender_name,$sender_msg,$user_id,$sender_msg,$msg_sub);
+}
+//submit new comment
+if($action == 'add_comment')
+{
+        add_new_comment($user_id,$product_id,$comment);
 }

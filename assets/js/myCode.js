@@ -201,9 +201,8 @@ $('.button_fav').click(function(e) {
           }
                    
         });
-      });
-      //validate email
-      // Validation functions
+         //validate email
+      
       function isValidEmail(email) {
         var emailPattern = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
         return emailPattern.test(email);
@@ -214,7 +213,48 @@ $('.button_fav').click(function(e) {
              .val('')
              .end()
         $(".msg_status").html("");
+        $(".error").text("");
           
-      })
-      
-      
+      });
+      });
+     
+      //submit user comment
+      $(".submit_comment").click(function(e) {
+        e.preventDefault();
+        var comment = $(".user_comment").val();
+        var user  = $("input[name=user_id]").val();
+        var method = $("input[name=comment_method]").val();
+        var product_id = $("#product_comment").val();
+        //validate comment
+        if(comment != '' && comment.length > 10)
+        {
+            //add comment code
+            $(".error").text("");
+              $.getJSON('includes/helpers.php', {
+                    user_id:user,
+                    action:method,
+                    p_id:product_id,
+                    comment:comment
+                })
+                .done(function(json) {
+                  $("#success_add").html('<div class="alert alert-success"><p class="text-center">'+json.callback_msg+'</p></div>');
+                  setTimeout(function(){// wait for 5 secs(2)
+                    location.reload(); // then reload the page.(3)
+                  }, 5000); 
+                })
+                .fail(function(jqXHR, textStatus, error) {
+                  console.log("Error : " + error);         
+                });
+        }else{
+          if(comment.length < 10)
+          {
+            $("#comment-error").text('Your Comment must be at least 10 characters long.');
+          }
+          else{
+            $("#comment-error").text("");
+          }
+        }
+        
+    });
+    
+    

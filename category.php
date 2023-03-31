@@ -57,7 +57,7 @@ if(isset($id) && $checkCat > 0 ):
     							</div>
     							<div class="col-lg-6 col-md-6 col-12 no-padding">
     								<div class="content">
-    									<h4 class="title"><a href="category.php?category_id=<?=$row['id']?>"><?=$row['name']?></a></h4>
+    									<h4 class="title"><a href="category?category_id=<?=$row['id']?>"><?=$row['name']?></a></h4>
     								</div>
     							</div>
 						</div>
@@ -83,7 +83,7 @@ if(isset($id) && $checkCat > 0 ):
 										<div class="col-xl-3 col-lg-4 col-md-4 col-12">
 												<div class="single-product">
 													<div class="product-img" style="height:250px;">
-																<a href="product-details.html">
+																<a href="product?product_id=<?=$product['id']?>">
 																	<?php 
 																		$images = get_all_rows_data('files','product_id',$product['id'],1);
 																		foreach($images as $img):
@@ -94,7 +94,7 @@ if(isset($id) && $checkCat > 0 ):
 																<?php //include $tpl."addToButtons.php"?>
 															</div>
 														<div class="product-content">
-															<h3><a href="product.php?product_id=<?=$product['id']?>"><?= $product['title'] ?></a></h3>
+															<h3><a href="product?product_id=<?=$product['id']?>"><?= $product['title'] ?></a></h3>
 														<div class="product-price">
 															<span><?=$product['price']?>$</span>
 														</div>
