@@ -39,7 +39,7 @@ $rows = paginate_records('products','status',1,16);
 					//pagination
 					$total_records = records_total('products','status',1,16);
 					//check if records count > 18 show pagination
-					if($total_records > 8):
+					if($total_records > 1):
 					?>
 					<div class="col-md-12">
 					<nav aria-label="Page navigation example">
