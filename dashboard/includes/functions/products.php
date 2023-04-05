@@ -298,3 +298,30 @@ if(! function_exists('delete_product_images')){
         endif;
     }
 }
+/*
+function to delete fav product
+*/
+if(! function_exists('del_fav'))
+{
+    function del_fav()
+    {
+        global $con;
+        $msg = '';
+        //check if product ID from get request
+        $product_id = isset($_GET['id']) && is_numeric($_GET['id']) ? intval($_GET['id']) : 0;
+        // Select All Data Depend On This ID
+        $check = checkItem('id', 'favs', $product_id);
+        // If There's Such ID Show The Form
+        if ($check > 0) {
+            $stmt = $con->prepare("DELETE FROM favs WHERE id = :zid");
+            $stmt->bindParam(":zid", $product_id);
+            $stmt->execute();
+            
+            $msg = show_msg('success','product Deleted Successfully');
+        } else {
+            $msg = show_msg('Error','This product is Not Found');
+        }
+        echo $msg;
+        redirectPage('favs.php');
+    }
+}

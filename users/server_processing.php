@@ -21,7 +21,8 @@
 // DB table to use
 //$table = 'favs';
 $user_id = intval($_GET['user_id']);
-$table = '(SELECT * FROM favs WHERE user_id = '.$user_id.') tbl';
+//$table = '(SELECT * FROM favs WHERE user_id = '.$user_id.') tbl';
+$table = '(SELECT f.*, p.title, p.price , p.quantity FROM favs f INNER JOIN products p ON f.product_id = p.id WHERE f.user_id='.$user_id.') tbl';
 
 // Table's primary key
 $primaryKey = 'id';
@@ -43,14 +44,20 @@ $columns = array(
     array('db'  => 'quantity',     'dt'    => 4),
     array(
         'db'        => 'id',
+        'dt'        => 5,
+        'formatter' => function ($d){
+            return "
+            <a onclick='confirmation(event)' href='?do=delProduct&id=$d' class='btn btn-sm btn-danger btn-non'> <i class='fa fa-trash'></i></a>";
+        }
+    ),
+    array(
+        'db'        => 'product_id',
         'dt'        => 6,
         'formatter' => function ($d){
             return "
-            <a onclick='confirmation(event)' href='?do=delProduct&id=$d' class='btn btn-sm btn-danger btn-non'> <i class='fa fa-trash'></i></a>
-            ";
+           <a href='product?product_id=$d' class='btn btn-sm btn-warning btn-non'><i class='fa fa-eye'></i></a>";
         }
     )
-    
 );
  
 // SQL server connection information

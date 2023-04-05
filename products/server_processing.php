@@ -38,12 +38,7 @@ $columns = array(
             }
         ),
     array( 'db' => 'id', 'dt' => 1 ),
-    array( 'db' => 'title','dt' => 2,
-            'formatter' => function($d,$title)
-            {
-                return "<a href='product?product_id=$d'>$title</a>";
-            }
-        ),
+    array( 'db' => 'title','dt' => 2),
     array( 'db' => 'status',     'dt' => 3 ,
         'formatter' => function($d){
             if($d == 0)
@@ -61,6 +56,7 @@ $columns = array(
             return "
             <a href='?do=Edit&id=$d' class='btn btn-sm btn-warning btn-non'> <i class='fa fa-pencil'></i></a>
             <a onclick='confirmation(event)' href='?do=delProduct&id=$d' class='btn btn-sm btn-danger btn-non'> <i class='fa fa-trash'></i></a>
+            <a href='product?product_id=$d' class='btn btn-sm btn-warning btn-non'><i class='fa fa-eye'></i></a>
             ";
         }
     )

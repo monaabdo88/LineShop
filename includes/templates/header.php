@@ -230,7 +230,7 @@ include "includes/functions/functions.php";
 											<span class="total-amount">$
 												<?=$total?></span>
 										</div>
-										<a href="checkout.html" class="btn animate">Checkout</a>
+										<a href="userCart" class="btn animate">Checkout</a>
 									</div>
 								</div>
 								<!--/ End Shopping Item -->

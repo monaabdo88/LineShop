@@ -9,7 +9,7 @@ if(isset($user_id)){
 	$user = get_row_data('users',$user_id);
     //delete product
     if($do == 'delProduct'){
-      delete_product();
+      del_fav();
     }
     else
     {
@@ -54,7 +54,8 @@ if(isset($user_id)){
 										<th>Title</th>
 										<th>Price</th>
 										<th>Qantity</th>
-                                        <th>Options</th>
+                    <th>Options</th>
+                    <th>View</th>
 									</tr>
 								</thead>
 								<tfoot>
@@ -64,7 +65,8 @@ if(isset($user_id)){
 										<th>Title</th>
 										<th>Price</th>
 										<th>Qantity</th>
-                                        <th>Options</th>
+                    <th>Options</th>
+                    <th>View</th>
 									</tr>
 								</tfoot>
 								</table>
@@ -80,7 +82,7 @@ if(isset($user_id)){
 									
 									<ul class="list-group">
 										<li class="list-group-item"><a href="profile.php?user_id=<?=$user_id?>">Edit Profile</a></li>
-										<li class="list-group-item"><a href="userProducts.php">Products</a></li>
+										<li class="list-group-item"><a href="myProducts.php">Products</a></li>
 										<li class="list-group-item active"><a href="favs.php">Favs</a></li>
 										<li class="list-group-item"><a href="messages.php">Messages</a></li>
 										<li class="list-group-item"><a href="orders.php">Orders</a></li>
@@ -164,7 +166,7 @@ if(isset($user_id)){
                       });     
                       //redirect back after deleting Product 5 seconds
                       setTimeout(function(){
-                            window.location.href = 'userProducts.php';
+                            window.location.href = 'favs.php';
                         }, 5000);
                     }
                   });

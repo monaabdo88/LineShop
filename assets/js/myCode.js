@@ -49,6 +49,7 @@ $('.button_fav').click(function(e) {
                       $('#btn-'+json.id).attr('data-method', 'addCart');
                       $(".total-count").text(json.items_count);
                       $("#"+json.id).remove();
+                      $("tr#"+json.id).remove();
                       $('.total-amount').html("$ "+ json.total);
                       $('.pro_quantity').html(json.quantity);
                   break;
