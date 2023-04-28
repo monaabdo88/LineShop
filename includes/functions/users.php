@@ -56,22 +56,22 @@ if(! function_exists('add_user')){
             }
             elseif(!$errors){
                  //check Upload Image
-                 if(isset($_FILES['avatar']) && $_FILES['avatar']['size'] != 0){
+            
+                if(isset($_FILES['avatar']) && $_FILES['avatar']['size'] != 0){
                     // Upload Variables
                     
                     $imageTmp	    = $_FILES['avatar']['tmp_name'];
                     $imageType      = $_FILES['avatar']['type'];
                     //upload user Image
-                    $image = resize_image('assets/uploads/users/',$imageTmp,$imageType);
+                    $image = resize_image('assets/uploads/users',$imageTmp,$imageType);
                     $errors['success'] = $image;
+                    //return $image;
                 }else{
                     $image = 'no-image.png';
                 }
                 //add new user to database
                 
-                $errors['success']  = $image;
-                $stmt = $con->prepare("INSERT INTO 
-                    users(
+                $stmt = $con->prepare("INSERT INTO users(
                             username, email, password,
                             avatar,phone,country_id,
                             state_id,city_id,exp_date,reset_link_token

@@ -286,7 +286,7 @@ if(! function_exists('delete_product_images')){
         $images_count = get_data_column_count('files','product_id',$product_id);
         if($images_count > 0):
             //unlink images from folder
-            $images = get_row_data('files','product_id',$product_id);
+            $images = get_row_data('files',$product_id,'product_id');
             foreach($images as $img){
                 $imgLink = __DIR__.$img['file_dir'].$img['file_name'];
                 unlink ($imgLink);

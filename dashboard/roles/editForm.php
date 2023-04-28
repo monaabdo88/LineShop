@@ -1,7 +1,7 @@
 <?php 
 //check if role ID from get request
 $roleId = isset($_GET['id']) && is_numeric($_GET['id']) ? intval($_GET['id']) : 0;
-$row = get_row_data('roles','id',$roleId);
+$row = get_row_data('roles',$roleId);
 $rowsCount = checkItem('id','roles',$roleId);
 //Check is role ID is already exists
 

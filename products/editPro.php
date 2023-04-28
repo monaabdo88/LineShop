@@ -14,7 +14,7 @@ if($rowsCount > 0 && $user_id == $product_data['user_id']){
 					<div class="bread-inner">
 						<ul class="bread-list">
 							<li><a href="index">Home<i class="ti-arrow-right"></i></a></li>
-                            <li><a href="userProducts.php">My Products<i class="ti-arrow-right"></i></a></li>
+                            <li><a href="myProducts">My Products<i class="ti-arrow-right"></i></a></li>
 							<li class="active"><a href="#">Edit <?=$product_data['title']?></a></li>
 						</ul>
 					</div>

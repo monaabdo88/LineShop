@@ -1,7 +1,7 @@
 <?php 
 //check if Page ID from get request
 $PageId = isset($_GET['id']) && is_numeric($_GET['id']) ? intval($_GET['id']) : 0;
-$row = get_row_data('pages','id',$PageId);
+$row = get_row_data('pages',$PageId);
 $rowsCount = checkItem('id','pages',$PageId);
 //Check is Page ID is already exists
 

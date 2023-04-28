@@ -6,6 +6,7 @@
 					<div class="bread-inner">
 						<ul class="bread-list">
 							<li><a href="index">Home<i class="ti-arrow-right"></i></a></li>
+                            <li><a href="myProducts">My Products<i class="ti-arrow-right"></i></a></li>
 							<li class="active"><a href="#">Add New Product</a></li>
 						</ul>
 					</div>

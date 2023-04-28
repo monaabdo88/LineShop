@@ -276,10 +276,10 @@ if(! function_exists('resize_image')){
         $file=$tmp_name;
         list($width,$height)=getimagesize($file);
         if(!$nwidth)
-            $nwidth=$width/4;
+            $nwidth= (int) ($width/4);
         
         if(!$nheight)
-            $nheight = $height/4;
+            $nheight = (int) ($height/4);
     
         $newimage=imagecreatetruecolor($nwidth,$nheight);
         $file_name = '';

@@ -160,7 +160,7 @@ $views = up_views($row['id']);
 													
 												<?php endif; ?>
 												<?php if(isset($_SESSION['user_id']) && $row['user_id'] == $_SESSION['user_id']): ?>
-													<a href="#">
+													<a href="myProducts?do=Edit&id=<?=$row['id']?>">
 														<i class="fa fa-pencil"></i> Edit
 													</a>
 												<?php endif?>

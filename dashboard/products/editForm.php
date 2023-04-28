@@ -1,9 +1,9 @@
 <?php 
 //check if product ID from get request
 $productId = isset($_GET['id']) && is_numeric($_GET['id']) ? intval($_GET['id']) : 0;
-$row = get_row_data('products','id',$productId);
+$row = get_row_data('products',$productId);
 $rowsCount = checkItem('id','products',$productId);
-$media = get_row_data('files','product_id',$row['id']);
+$media = get_row_data('files',$productId,'product_id');
 //Check is Product ID is already exists
 if($rowsCount > 0 ){
 ?>                

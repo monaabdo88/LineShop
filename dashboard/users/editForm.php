@@ -1,7 +1,7 @@
 <?php 
 //check if user ID from get request
 $userId = isset($_GET['id']) && is_numeric($_GET['id']) ? intval($_GET['id']) : 0;
-$row = get_row_data('users','id',$userId);
+$row = get_row_data('users',$userId);
 $rowsCount = checkItem('id','users',$userId);
 //Check is user ID is already exists
 
