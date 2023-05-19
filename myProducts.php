@@ -106,7 +106,8 @@ if(isset($user_id)){
 										<li class="list-group-item"><a href="profile.php?user_id=<?=$user_id?>">Edit Profile</a></li>
 										<li class="list-group-item active"><a href="myProducts.php">Products</a></li>
 										<li class="list-group-item"><a href="favs.php">Favs</a></li>
-										<li class="list-group-item"><a href="messages.php">Messages</a></li>
+                    <li class="list-group-item"><a href="messages?type=inbox">Inbox Messages</a></li>
+										<li class="list-group-item"><a href="messages?type=send">Send Messages</a></li>
 										<li class="list-group-item"><a href="orders.php">Orders</a></li>
 									</ul>
 								</div>

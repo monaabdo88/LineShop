@@ -20,28 +20,27 @@
  
 // DB table to use
 $user_id = intval($_GET['user_id']);
-$table = '(SELECT * FROM messages WHERE user_id='.$user_id.') tbl';
+$type = $_GET['type'];
+($type == 'send') ? $col =  'sender_id': $col = 'user_id';
+($type == 'send') ? $user_status =  'user_id': $user_status = 'sender_id';
+
+$table = '(SELECT m.*, u.username FROM messages m INNER JOIN users u ON m.'.$user_status.' = u.id WHERE m.'.$col.' = '.$user_id.') tbl';
 // Table's primary key
 $primaryKey = 'id';
-// Array of database columns which should be read and sent back to DataTables.
-// The `db` parameter represents the column name in the database, while the `dt`
-// parameter represents the DataTables column identifier. In this case simple
-// indexes
-
+        
 $columns = array(
     array('db'  => 'id', 'dt'   => 0,
             'formatter' => function($d){
-                return "<input type='checkbox'  onchange='toggleCheckbox()' name='checkProduct[]' value='$d'/>";
+                return "<input type='checkbox'  onchange='toggleCheckbox()' name='checkMsg[]' value='$d'/>";
             }
         ),
-    array( 'db' => 'id', 'dt' => 1 ),
-    array( 'db' => 'title','dt' => 2),
-    array('db'  => 'sender_name',  'dt'    => 3),
-    array('db'  => 'sender_email',     'dt'    => 4),
-    array('db'  => 'message',     'dt'    => 5),
+    array('db' => 'id', 'dt' => 1 ),
+    array('db' => 'title','dt' => 2),
+    array('db'  => 'username','dt'    => 3),
+    array('db'  => 'message','dt'    => 4),
     array(
         'db'        => 'product_id',
-        'dt'        => 6,
+        'dt'        => 5,
         'formatter' => function ($d){
             return "
            <a href='product?product_id=$d' class='btn btn-sm btn-warning btn-non'><i class='fa fa-eye'></i></a>";
@@ -49,10 +48,11 @@ $columns = array(
     ),
     array(
         'db'        => 'id',
-        'dt'        => 7,
+        'dt'        => 6,
         'formatter' => function ($d){
             return "
-            <a onclick='confirmation(event)' href='?do=delProduct&id=$d' class='btn btn-sm btn-danger btn-non'> <i class='fa fa-trash'></i></a>";
+            <a href='replay?replay_id=$d' class='btn btn-sm btn-danger btn-non'><i class='fa fa-reply'></i></a>
+            <a onclick='confirmation(event)' href='?do=delMsg&id=$d' class='btn btn-sm btn-danger btn-non'> <i class='fa fa-trash'></i></a>";
         }
     ),
     

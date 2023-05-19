@@ -151,7 +151,8 @@ if(isset($user_id)){
 										<li class="list-group-item active"><a href="profile">Edit Profile</a></li>
 										<li class="list-group-item"><a href="myProducts">Products</a></li>
 										<li class="list-group-item"><a href="favs">Favs</a></li>
-										<li class="list-group-item"><a href="messages">Messages</a></li>
+										<li class="list-group-item"><a href="messages?type=inbox">Inbox Messages</a></li>
+										<li class="list-group-item"><a href="messages?type=send">Send Messages</a></li>
 										<li class="list-group-item"><a href="orders">Orders</a></li>
 									</ul>
 								</div>

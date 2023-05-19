@@ -111,7 +111,7 @@ include $tpl."header.php";
 						<div class="row">
 							<div class="col-lg-6 col-md-6 col-12">
 								<div class="list-image overlay">
-									<img src="<?=$baseUrl?>assets/uploads/products/<?=get_item('file_name','files','product_id',$sale['id'])?>" alt="#">
+									<img src="assets/uploads/products/<?=get_item('file_name','files','product_id',$sale['id'])?>" alt="#">
 									<a href="product?product_id=<?=$sale['id']?>" class="buy"><i class="fa fa-shopping-bag"></i></a>
 								</div>
 							</div>
@@ -150,7 +150,7 @@ include $tpl."header.php";
 						<div class="row">
 							<div class="col-lg-6 col-md-6 col-12">
 								<div class="list-image overlay">
-									<img src="<?=$baseUrl?>assets/uploads/products/<?=get_item('file_name','files','product_id',$sale['id'])?>" alt="#">
+									<img src="assets/uploads/products/<?=get_item('file_name','files','product_id',$sale['id'])?>" alt="#">
 									<a href="product?product_id=<?=$sale['id']?>" class="buy"><i class="fa fa-shopping-bag"></i></a>
 								</div>
 							</div>

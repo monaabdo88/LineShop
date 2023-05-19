@@ -35,7 +35,7 @@ if(! function_exists('redirectPage')){
             
         }
         header("refresh:$seconds,url=$url");
-        //exit();
+        exit;
     }
 }
 /*
@@ -221,7 +221,7 @@ return value of column
 if(! function_exists('get_item')){
     function get_item($column,$tbl,$col_name,$id){
         global $con;
-        $stmt = $con->prepare("SELECT $column FROM $tbl WHERE $col_name = ?");
+        $stmt = $con->prepare("SELECT $column FROM $tbl WHERE $col_name = ? ORDER BY id DESC");
         $stmt->execute(array($id));
         $row = $stmt->fetch();
         if($stmt->rowCount() > 0){
@@ -660,17 +660,17 @@ function to send message between users
 */
 if(! function_exists('send_product_msg'))
 {
-    function send_product_msg($author,$product_id,$sender_email,$sender_name,$sender_msg,$user_id,$msg,$subject)
+    function send_product_msg($author,$product_id,$sender_msg,$user_id,$msg,$subject)
     {
         global $con;
-        $stmt = $con->prepare('INSERT INTO messages (user_id, product_id,title,sender_name,sender_email,message,sender_id) VALUES 
-                                      (:muserID, :mPro_id, :mtitle,:msenderName,:msenderEmail,:mMsg,:msenderID)');
+        $sender_name = get_row_data('users',$user_id);
+        $stmt = $con->prepare('INSERT INTO messages (user_id, product_id,title,sender_name,message,sender_id) VALUES 
+                                      (:muserID, :mPro_id, :mtitle,:msenderName,:mMsg,:msenderID)');
             $stmt->execute(array(
                 'muserID' 	    => $author,
                 'mPro_id' 	    => $product_id,
                 'mtitle' 	    => $subject,
-                'msenderName' 	=> $sender_name,
-                'msenderEmail'   => $sender_email,
+                'msenderName' 	=> $sender_name['username'],
                 'mMsg'          => $sender_msg,
                 'msenderID'     => $user_id
             ));

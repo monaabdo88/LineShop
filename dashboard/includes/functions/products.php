@@ -298,30 +298,29 @@ if(! function_exists('delete_product_images')){
         endif;
     }
 }
-/*
-function to delete fav product
-*/
-if(! function_exists('del_fav'))
+/**
+ * function to delete record
+ */
+if(! function_exists('delete_record'))
 {
-    function del_fav()
-    {
+    function delete_record($tbl){
         global $con;
         $msg = '';
-        //check if product ID from get request
-        $product_id = isset($_GET['id']) && is_numeric($_GET['id']) ? intval($_GET['id']) : 0;
+        //check if record ID from get request
+        $row_id = isset($_GET['id']) && is_numeric($_GET['id']) ? intval($_GET['id']) : 0;
         // Select All Data Depend On This ID
-        $check = checkItem('id', 'favs', $product_id);
+        $check = checkItem('id', $tbl, $row_id);
         // If There's Such ID Show The Form
         if ($check > 0) {
-            $stmt = $con->prepare("DELETE FROM favs WHERE id = :zid");
-            $stmt->bindParam(":zid", $product_id);
+            $stmt = $con->prepare("DELETE FROM $tbl WHERE id = :zid");
+            $stmt->bindParam(":zid", $row_id);
             $stmt->execute();
             
-            $msg = show_msg('success','product Deleted Successfully');
+            $msg = show_msg('success','Record Deleted Successfully');
         } else {
-            $msg = show_msg('Error','This product is Not Found');
+            $msg = show_msg('Error','This Record is Not Found');
         }
         echo $msg;
-        redirectPage('favs.php');
+        //redirectPage('');
     }
 }

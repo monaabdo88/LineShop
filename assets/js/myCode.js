@@ -140,23 +140,24 @@ $('.button_fav').click(function(e) {
       $(document).ready(function() {
         $("#myForm").submit(function(event) {
           event.preventDefault();
-          var senderName = $("#senderName").val();
+          //var senderName = $("#senderName").val();
           var senderMsg  = $("#senderMsg").val();
-          var senderEmail = $("#senderEmail").val();
+          //var senderEmail = $("#senderEmail").val();
           var author = $("input[name=author]").val();
           var user  = $("input[name=user_id]").val();
           var method = $("input[name=method]").val();
           var product_id = $("input[name=product_id]").val();
           var msg_sub = $("#msgSubject").val();
           //if form is valid submit
-          if(senderName.length > 3 && isValidEmail(senderEmail) && senderMsg.length > 10)
+         // if(senderName.length > 3 && isValidEmail(senderEmail) && senderMsg.length > 10)
+         if(senderMsg.length > 10)
           {
               $(".error").text("");
               //$(".submit_msg").text('Sending ...').attr("disabled", true);
               //send message ajax code
               $.getJSON('includes/helpers.php', {
-                    sender_name:senderName,
-                    sender_email:senderEmail,
+                    /*sender_name:senderName,
+                    sender_email:senderEmail,*/
                     sender_msg:senderMsg,
                     p_author:author,
                     user_id:user,
@@ -166,6 +167,11 @@ $('.button_fav').click(function(e) {
                 })
                 .done(function(json) {
                   $(".msg_status").html('<div class="alert alert-success"><p class="text-center">'+json.callback_msg+'</p></div>');
+                  setTimeout(function(){// wait for 5 secs(2)
+                    $('#exampleModalCenter').modal('hide');; // then reload the page.(3)
+                    
+                  }, 5000);
+                  
                 })
                 .fail(function(jqXHR, textStatus, error) {
                   console.log("Error : " + error);         
@@ -173,12 +179,12 @@ $('.button_fav').click(function(e) {
           }
           else{
             //validate email
-            if (senderEmail== '' || !isValidEmail(senderEmail)) {
+            /*if (senderEmail== '' || !isValidEmail(senderEmail)) {
               $("#email-error").text("Please enter a valid email address.");
             }
             else{
               $("#email-error").text("");
-            }
+            }*/
             //validate message subject
             if(msg_sub == '' || msg_sub.length < 3){
                 $("#subject-error").text("Message subject must be at least 3 characters long.");
@@ -186,11 +192,11 @@ $('.button_fav').click(function(e) {
                 $("#subject-error").text();
             }
             //validate sender email
-            if (senderName.length < 3) {
+            /*if (senderName.length < 3) {
               $("#name-error").text("Name must be at least 3 characters long.");
             }else{
               $("#name-error").text("");
-            } 
+            } */
             //validate sender message
             if(senderMsg.length < 10)
             {

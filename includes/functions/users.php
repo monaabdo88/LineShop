@@ -16,13 +16,13 @@ if(! function_exists('add_user')){
         //check if method is post
         if($_SERVER['REQUEST_METHOD'] == 'POST'){
             //prepare values from add form
-            $user_name         = $_POST['username'];
-            $email             = $_POST['email'];
-            $password          = sha1($_POST['password']);
+            $user_name         = trim(htmlspecialchars($_POST['username']));
+            $email             = filter_var($_POST['email'], FILTER_VALIDATE_EMAIL);
+            $password          = trim(sha1($_POST['password']));
             $country_id        = $_POST['country_id'];
             (isset($_POST['city_id'])) ? $city_id = $_POST['city_id'] : $city_id = '';
             $state_id          = $_POST['state_id'];
-            $phone             = $_POST['phone'];
+            $phone             = trim(htmlspecialchars(filter_var($_POST['phone'], FILTER_VALIDATE_INT)));
             $token             = md5($email).rand(10,9999);
             $expFormat         = mktime(
             date("H"), date("i"), date("s"), date("m") ,date("d")+1, date("Y"));
@@ -38,8 +38,8 @@ if(! function_exists('add_user')){
             elseif($email == ''){
                 $errors['error'] = 'User Email is Required';
             }
-            elseif($phone == ''){
-                $errors['error'] = 'User Phone is Required';
+            elseif($phone == '' || !preg_match('/^1\d{9}$/', $phone)){
+                $errors['error'] = 'Invalid phone number';
             }
             elseif(!filter_var($email, FILTER_VALIDATE_EMAIL)) {
                 $errors['error'] = 'Not Valid Email';    
@@ -114,8 +114,8 @@ if(! function_exists('login_user')){
         global $con;
         $errors = array();
 
-        $email    = $_POST['email'];
-        $password = $_POST['password'];
+        $email    = filter_var($_POST['email'], FILTER_VALIDATE_EMAIL);
+        $password = trim(htmlspecialchars($_POST['password']));
         //Hash The Password to protect admin info
         $hashedPass = sha1($password);
         //check if email is valid email
@@ -157,14 +157,15 @@ if(! function_exists('edit_user')){
         $errors = array();
         if($_SERVER['REQUEST_METHOD'] == 'POST'){
             //Prepare Values from edit form
-            $user_name         = $_POST['username'];
-            $email             = $_POST['email'];
+            $user_name         = trim(htmlspecialchars($_POST['username']));
+            $email             = filter_var($_POST['email'], FILTER_VALIDATE_EMAIL);
+            
             $country_id        = @$_POST['country_id'];
             $city_id           = @$_POST['city_id'];
             $state_id          = @$_POST['state_id'];
-            $phone             = @$_POST['phone'];
+            $phone             = @trim(htmlspecialchars(filter_var($_POST['phone'], FILTER_VALIDATE_INT)));
             if(isset($_POST['password']) && $_POST['password'] != '')
-                $password  = sha1($_POST['password']);
+                $password  = trim(sha1($_POST['password']));
             else
                 $password = get_item('password','users','id',$id);
                 

@@ -3,9 +3,23 @@ include_once "init.php";
 include_once $tpl."header.php";
 $user_id = $_SESSION['user_id'];
 $do = isset($_GET['do']) ? $_GET['do'] : '';
+$type = isset($_GET['type']) ? $_GET['type'] : '';
+$file = "users/server_index_msg.php?user_id=$user_id&type=$type";
 if(isset($user_id)){
+  include_once "dashboard/includes/functions/products.php";
+
     $user = get_row_data('users',$user_id);
     $messages = get_all_rows_data('messages','user_id',$user_id);
+    //delete Message
+    if($do == 'delMsg'){
+      delete_record('messages');
+    }
+    else
+    {
+      //delete All products code
+      if($do == 'deleteAll')
+          delete_all_rows();
+    }
 ?>
 <!-- Breadcrumbs -->
 <div class="breadcrumbs">
@@ -15,8 +29,8 @@ if(isset($user_id)){
 					<div class="bread-inner">
 						<ul class="bread-list">
 							<li><a href="index">Home<i class="ti-arrow-right"></i></a></li>
-                            <li><a href="profile">Profile <i class="ti-arrow-right"></i></a></li>
-							<li class="active"><?=$user['username']?> Messages</li>
+              <li><a href="profile">Profile <i class="ti-arrow-right"></i></a></li>
+							<li class="active"><?=($type == 'inbox') ? 'Inbox' : 'Send'?></li>
 						</ul>
 					</div>
 				</div>
@@ -42,11 +56,10 @@ if(isset($user_id)){
 										<th class="no-sort"><input type="checkbox" class="checkall"/></th>
 										<th>#</th>
 										<th>Subject</th>
-										<th>Sender Name</th>
-                                        <th>Sender Email</th>
+										<th><?=($type == 'inbox')? 'From' : 'To';?></th>
 										<th>Message</th>
 										<th>Product Name</th>
-                                        <th>Options</th>
+                    <th>Options</th>
 									</tr>
 								</thead>
 								<tfoot>
@@ -54,11 +67,10 @@ if(isset($user_id)){
 										<th><input type="checkbox" class="checkall"/></th>
 										<th>#</th>
 										<th>Subject</th>
-										<th>Sender Name</th>
-                                        <th>Sender Email</th>
+										<th><?=($type == 'inbox')? 'From' : 'To';?></th>
 										<th>Message</th>
 										<th>Product Name</th>
-                                        <th>Options</th>
+                    <th>Options</th>
 									</tr>
 								</tfoot>
 								</table>
@@ -76,7 +88,8 @@ if(isset($user_id)){
 										<li class="list-group-item"><a href="profile.php?user_id=<?=$user_id?>">Edit Profile</a></li>
 										<li class="list-group-item"><a href="myProducts.php">Products</a></li>
 										<li class="list-group-item"><a href="favs.php">Favs</a></li>
-										<li class="list-group-item active"><a href="messages.php">Messages</a></li>
+										<li class="list-group-item <?=($type == 'inbox') ? 'active':''?>"><a href="messages?type=inbox">Inbox Messages</a></li>
+										<li class="list-group-item <?=($type == 'send') ? 'active':''?>"><a href="messages?type=send">Send Messages</a></li>
 										<li class="list-group-item"><a href="orders.php">Orders</a></li>
 									</ul>
 								</div>
@@ -98,7 +111,7 @@ if(isset($user_id)){
 <script type="text/javascript">
           $(document).ready(function() {
             //Show records of products on datatables
-			var user_id = <?=$user_id?>;
+			      var user_id = <?=$user_id?>;
             var t = $('#example').DataTable( {
               "columnDefs": [
                   { "orderable": false, "targets": 0 }
@@ -106,7 +119,7 @@ if(isset($user_id)){
               "processing": true,
               "serverSide": true,
               "targets": 0,
-              "ajax": "users/server_msg.php?user_id="+user_id,
+              "ajax": '<?=$file;?>',
               "order": [[ 1, 'asc' ]]
             });
             t.on( 'order.dt search.dt', function () {
@@ -157,7 +170,7 @@ if(isset($user_id)){
                       });     
                       //redirect back after deleting Product 5 seconds
                       setTimeout(function(){
-                            window.location.href = 'myProducts';
+                            window.location.href = 'messages';
                         }, 5000);
                     }
                   });
@@ -186,7 +199,7 @@ if(isset($user_id)){
                   //window.location.href=urlToRedirect;
                   $.ajax({    
                     type: "POST",
-                    data :{ids:ids_products,tblname:"products"},
+                    data :{ids:ids_products,tblname:"messages"},
                     url: urlToRedirect, 
                     success: function(){   
                       swal("Poof! Your imaginary file has been deleted!", {
@@ -194,7 +207,7 @@ if(isset($user_id)){
                       });     
                       //redirect back after deleting Product 5 seconds
                       setTimeout(function(){
-                            window.location.href = 'myProducts';
+                            window.location.href = 'messages';
                         }, 5000);
                     }
                   });
@@ -204,11 +217,5 @@ if(isset($user_id)){
               });
         }
 
-        //ckeditor
-        CKEDITOR.replace( 'editor1', {
-            filebrowserUploadUrl: '../upload.php?command=QuickUpload&type=Images&responseType=json',
-            filebrowserUploadMethod: "form"
-
-        } );
         
 </script> 

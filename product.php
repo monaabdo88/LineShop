@@ -82,7 +82,7 @@ $views = up_views($row['id']);
 													</a>
 													<!-- Modal -->
 													<div class="col-md-8 offset-md-4">
-														<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+														<div class="modal fade msg_dialog" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
 														<div class="modal-dialog modal-dialog-centered" role="document">
 															<div class="modal-content">
 																<div class="modal-header">
@@ -99,23 +99,8 @@ $views = up_views($row['id']);
 																					<!-- Comment Form -->
 																					<form class="form" id="myForm" action="#" method="post">
 																						<div class="row">
-																							<div class="col-md-12">
-																								<div class="msg_status"></div>
-																							</div>	
-																							<div class="col-lg-6 col-md-6 col-12">
-																								<div class="form-group">
-																									<label>Your Name<span>*</span></label>
-																									<input type="text" name="name" id="senderName" placeholder="" >
-																									<span class="error text-danger" id="name-error"></span>
-																								</div>
-																							</div>
-																							<div class="col-lg-6 col-md-6 col-12">
-																								<div class="form-group">
-																									<label>Your Email<span>*</span></label>
-																									<input type="email" name="email" id="senderEmail" placeholder="">
-																									<span class="error text-danger" id="email-error"></span>
-																								</div>
-																							</div>
+																							
+																				
 																							<div class="col-lg-12">
 																								<div class="form-group">
 																									<label>Your Message Subject<span>*</span></label>
@@ -132,10 +117,14 @@ $views = up_views($row['id']);
 																								</div>
 																							</div>
 																							<div class="col-12">
+																								<div class="msg_status"></div>
 																								<div class="form-group button">
 																								<input type="hidden" name="user_id" value="<?=$_SESSION['user_id']?>" />
 																								<input type="hidden" name="product_id" value="<?=$row['id']?>"/>
 																								<input type="hidden" name="author" value="<?=$row['user_id']?>" />
+																								<input type="hidden" name="senderName" valeu="" />
+																								<input type="hidden" name="senderEmail" valeu="" />
+																								
 																								<input type="hidden" name="method" value="send_product_msg" />
 																									<button type="submit" class="btn submit_msg">Send</button>
 																								</div>
