@@ -139,7 +139,7 @@ if(isset($user_id)){
           //enable delete all if checkbox checked length greater than 0
           function toggleCheckbox()
           {
-            if($("input[name='checkProduct[]']").filter(':checked').length > 0){
+            if($("input[name='checkMsg[]']").filter(':checked').length > 0){
               $(".delAll").removeAttr("disabled");
             }else{
               $(".delAll").prop('disabled', true);              
@@ -182,7 +182,7 @@ if(isset($user_id)){
        //Delete All function
        function confirmationDel() {
               var ids_products = new Array(); 
-              $("input[name='checkProduct[]']:checked:enabled").each(function () {
+              $("input[name='checkMsg[]']:checked:enabled").each(function () {
                 ids_products.push($(this).val());
               });      
               var urlToRedirect = "?do=deleteAll"; 

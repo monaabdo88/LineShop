@@ -660,19 +660,20 @@ function to send message between users
 */
 if(! function_exists('send_product_msg'))
 {
-    function send_product_msg($author,$product_id,$sender_msg,$user_id,$msg,$subject)
+    function send_product_msg($author,$product_id,$sender_msg,$user_id,$msg,$subject,$replay_id)
     {
         global $con;
         $sender_name = get_row_data('users',$user_id);
-        $stmt = $con->prepare('INSERT INTO messages (user_id, product_id,title,sender_name,message,sender_id) VALUES 
-                                      (:muserID, :mPro_id, :mtitle,:msenderName,:mMsg,:msenderID)');
+        $stmt = $con->prepare('INSERT INTO messages (user_id, product_id,title,sender_name,message,sender_id,replay_id) VALUES 
+                                      (:muserID, :mPro_id, :mtitle,:msenderName,:mMsg,:msenderID,:mReplay_id)');
             $stmt->execute(array(
                 'muserID' 	    => $author,
                 'mPro_id' 	    => $product_id,
                 'mtitle' 	    => $subject,
                 'msenderName' 	=> $sender_name['username'],
                 'mMsg'          => $sender_msg,
-                'msenderID'     => $user_id
+                'msenderID'     => $user_id,
+                'mReplay_id'    => $replay_id
             ));
             if($stmt)
                 $msg =  'Message Send Successfully';

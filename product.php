@@ -124,7 +124,7 @@ $views = up_views($row['id']);
 																								<input type="hidden" name="author" value="<?=$row['user_id']?>" />
 																								<input type="hidden" name="senderName" valeu="" />
 																								<input type="hidden" name="senderEmail" valeu="" />
-																								
+																								<input type="hidden" name="replay_id" value="0"/>
 																								<input type="hidden" name="method" value="send_product_msg" />
 																									<button type="submit" class="btn submit_msg">Send</button>
 																								</div>

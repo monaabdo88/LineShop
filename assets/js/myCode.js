@@ -147,6 +147,7 @@ $('.button_fav').click(function(e) {
           var user  = $("input[name=user_id]").val();
           var method = $("input[name=method]").val();
           var product_id = $("input[name=product_id]").val();
+          var replay_id = $("input[name=replay_id]").val();
           var msg_sub = $("#msgSubject").val();
           //if form is valid submit
          // if(senderName.length > 3 && isValidEmail(senderEmail) && senderMsg.length > 10)
@@ -163,6 +164,7 @@ $('.button_fav').click(function(e) {
                     user_id:user,
                     action:method,
                     p_id:product_id,
+                    r_id:replay_id,
                     subject:msg_sub
                 })
                 .done(function(json) {

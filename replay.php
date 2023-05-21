@@ -67,7 +67,7 @@ if(isset($user_id) && isset($id) && $checkMsg > 0 ):
 									if($_SESSION['user_id'] != $row['sender_id']):
 										 include ("includes/templates/replay_msg.php");
 									endif;
-									/*if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['edit_user']) && $_POST['edit_user'] == 'save_changes'){
+									if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['edit_user']) && $_POST['edit_user'] == 'save_changes'){
 										$errors = edit_user($user_id);
 									}
 								
@@ -84,7 +84,7 @@ if(isset($user_id) && isset($id) && $checkMsg > 0 ):
 											if($type == 'success') header('refresh:5;url='.$_SERVER['HTTP_REFERER']);
 										}
 										
-									}*/
+									}
 								?>
 								
 							</div>

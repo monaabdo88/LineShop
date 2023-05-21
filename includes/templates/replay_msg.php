@@ -10,8 +10,10 @@
 									<div class="reply">
 										<div class="reply-head">
 											<h4 class="reply-title">Replay to The Message</h4>
+											<div class="msg_status"></div>
+                                                    
 											<!-- Comment Form -->
-											<form id="add_comment" action="#" method="post">
+											<form id="myForm" action="#" method="post">
 												<div class="row">
 													<div class="col-md-12" id="success_add"></div>
 													
@@ -28,13 +30,14 @@
                                                         </div>
                                                         </div>
 													<div class="col-12">
-													<div class="msg_status"></div>
-                                                            <div class="form-group button">
-                                                                <input type="hidden" name="user_id" value="<?=$row['user_id']?>" />
+													        <div class="form-group button">
+                                                                <input type="hidden" name="user_id" value="<?=$_SESSION['user_id']?>" />
                                                                 <input type="hidden" name="product_id" value="<?=$row['product_id']?>"/>
-                                                                <input type="hidden" name="author" value="<?=$_SESSION['user_id']?>" />                                        
+                                                                <input type="hidden" name="author" value="<?=$row['sender_id']?>" />                                        
                                                                 <input type="hidden" name="method" value="send_product_msg" />
-                                                                <button type="submit" class="btn submit_msg">Send</button>
+                                                                <input type="hidden" name="replay_id" value="<?=$row['id']?>" />
+                                                                
+																<button type="submit" class="btn submit_msg">Send</button>
                                                             </div>
 													</div>
 												</div>
