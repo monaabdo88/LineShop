@@ -40,7 +40,7 @@ include $tpl."header.php";
 													
                                                     <td class="image" data-title="No"><img src="'.$img_dir.'/'.$img_name.'" alt="#"></a></td>
                                                     <td class="product-des" data-title="Description">
-                                                        <p class="product-name"><a href="#">'.$pro['title'].'</a></p>
+                                                        <p class="product-name"><a href="product?product_id='.$pro['id'].'">'.$pro['title'].'</a></p>
                                                     </td>
                                                     <td class="price" data-title="Price"><span>$'.$price_after_discount.' </span></td>
                                                     <td class="qty" data-title="Qty"><!-- Input Order -->
@@ -50,7 +50,7 @@ include $tpl."header.php";
                                                                     <i class="ti-minus"></i>
                                                                 </button>
                                                             </div>
-                                                            <input type="text" name="quant[1]" class="input-number"  data-min="1" data-max="100" value="1">
+                                                            <input type="text" name="quant[1]" class="input-number"  data-min="1" data-max="'.$pro['quantity'].'" value="1">
                                                             <div class="button plus">
                                                                 <button type="button" class="btn btn-primary btn-number" data-type="plus" data-field="quant[1]">
                                                                     <i class="ti-plus"></i>
@@ -96,10 +96,9 @@ include $tpl."header.php";
 							<div class="col-lg-4 col-md-7 col-12">
 								<div class="right">
 									<ul>
-										<li>Cart Subtotal<span>$330.00</span></li>
+										<li>Cart Subtotal<span>$<?=$total?></span></li>
 										<li>Shipping<span>Free</span></li>
-										<li>You Save<span>$20.00</span></li>
-										<li class="last">You Pay<span>$310.00</span></li>
+										<li class="last">You Pay<span>$<?=$total?></span></li>
 									</ul>
 									<div class="button5">
 										<a href="#" class="btn">Checkout</a>
